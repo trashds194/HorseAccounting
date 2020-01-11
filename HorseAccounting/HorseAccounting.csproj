@@ -106,6 +106,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DbConnection.cs" />
     <Compile Include="Model\Horse.cs" />
     <Compile Include="ViewModel\HorseListViewModel.cs" />
     <Compile Include="View\HorsesList.xaml.cs">

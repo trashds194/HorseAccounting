@@ -9,12 +9,13 @@
       Title="HorsesList" Background="White">
 
     <Grid>
-        <DataGrid AutoGenerateColumns="False" Name="HorseList" Margin="20">
+        <DataGrid AutoGenerateColumns="False" Name="HorseList" Margin="20" ItemsSource="{Binding Horses}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№ по ГПК" Binding="{Binding Path=GpkNum}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Кличка" Binding="{Binding Path=NickName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Тавро" Binding="{Binding Path=Brand}"></DataGridTextColumn>
             </DataGrid.Columns>
+            
         </DataGrid>
     </Grid>
 </Page>
