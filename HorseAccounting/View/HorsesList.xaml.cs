@@ -1,5 +1,4 @@
-﻿using HorseAccounting.View;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HorseAccounting
+namespace HorseAccounting.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для HorsesList.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class HorsesList : Page
     {
-        public MainWindow()
+        public HorsesList()
         {
             InitializeComponent();
-            HorseList.Content = new HorsesList();
         }
     }
 }
