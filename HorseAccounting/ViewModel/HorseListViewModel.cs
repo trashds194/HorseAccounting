@@ -35,10 +35,13 @@ namespace HorseAccounting.ViewModel
                     {
                         GpkNum = dataReader.GetInt32(1),
                         NickName = dataReader.GetString(2),
-                        Brand = dataReader.GetInt32(3)
-                    })
-;
-
+                        Brand = dataReader.GetInt32(3),
+                        Bloodiness = dataReader.GetString(4),
+                        Color = dataReader.GetString(5),
+                        BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+                        BirthPlace = dataReader.GetString(8),
+                        Owner = dataReader.GetString(9),
+                    });
             }
 
 
@@ -47,8 +50,6 @@ namespace HorseAccounting.ViewModel
 
             //close Connection
             connection1.Close();
-
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
