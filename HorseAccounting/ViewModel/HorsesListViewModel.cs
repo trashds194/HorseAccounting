@@ -1,25 +1,50 @@
-﻿using HorseAccounting.Model;
+﻿using GalaSoft.MvvmLight.Command;
+using HorseAccounting.Infra;
+using HorseAccounting.Model;
 using MySql.Data.MySqlClient;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
-    public class HorseListViewModel : INotifyPropertyChanged
+    public class HorsesListViewModel : NavigateViewModel
     {
         private Horse horse;
         private MySqlConnection connection1 { get; set; }
 
         public ObservableCollection<Horse> Horses { get; set; }
-        public Horse Horse { get { return horse; } set { horse = value; OnPropertyChanged("Horse"); } }
+        public Horse Horse { get { return horse; } set { horse = value; } }
 
-        public HorseListViewModel()
+        public HorsesListViewModel()
+        {
+            Title = "Page1";
+            GetData();
+        }
+
+        private ICommand _addHorse;
+
+        public ICommand AddHorse
+        {
+            get
+            {
+                if (_addHorse == null)
+                {
+                    _addHorse = new RelayCommand(() =>
+                    {
+                        Navigate("View/AddHorse.xaml");
+                    });
+                }
+                return _addHorse;
+            }
+            set { _addHorse = value; }
+        }
+
+        private void GetData()
         {
             Horses = new ObservableCollection<Horse>();
             string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
             connection1 = new MySqlConnection(connectionString);
-            string query = "SELECT * FROM horse";
+            string query = "SELECT * FROM лошадь";
 
             connection1.Open();
             //Create Command
@@ -29,7 +54,7 @@ namespace HorseAccounting.ViewModel
 
             //Read the data and store them in the list
             while (dataReader.Read())
-            {               
+            {
                 Horses.Add(
                     new Horse
                     {
@@ -50,13 +75,6 @@ namespace HorseAccounting.ViewModel
 
             //close Connection
             connection1.Close();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

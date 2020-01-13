@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HorseAccounting.Infra;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace HorseAccounting.Model
 {
-    public class Horse : INotifyPropertyChanged
+    public class Horse : NotificationClass
     {
         public int Id { get; set; }
         public int GpkNum { get; set; }
@@ -15,12 +16,5 @@ namespace HorseAccounting.Model
         public string BirthDate { get; set; }
         public string BirthPlace { get; set; }
         public string Owner { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

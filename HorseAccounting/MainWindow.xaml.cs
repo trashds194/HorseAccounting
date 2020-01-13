@@ -1,4 +1,6 @@
-﻿using HorseAccounting.View;
+﻿using GalaSoft.MvvmLight.Messaging;
+using HorseAccounting.Infra;
+using HorseAccounting.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,15 @@ namespace HorseAccounting
         public MainWindow()
         {
             InitializeComponent();
-            HorseList.Content = new HorsesList();
+            NavigationSetup();
+        }
+
+        void NavigationSetup()
+        {
+            Messenger.Default.Register<NavigateArgs>(this, (x) =>
+            {
+                mainFrame.Navigate(new Uri(x.Url, UriKind.Relative));
+            });
         }
     }
 }

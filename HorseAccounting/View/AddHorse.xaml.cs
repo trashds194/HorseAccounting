@@ -1,7 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using HorseAccounting.Infra;
-using HorseAccounting.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +16,13 @@ using System.Windows.Shapes;
 namespace HorseAccounting.View
 {
     /// <summary>
-    /// Логика взаимодействия для HorsesList.xaml
+    /// Логика взаимодействия для AddHorse.xaml
     /// </summary>
-    public partial class HorsesList : Page
+    public partial class AddHorse : Page
     {
-        public HorsesList()
+        public AddHorse()
         {
             InitializeComponent();
-
-            DataContext = new HorsesListViewModel();
         }
     }
 }
