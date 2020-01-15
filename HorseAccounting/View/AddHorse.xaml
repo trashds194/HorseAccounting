@@ -5,11 +5,30 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HorseAccounting.View"
       mc:Ignorable="d" 
-      d:DesignHeight="900" d:DesignWidth="1600"
-      DataContext="{Binding Page2,Source={StaticResource Locator}}">
+      d:DesignHeight="700" d:DesignWidth="1200"
+      DataContext="{Binding AddHorseViewModel,Source={StaticResource Locator}}">
 
     <Grid Background="White">
-        <Button x:Name="button" Command="{Binding BackToList}" Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Height="55"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="button" Command="{Binding BackToList}" Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Height="55" FontSize="18"/>
+        <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="20" Grid.Row="8" FontSize="18"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="58" Margin="40,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.GpkNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Top" Width="514"/>
+        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="58" Margin="40,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding AddedHorse.NickName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Top" Width="514"/>
 
     </Grid>
 </Page>

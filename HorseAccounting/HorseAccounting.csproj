@@ -129,7 +129,6 @@
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\NavigateViewModel.cs" />
-    <Compile Include="Infra\NotificationClass.cs" />
     <Compile Include="Infra\RelayCommand.cs" />
     <Compile Include="Model\Horse.cs" />
     <Compile Include="ViewModel\AddHorseViewModel.cs" />
@@ -179,6 +178,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

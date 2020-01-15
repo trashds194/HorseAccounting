@@ -2,11 +2,6 @@
 {
     public class NavigateArgs
     {
-        public NavigateArgs()
-        {
-
-        }
-
         public NavigateArgs(string url)
         {
             Url = url;

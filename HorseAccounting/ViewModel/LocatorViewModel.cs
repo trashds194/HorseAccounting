@@ -1,5 +1,7 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace HorseAccounting.ViewModel
 {
@@ -23,9 +25,10 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<MainWindowViewModel>();
             SimpleIoc.Default.Register<HorsesListViewModel>();
             SimpleIoc.Default.Register<AddHorseViewModel>();
+            Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
         }
 
-        public MainWindowViewModel Main
+        public MainWindowViewModel MainWindowViewModel
         {
             get
             {
@@ -33,7 +36,7 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public HorsesListViewModel Page1
+        public HorsesListViewModel HorsesListViewModel
         {
             get
             {
@@ -41,7 +44,7 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public AddHorseViewModel Page2
+        public AddHorseViewModel AddHorseViewModel
         {
             get
             {
@@ -53,6 +56,11 @@ namespace HorseAccounting.ViewModel
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
+        }
+
+        private void NotifyUserMethod(NotificationMessage message)
+        {
+            MessageBox.Show(message.Notification);
         }
     }
 }
