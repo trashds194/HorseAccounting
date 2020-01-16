@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Windows.Input;
@@ -53,8 +54,13 @@ namespace HorseAccounting.ViewModel
                 {
                     AddedHorse = new Horse();
                     _addHorse = new RelayCommand(() =>
-                    {                       
-                        Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName);
+                    {        
+                        if(Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color,
+                            AddedHorse.BirthDate, AddedHorse.BirthPlace, AddedHorse.Owner))
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили лошадь"));
+                        }
+                        
                     });
                 }
                 return _addHorse;

@@ -77,12 +77,13 @@ namespace HorseAccounting.Model
             return horses;
         }
 
-        public static void AddHorse(int gpk, string nick)
+        public static bool AddHorse(int gpk, string nick, int brand, string blodeness, string color, string dateBirth, string placeBirth, string owner)
         {
             string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
             connection = new MySqlConnection(connectionString);
             string query = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Чип`, `Выбытие`) " +
-                "VALUES (" + gpk +", '"+nick+"', 2,2,2,2,'2000-01-01',2,2,2,2,2,2)";
+                "VALUES (" + gpk + ", '" + nick + "', '" + brand + "', '" + blodeness + "','" + color +
+                "',2,'" + Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") + "','" + placeBirth + "','" + owner + "',2,2,2,2)";
 
             try
             {
@@ -97,10 +98,13 @@ namespace HorseAccounting.Model
 
                 //close Connection
                 connection.Close();
+
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
         }
     }

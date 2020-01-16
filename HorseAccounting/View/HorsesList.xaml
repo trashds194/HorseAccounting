@@ -20,7 +20,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="2" Height="20px" VerticalAlignment="Top">
+        <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
             <MenuItem Header="О программе" Background="White" Height="20"/>
         </Menu>
         <ListView Name="HorseList" Margin="20" ItemsSource="{Binding HorsesList}" Grid.RowSpan="3" Grid.Row="1">

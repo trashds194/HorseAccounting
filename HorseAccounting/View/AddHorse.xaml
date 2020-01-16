@@ -10,8 +10,8 @@
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -23,12 +23,31 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="button" Command="{Binding BackToList}" Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Height="55" FontSize="18"/>
-        <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="20" Grid.Row="8" FontSize="18"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="58" Margin="40,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.GpkNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Top" Width="514"/>
-        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="58" Margin="40,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding AddedHorse.NickName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Top" Width="514"/>
+        <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
+        <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="20" Grid.Row="10" FontSize="18" Grid.RowSpan="2"/>
 
+        <Label Grid.Row="0" Grid.Column="1" Content="Добавление лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Segoe Print" FontWeight="Bold"/>
+        <Label Grid.Row="1" Content="№ по ГПК:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="2" Content="Кличка:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="3" Content="Тавро:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="4" Content="Кровность:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="5" Content="Масть:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="6" Content="Дата рождения:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="7" Content="Место рождения:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="8" Content="Владелец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        
+        <TextBox x:Name="gpkNumTextBox" Margin="40,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.GpkNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1"/>
+        <TextBox x:Name="nickNameTextBox" Margin="40,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding AddedHorse.NickName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1"/>
+        <TextBox x:Name="brandTextBox" Margin="40,10" Grid.Row="3" TextWrapping="Wrap" Text="{Binding AddedHorse.Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <TextBox x:Name="blodinessTextBox" Margin="40,10" Grid.Row="4" TextWrapping="Wrap" Text="{Binding AddedHorse.Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <TextBox x:Name="colorTextBox" Margin="40,10" Grid.Row="5" TextWrapping="Wrap" Text="{Binding AddedHorse.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <DatePicker x:Name="birthDateDatePicker" Margin="40,10" Grid.Row="6" Text="{Binding AddedHorse.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <TextBox x:Name="birthPlaceTextBox" Margin="40,10" Grid.Row="7" TextWrapping="Wrap" Text="{Binding AddedHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <TextBox x:Name="ownerTextBox" Margin="40,10" Grid.Row="8" TextWrapping="Wrap" Text="{Binding AddedHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4"/>
     </Grid>
 </Page>
