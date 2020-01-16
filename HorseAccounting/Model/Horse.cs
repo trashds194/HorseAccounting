@@ -107,5 +107,17 @@ namespace HorseAccounting.Model
                 return false;
             }
         }
+
+        public void CleanHorseData()
+        {
+            GpkNum = 0;
+            NickName = string.Empty;
+            Brand = 0;
+            Bloodiness = string.Empty;
+            Color = string.Empty;
+            BirthDate = string.Empty;
+            BirthPlace = string.Empty;
+            Owner = string.Empty;
+        }
     }
 }

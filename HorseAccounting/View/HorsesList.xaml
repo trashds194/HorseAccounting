@@ -43,7 +43,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding GpkNum}" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock Text="{Binding GpkNum}" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
                             <TextBlock Text="{Binding NickName}" Grid.Column="1" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
                             <TextBlock Text="{Binding Brand}" Grid.Column="2" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
                             <TextBlock Text="{Binding Bloodiness}" Grid.Column="3" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
@@ -51,7 +51,7 @@
                             <TextBlock Text="{Binding Color}" Grid.Column="5" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
                             <TextBlock Text="{Binding BirthPlace}" Grid.Column="6" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
                             <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="14" Margin="10,0,0,0"/>
-                            <TextBlock Text="№ по ГПК" Grid.Row="1"/>
+                            <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,0,0,0"/>
                             <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0"/>
                             <TextBlock Text="тавро" Grid.Row="1" Grid.Column="2" Margin="10,0,0,0"/>
                             <TextBlock Text="Кровность" Grid.Row="1" Grid.Column="3" Margin="10,0,0,0"/>

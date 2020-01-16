@@ -25,6 +25,7 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<MainWindowViewModel>();
             SimpleIoc.Default.Register<HorsesListViewModel>();
             SimpleIoc.Default.Register<AddHorseViewModel>();
+            SimpleIoc.Default.Register<ShowHorseViewModel>();
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
         }
 
@@ -52,6 +53,13 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public ShowHorseViewModel ShowHorseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ShowHorseViewModel>();
+            }
+        }
 
         public static void Cleanup()
         {

@@ -133,11 +133,15 @@
     <Compile Include="Model\Horse.cs" />
     <Compile Include="ViewModel\AddHorseViewModel.cs" />
     <Compile Include="ViewModel\HorsesListViewModel.cs" />
+    <Compile Include="ViewModel\ShowHorseViewModel.cs" />
     <Compile Include="View\AddHorse.xaml.cs">
       <DependentUpon>AddHorse.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HorsesList.xaml.cs">
       <DependentUpon>HorsesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShowHorse.xaml.cs">
+      <DependentUpon>ShowHorse.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -156,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HorsesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShowHorse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

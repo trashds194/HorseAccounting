@@ -58,7 +58,12 @@ namespace HorseAccounting.ViewModel
                         if(Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color,
                             AddedHorse.BirthDate, AddedHorse.BirthPlace, AddedHorse.Owner))
                         {
-                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили лошадь"));
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
+                            AddedHorse.CleanHorseData();
+                        }
+                        else
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
                         }
                         
                     });
