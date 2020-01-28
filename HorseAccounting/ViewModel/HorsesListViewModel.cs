@@ -16,7 +16,7 @@ namespace HorseAccounting.ViewModel
         {
             Title = "Главная страница";
             horses = Horse.GetHorses();
-            this.RaisePropertyChanged(() => this.HorsesList);          
+            this.RaisePropertyChanged(() => this.HorsesList);
         }
 
         private ICommand _addHorse;
@@ -34,6 +34,12 @@ namespace HorseAccounting.ViewModel
                 return _addHorse;
             }
             private set { _addHorse = value; }
+        }
+
+        public void DoubleClickMethod()
+        {
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Двойной клик"));
+            Navigate("View/ShowHorse.xaml");
         }
 
         public ObservableCollection<Horse> HorsesList

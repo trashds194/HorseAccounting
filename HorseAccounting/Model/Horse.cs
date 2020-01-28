@@ -13,6 +13,7 @@ namespace HorseAccounting.Model
         private int brand;
         private string bloodiness;
         private string color;
+        private string gender;
         private string birthDate;
         private string birthPlace;
         private string owner;
@@ -25,6 +26,7 @@ namespace HorseAccounting.Model
         public int Brand { get { return brand; } set { Set<int>(() => this.Brand, ref brand, value); } }
         public string Bloodiness { get { return bloodiness; } set { Set<string>(() => this.Bloodiness, ref bloodiness, value); } }
         public string Color { get { return color; } set { Set<string>(() => this.Color, ref color, value); } }
+        public string Gender { get { return gender; } set { Set<string>(() => this.Gender, ref gender, value); } }
         public string BirthDate { get { return birthDate; } set { Set<string>(() => this.BirthDate, ref birthDate, value); } }
         public string BirthPlace { get { return birthPlace; } set { Set<string>(() => this.BirthPlace, ref birthPlace, value); } }
         public string Owner { get { return owner; } set { Set<string>(() => this.Owner, ref owner, value); } }
@@ -77,13 +79,13 @@ namespace HorseAccounting.Model
             return horses;
         }
 
-        public static bool AddHorse(int gpk, string nick, int brand, string blodeness, string color, string dateBirth, string placeBirth, string owner)
+        public static bool AddHorse(int gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner)
         {
             string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
             connection = new MySqlConnection(connectionString);
             string query = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Чип`, `Выбытие`) " +
                 "VALUES (" + gpk + ", '" + nick + "', '" + brand + "', '" + blodeness + "','" + color +
-                "',2,'" + Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") + "','" + placeBirth + "','" + owner + "',2,2,2,2)";
+                "', '" + gend + "', '" + Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") + "','" + placeBirth + "','" + owner + "',2,2,2,2)";
 
             try
             {
