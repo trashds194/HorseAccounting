@@ -38,8 +38,11 @@ namespace HorseAccounting.ViewModel
 
         public void DoubleClickMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Двойной клик"));
-            Navigate("View/ShowHorse.xaml");
+            if (SelectedHorse != null)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Двойной клик"));
+                Navigate("View/ShowHorse.xaml");
+            }
         }
 
         public ObservableCollection<Horse> HorsesList

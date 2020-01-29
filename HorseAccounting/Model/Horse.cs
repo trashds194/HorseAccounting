@@ -53,6 +53,7 @@ namespace HorseAccounting.Model
                     horses.Add(
                         new Horse
                         {
+                            ID = dataReader.GetInt32(0),
                             GpkNum = dataReader.GetInt32(1),
                             NickName = dataReader.GetString(2),
                             Brand = dataReader.GetInt32(3),
@@ -74,6 +75,12 @@ namespace HorseAccounting.Model
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                horses.Add(
+                    new Horse
+                    {
+                        NickName = "База данных не найдена!",
+                        Bloodiness = "Обратитесь к разработчику приложения!"
+                    });
             }
 
             return horses;

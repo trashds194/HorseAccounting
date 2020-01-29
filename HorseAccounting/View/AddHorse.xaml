@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HorseAccounting.View"
+      xmlns:infra="clr-namespace:HorseAccounting.Infra"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1200"
       DataContext="{Binding AddHorseViewModel,Source={StaticResource Locator}}">
@@ -59,7 +60,25 @@
         </Grid>
         
         <DatePicker x:Name="birthDateDatePicker" Margin="40,10" Grid.Row="7" Text="{Binding AddedHorse.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
-        <TextBox x:Name="birthPlaceTextBox" Margin="40,10" Grid.Row="8" TextWrapping="Wrap" Text="{Binding AddedHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
-        <TextBox x:Name="ownerTextBox" Margin="40,10" Grid.Row="9" TextWrapping="Wrap" Text="{Binding AddedHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4"/>
+
+        <Grid Grid.Row="8" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <RadioButton x:Name="birthPlaceButton" IsChecked="{Binding IsStudFarm}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="birthPlaceTextBox" Margin="40,0" TextWrapping="Wrap" Text="{Binding AddedHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="9" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <RadioButton x:Name="ownerButton" IsChecked="{Binding IsOwner}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="ownerTextBox" Margin="40,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Page>

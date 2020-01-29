@@ -14,6 +14,16 @@ namespace HorseAccounting.ViewModel
 
     public class AddHorseViewModel : NavigateViewModel
     {
+        #region Consts
+
+        private const string stallionGender = "Жеребец";
+        private const string mareGender = "Кобыла";
+        private const string studFarmName = "К/З им 1КА";
+
+        #endregion
+
+        private string studFarm;
+        private string owner;
         private Horse horse;
         Gender gender = Gender.Mare;
 
@@ -21,6 +31,8 @@ namespace HorseAccounting.ViewModel
         {
             Title = "Добавление лошади";
         }
+
+        #region Definition
 
         public Horse AddedHorse
         {
@@ -31,7 +43,7 @@ namespace HorseAccounting.ViewModel
             set
             {
                 horse = value;
-                RaisePropertyChanged("AddedHorse");
+                RaisePropertyChanged(nameof(AddedHorse));
             }
         }
 
@@ -44,12 +56,56 @@ namespace HorseAccounting.ViewModel
                     return;
 
                 gender = value;
-                RaisePropertyChanged("Gender");
-                RaisePropertyChanged("IsStallion");
-                RaisePropertyChanged("IsMare");
-                RaisePropertyChanged("GetResult");
+                RaisePropertyChanged(nameof(Gender));
+                RaisePropertyChanged(nameof(IsStallion));
+                RaisePropertyChanged(nameof(IsMare));
+                RaisePropertyChanged(nameof(GetResult));
             }
         }
+
+        public static string StudFarmName => studFarmName;
+        public static string StallionGender => stallionGender;
+        public static string MareGender => mareGender;
+
+        public string StudFarm
+        {
+            get
+            {
+                return studFarm;
+            }
+            set
+            {
+                if (studFarm == value)
+                {
+                    return;
+                }
+
+                studFarm = value;
+                RaisePropertyChanged(nameof(StudFarm));
+            }
+        }
+
+        public string Owner
+        {
+            get
+            {
+                return owner;
+            }
+            set
+            {
+                if (owner == value)
+                {
+                    return;
+                }
+
+                owner = value;
+                RaisePropertyChanged(nameof(Owner));
+            }
+        }
+
+        #endregion
+
+        #region RadioButtons
 
         public bool IsStallion
         {
@@ -71,6 +127,26 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public bool IsStudFarm
+        {
+            get { return StudFarm == StudFarmName; }
+            set
+            {
+                StudFarm = value ? StudFarmName : StudFarm;
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(StudFarm));
+            }
+        }
+
+        public bool IsOwner
+        {
+            get { return Owner == StudFarmName; }
+            set
+            {
+                Owner = value ? StudFarmName : Owner;
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(Owner));
+            }
+        }
+
         public string GetResult
         {
             get
@@ -78,13 +154,15 @@ namespace HorseAccounting.ViewModel
                 switch (Gender)
                 {
                     case Gender.Stallion:
-                        return "Жеребец";
+                        return StallionGender;
                     case Gender.Mare:
-                        return "Кобыла";
+                        return MareGender;
                 }
-                return "";
+                return null;
             }
         }
+
+        #endregion
 
         #region Commands
 
