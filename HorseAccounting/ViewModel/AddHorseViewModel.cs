@@ -16,14 +16,14 @@ namespace HorseAccounting.ViewModel
     {
         #region Consts
 
-        private const string stallionGender = "Жеребец";
-        private const string mareGender = "Кобыла";
-        private const string studFarmName = "К/З им 1КА";
+        private const string _stallionGender = "Жеребец";
+        private const string _mareGender = "Кобыла";
+        private const string _studFarmName = "К/З им 1КА";
 
         #endregion
 
-        private string studFarm;
-        private string owner;
+        private string _studFarm;
+        private string _owner;
         private Horse horse;
         Gender gender = Gender.Mare;
 
@@ -53,7 +53,9 @@ namespace HorseAccounting.ViewModel
             set
             {
                 if (gender == value)
+                {
                     return;
+                }
 
                 gender = value;
                 RaisePropertyChanged(nameof(Gender));
@@ -63,25 +65,27 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public static string StudFarmName => studFarmName;
-        public static string StallionGender => stallionGender;
-        public static string MareGender => mareGender;
+        public static string StudFarmName => _studFarmName;
+        public static string StallionGender => _stallionGender;
+        public static string MareGender => _mareGender;
 
         public string StudFarm
         {
             get
             {
-                return studFarm;
+                return _studFarm;
             }
             set
             {
-                if (studFarm == value)
+                if (_studFarm == value)
                 {
                     return;
                 }
 
-                studFarm = value;
+                _studFarm = value;
                 RaisePropertyChanged(nameof(StudFarm));
+                RaisePropertyChanged(nameof(IsStudFarm));
+                RaisePropertyChanged(nameof(DropStudFarm));
             }
         }
 
@@ -89,17 +93,19 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                return owner;
+                return _owner;
             }
             set
             {
-                if (owner == value)
+                if (_owner == value)
                 {
                     return;
                 }
 
-                owner = value;
+                _owner = value;
                 RaisePropertyChanged(nameof(Owner));
+                RaisePropertyChanged(nameof(IsOwner));
+                RaisePropertyChanged(nameof(DropOwner));
             }
         }
 
@@ -193,8 +199,16 @@ namespace HorseAccounting.ViewModel
                     AddedHorse = new Horse();
                     _addHorse = new RelayCommand(() =>
                     {
+                        if (StudFarm == null)
+                        {
+                            StudFarm = AddedHorse.BirthPlace;
+                        }
+                        if (Owner == null)
+                        {
+                            Owner = AddedHorse.Owner;
+                        }
                         if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetResult,
-                            AddedHorse.BirthDate, AddedHorse.BirthPlace, AddedHorse.Owner))
+                            AddedHorse.BirthDate, StudFarm, Owner))
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
                             AddedHorse.CleanHorseData();
@@ -203,12 +217,45 @@ namespace HorseAccounting.ViewModel
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
                         }
-
                     });
                 }
                 return _addHorse;
             }
             set { _addHorse = value; }
+        }
+
+        private ICommand _dropStudFarm;
+        public ICommand DropStudFarm
+        {
+            get
+            {
+                if (_dropStudFarm == null)
+                {
+                    _dropStudFarm = new RelayCommand(() =>
+                    {
+                        StudFarm = null;
+                    });
+                }
+                return _dropStudFarm;
+            }
+            set { _dropStudFarm = value; }
+        }
+
+        private ICommand _dropOwner;
+        public ICommand DropOwner
+        {
+            get
+            {
+                if (_dropOwner == null)
+                {
+                    _dropOwner = new RelayCommand(() =>
+                    {
+                        Owner = null;
+                    });
+                }
+                return _dropOwner;
+            }
+            set { _dropOwner = value; }
         }
 
         #endregion

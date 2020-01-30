@@ -3,6 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+      xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       xmlns:local="clr-namespace:HorseAccounting.View"
       xmlns:infra="clr-namespace:HorseAccounting.Infra"
       mc:Ignorable="d" 
@@ -68,7 +71,13 @@
             </Grid.RowDefinitions>
 
             <RadioButton x:Name="birthPlaceButton" IsChecked="{Binding IsStudFarm}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="birthPlaceTextBox" Margin="40,0" TextWrapping="Wrap" Text="{Binding AddedHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="birthPlaceTextBox" Margin="40,0" TextWrapping="Wrap" Text="{Binding AddedHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <cmd:EventToCommand Command="{Binding DropStudFarm, Mode=OneWay}" MustToggleIsEnabledValue="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
         </Grid>
 
         <Grid Grid.Row="9" Grid.Column="1">
@@ -78,7 +87,13 @@
             </Grid.RowDefinitions>
 
             <RadioButton x:Name="ownerButton" IsChecked="{Binding IsOwner}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="ownerTextBox" Margin="40,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            <TextBox x:Name="ownerTextBox" Margin="40,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AddedHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <cmd:EventToCommand Command="{Binding DropOwner, Mode=OneWay}" MustToggleIsEnabledValue="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
         </Grid>
     </Grid>
 </Page>
