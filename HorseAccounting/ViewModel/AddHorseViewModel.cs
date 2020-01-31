@@ -22,17 +22,21 @@ namespace HorseAccounting.ViewModel
 
         #endregion
 
+        #region Vars
+
         private string _studFarm;
         private string _owner;
         private Horse horse;
         Gender gender = Gender.Mare;
+
+        #endregion
 
         public AddHorseViewModel()
         {
             Title = "Добавление лошади";
         }
 
-        #region Definition
+        #region Definitions
 
         public Horse AddedHorse
         {

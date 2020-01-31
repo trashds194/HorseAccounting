@@ -25,7 +25,7 @@
         <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
             <MenuItem Header="О программе" Background="White" Height="20"/>
         </Menu>
-        <ListView Name="HorseList" Margin="20" ItemsSource="{Binding HorsesList}" Grid.RowSpan="3" Grid.Row="1">
+        <ListView Name="HorseList" Margin="20" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <ei:CallMethodAction MethodName="DoubleClickMethod" TargetObject="{Binding}"/>

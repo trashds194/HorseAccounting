@@ -7,6 +7,8 @@ namespace HorseAccounting.Model
 {
     public class Horse : ObservableObject
     {
+        #region Vars 
+
         private int id;
         private int gpkNum;
         private string nickName;
@@ -17,6 +19,11 @@ namespace HorseAccounting.Model
         private string birthDate;
         private string birthPlace;
         private string owner;
+
+        private static int receivedID;
+        #endregion
+
+        #region Definitions
 
         private static MySqlConnection connection { get; set; }
 
@@ -31,6 +38,10 @@ namespace HorseAccounting.Model
         public string BirthPlace { get { return birthPlace; } set { Set<string>(() => this.BirthPlace, ref birthPlace, value); } }
         public string Owner { get { return owner; } set { Set<string>(() => this.Owner, ref owner, value); } }
 
+        public static int ReceivedID { get => receivedID; set => receivedID = value; }
+
+        #endregion
+
         public static ObservableCollection<Horse> GetHorses()
         {
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
@@ -38,6 +49,61 @@ namespace HorseAccounting.Model
             string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
             connection = new MySqlConnection(connectionString);
             string query = "SELECT * FROM лошадь";
+
+            try
+            {
+                connection.Open();
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    horses.Add(
+                        new Horse
+                        {
+                            ID = dataReader.GetInt32(0),
+                            GpkNum = dataReader.GetInt32(1),
+                            NickName = dataReader.GetString(2),
+                            Brand = dataReader.GetInt32(3),
+                            Bloodiness = dataReader.GetString(4),
+                            Color = dataReader.GetString(5),
+                            BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+                            BirthPlace = dataReader.GetString(8),
+                            Owner = dataReader.GetString(9),
+                        });
+                }
+
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                horses.Add(
+                    new Horse
+                    {
+                        NickName = "База данных не найдена!",
+                        Bloodiness = "Обратитесь к разработчику приложения!"
+                    });
+            }
+
+            return horses;
+        }
+
+        public static ObservableCollection<Horse> GetSelectedHorse()
+        {
+            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+
+            string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
+            connection = new MySqlConnection(connectionString);
+            string query = "SELECT * FROM лошадь Where ID = " + ReceivedID;
 
             try
             {

@@ -9,8 +9,12 @@ namespace HorseAccounting.ViewModel
 {
     public class HorsesListViewModel : NavigateViewModel
     {
+        #region Vars
+
         private Horse horse;
         private ObservableCollection<Horse> horses;
+
+        #endregion
 
         public HorsesListViewModel()
         {
@@ -19,31 +23,7 @@ namespace HorseAccounting.ViewModel
             this.RaisePropertyChanged(() => this.HorsesList);
         }
 
-        private ICommand _addHorse;
-        public ICommand AddHorse
-        {
-            get
-            {
-                if (_addHorse == null)
-                {
-                    _addHorse = new RelayCommand(() =>
-                    {
-                        Navigate("View/AddHorse.xaml");
-                    });
-                }
-                return _addHorse;
-            }
-            private set { _addHorse = value; }
-        }
-
-        public void DoubleClickMethod()
-        {
-            if (SelectedHorse != null)
-            {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Двойной клик"));
-                Navigate("View/ShowHorse.xaml");
-            }
-        }
+        #region Definitions
 
         public ObservableCollection<Horse> HorsesList
         {
@@ -62,7 +42,42 @@ namespace HorseAccounting.ViewModel
             set
             {
                 horse = value;
-                RaisePropertyChanged("SelectedHorse");
+                RaisePropertyChanged(nameof(SelectedHorse));
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        private ICommand _addHorse;
+        public ICommand AddHorse
+        {
+            get
+            {
+                if (_addHorse == null)
+                {
+                    _addHorse = new RelayCommand(() =>
+                    {
+                        Navigate("View/AddHorse.xaml");
+                    });
+                }
+                return _addHorse;
+            }
+            private set { _addHorse = value; }
+        }
+
+        #endregion
+
+        public void DoubleClickMethod()
+        {
+            if (SelectedHorse != null)
+            {
+                if(SelectedHorse.ID != 0)
+                {
+                    Horse.ReceivedID = SelectedHorse.ID;
+                    Navigate("View/ShowHorse.xaml");
+                }
             }
         }
     }
