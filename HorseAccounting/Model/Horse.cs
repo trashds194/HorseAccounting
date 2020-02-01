@@ -20,7 +20,6 @@ namespace HorseAccounting.Model
         private string birthPlace;
         private string owner;
 
-        private static int receivedID;
         #endregion
 
         #region Definitions
@@ -37,8 +36,6 @@ namespace HorseAccounting.Model
         public string BirthDate { get { return birthDate; } set { Set<string>(() => this.BirthDate, ref birthDate, value); } }
         public string BirthPlace { get { return birthPlace; } set { Set<string>(() => this.BirthPlace, ref birthPlace, value); } }
         public string Owner { get { return owner; } set { Set<string>(() => this.Owner, ref owner, value); } }
-
-        public static int ReceivedID { get => receivedID; set => receivedID = value; }
 
         #endregion
 
@@ -97,13 +94,13 @@ namespace HorseAccounting.Model
             return horses;
         }
 
-        public static ObservableCollection<Horse> GetSelectedHorse()
+        public static ObservableCollection<Horse> GetSelectedHorse(int ID)
         {
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
             string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
             connection = new MySqlConnection(connectionString);
-            string query = "SELECT * FROM лошадь Where ID = " + ReceivedID;
+            string query = "SELECT * FROM лошадь Where ID = " + ID;
 
             try
             {

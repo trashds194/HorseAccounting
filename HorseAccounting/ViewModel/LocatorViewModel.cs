@@ -1,6 +1,9 @@
 ﻿using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using HorseAccounting.Infra;
+using HorseAccounting.Model;
+using System;
 using System.Windows;
 
 namespace HorseAccounting.ViewModel
@@ -11,22 +14,24 @@ namespace HorseAccounting.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
             SimpleIoc.Default.Register<MainWindowViewModel>();
             SimpleIoc.Default.Register<HorsesListViewModel>();
             SimpleIoc.Default.Register<AddHorseViewModel>();
             SimpleIoc.Default.Register<ShowHorseViewModel>();
+            //SimpleIoc.Default.Register(() => new ShowHorseViewModel(new Horse()));
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
+
+            SetupNavigation();
+        }
+
+        private static void SetupNavigation()
+        {
+            var navigationService = new PageNavigationService();
+            navigationService.Configure("Home", new Uri("../View/HorsesList.xaml", UriKind.Relative));
+            navigationService.Configure("AddHorsePage", new Uri("../View/AddHorse.xaml", UriKind.Relative));
+            navigationService.Configure("ShowHorsePage", new Uri("../View/ShowHorse.xaml", UriKind.Relative));
+
+            SimpleIoc.Default.Register<IPageNavigationService>(() => navigationService);
         }
 
         public MainWindowViewModel MainWindowViewModel

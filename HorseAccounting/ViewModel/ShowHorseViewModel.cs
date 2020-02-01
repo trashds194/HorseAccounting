@@ -1,29 +1,33 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
-    public class ShowHorseViewModel : NavigateViewModel
+    public class ShowHorseViewModel : ViewModelBase
     {
         #region Vars
 
-        private Horse selectedHorse;
-        private ObservableCollection<Horse> selectedHorseList;
+        private IPageNavigationService _navigationService = new PageNavigationService();
+        private Horse _selectedHorse;
+        private ObservableCollection<Horse> _selectedHorseList;
 
         #endregion
 
-        public ShowHorseViewModel()
+        public ShowHorseViewModel(IPageNavigationService navigationService)
         {
-            Title = "Просмотр лошади";
-            selectedHorseList = Horse.GetSelectedHorse();
+            //Title = "Просмотр лошади";
+            _navigationService = navigationService;         
+            
+        }
+
+        public void OnPageLoad()
+        {
+            this.SelectedHorse = (Horse)_navigationService.Parameter;
+            _selectedHorseList = Horse.GetSelectedHorse(SelectedHorse.ID);
             this.RaisePropertyChanged(() => this.SelectedHorseList);
         }
 
@@ -33,7 +37,7 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                return selectedHorseList;
+                return _selectedHorseList;
             }
         }
 
@@ -41,12 +45,15 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                return selectedHorse;
+                return _selectedHorse;
             }
             set
             {
-                selectedHorse = value;
-                RaisePropertyChanged(nameof(SelectedHorse));
+                if (_selectedHorse != value)
+                {
+                    _selectedHorse = value;
+                    RaisePropertyChanged(nameof(SelectedHorse));
+                }
             }
         }
 
@@ -54,21 +61,21 @@ namespace HorseAccounting.ViewModel
 
         #region Commands
 
-        private ICommand _horsesList;
+        private ICommand _backToHorsesList;
         public ICommand BackToList
         {
             get
             {
-                if (_horsesList == null)
+                if (_backToHorsesList == null)
                 {
-                    _horsesList = new RelayCommand(() =>
+                    _backToHorsesList = new RelayCommand(() =>
                     {
-                        Navigate("View/HorsesList.xaml");
+                        _navigationService.NavigateTo("Home");
                     });
                 }
-                return _horsesList;
+                return _backToHorsesList;
             }
-            set { _horsesList = value; }
+            set { _backToHorsesList = value; }
         }
 
         #endregion

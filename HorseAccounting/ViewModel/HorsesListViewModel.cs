@@ -1,5 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
@@ -7,19 +7,21 @@ using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
-    public class HorsesListViewModel : NavigateViewModel
+    public class HorsesListViewModel : ViewModelBase
     {
         #region Vars
 
-        private Horse horse;
-        private ObservableCollection<Horse> horses;
+        private IPageNavigationService _navigationService;
+        private Horse _horse;
+        private ObservableCollection<Horse> _horses;
+        private ShowHorseViewModel _showHorse;
 
         #endregion
 
-        public HorsesListViewModel()
+        public HorsesListViewModel(IPageNavigationService navigationService)
         {
-            Title = "Главная страница";
-            horses = Horse.GetHorses();
+            _navigationService = navigationService;
+            _horses = Horse.GetHorses();
             this.RaisePropertyChanged(() => this.HorsesList);
         }
 
@@ -29,7 +31,7 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                return horses;
+                return _horses;
             }
         }
 
@@ -37,12 +39,32 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                return horse;
+                return _horse;
             }
             set
             {
-                horse = value;
+                _horse = value;
                 RaisePropertyChanged(nameof(SelectedHorse));
+
+
+                //this.ShowHorse = new ShowHorseViewModel(value);
+                //_navigationService.NavigateTo("Просмотр лошади", value);
+            }
+        }
+
+        public ShowHorseViewModel ShowHorse
+        {
+            get
+            {
+                return _showHorse;
+            }
+            set
+            {
+                if (_showHorse != null)
+                {
+                    _showHorse = value;
+                    RaisePropertyChanged(nameof(ShowHorse));
+                }
             }
         }
 
@@ -50,19 +72,17 @@ namespace HorseAccounting.ViewModel
 
         #region Commands
 
-        private ICommand _addHorse;
-        public ICommand AddHorse
+        private RelayCommand _addHorse;
+        public RelayCommand AddHorse
         {
             get
             {
-                if (_addHorse == null)
-                {
-                    _addHorse = new RelayCommand(() =>
+                return _addHorse
+                    ?? (_addHorse = new RelayCommand(
+                    () =>
                     {
-                        Navigate("View/AddHorse.xaml");
-                    });
-                }
-                return _addHorse;
+                        _navigationService.NavigateTo("AddHorsePage");
+                    }));
             }
             private set { _addHorse = value; }
         }
@@ -73,10 +93,9 @@ namespace HorseAccounting.ViewModel
         {
             if (SelectedHorse != null)
             {
-                if(SelectedHorse.ID != 0)
+                if (SelectedHorse.ID != 0)
                 {
-                    Horse.ReceivedID = SelectedHorse.ID;
-                    Navigate("View/ShowHorse.xaml");
+                    _navigationService.NavigateTo("ShowHorsePage", SelectedHorse);
                 }
             }
         }

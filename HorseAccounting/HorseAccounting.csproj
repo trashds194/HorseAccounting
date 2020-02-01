@@ -137,10 +137,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infra\DbConnection.cs" />
-    <Compile Include="Infra\NavigateArgs.cs" />
+    <Compile Include="Infra\IPageNavigationService.cs" />
+    <Compile Include="Infra\PageNavigationService.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\NavigateViewModel.cs" />
     <Compile Include="Model\Horse.cs" />
     <Compile Include="ViewModel\AddHorseViewModel.cs" />
     <Compile Include="ViewModel\HorsesListViewModel.cs" />

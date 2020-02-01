@@ -26,8 +26,6 @@ namespace HorseAccounting.View
         public HorsesList()
         {
             InitializeComponent();
-
-            DataContext = new HorsesListViewModel();
         }
     }
 }

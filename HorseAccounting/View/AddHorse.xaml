@@ -10,7 +10,8 @@
       xmlns:infra="clr-namespace:HorseAccounting.Infra"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1200"
-      DataContext="{Binding AddHorseViewModel,Source={StaticResource Locator}}">
+      Title="AddHorsePage"
+      DataContext="{Binding AddHorseViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>

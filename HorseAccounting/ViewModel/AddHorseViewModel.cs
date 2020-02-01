@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
@@ -12,7 +13,7 @@ namespace HorseAccounting.ViewModel
         Mare
     }
 
-    public class AddHorseViewModel : NavigateViewModel
+    public class AddHorseViewModel : ViewModelBase
     {
         #region Consts
 
@@ -24,6 +25,7 @@ namespace HorseAccounting.ViewModel
 
         #region Vars
 
+        private IPageNavigationService _navigationService;
         private string _studFarm;
         private string _owner;
         private Horse horse;
@@ -31,9 +33,9 @@ namespace HorseAccounting.ViewModel
 
         #endregion
 
-        public AddHorseViewModel()
+        public AddHorseViewModel(IPageNavigationService navigationService)
         {
-            Title = "Добавление лошади";
+            _navigationService = navigationService;
         }
 
         #region Definitions
@@ -185,7 +187,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _horsesList = new RelayCommand(() =>
                     {
-                        Navigate("View/HorsesList.xaml");
+                        _navigationService.NavigateTo("Home");
                     });
                 }
                 return _horsesList;

@@ -26,15 +26,6 @@ namespace HorseAccounting
         public MainWindow()
         {
             InitializeComponent();
-            NavigationSetup();
-        }
-
-        void NavigationSetup()
-        {
-            Messenger.Default.Register<NavigateArgs>(this, (x) =>
-            {
-                mainFrame.Navigate(new Uri(x.Url, UriKind.Relative));
-            });
         }
     }
 }
