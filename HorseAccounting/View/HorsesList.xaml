@@ -6,11 +6,27 @@
       xmlns:local="clr-namespace:HorseAccounting.View"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+      
       mc:Ignorable="d" 
+      
       d:DesignHeight="700" d:DesignWidth="1200"
+      
       DataContext="{Binding HorsesListViewModel, Source={StaticResource Locator}}"
-      Background="White">
+      
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"   
+      
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
@@ -23,7 +39,7 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
-            <MenuItem Header="О программе" Background="White" Height="20"/>
+            <MenuItem Header="О программе" Height="20"/>
         </Menu>
         <ListView Name="HorseList" Margin="20" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1">
             <i:Interaction.Triggers>

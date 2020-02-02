@@ -12,6 +12,7 @@ namespace HorseAccounting.ViewModel
         #region Vars
 
         private IPageNavigationService _navigationService = new PageNavigationService();
+        private string _horseNick;
         private Horse _selectedHorse;
         private ObservableCollection<Horse> _selectedHorseList;
 
@@ -20,18 +21,32 @@ namespace HorseAccounting.ViewModel
         public ShowHorseViewModel(IPageNavigationService navigationService)
         {
             //Title = "Просмотр лошади";
-            _navigationService = navigationService;         
-            
+            _navigationService = navigationService;
+
         }
 
         public void OnPageLoad()
         {
             this.SelectedHorse = (Horse)_navigationService.Parameter;
+            HorseNick = SelectedHorse.NickName;
             _selectedHorseList = Horse.GetSelectedHorse(SelectedHorse.ID);
             this.RaisePropertyChanged(() => this.SelectedHorseList);
         }
 
         #region Definitions
+
+        public string HorseNick
+        {
+            get
+            {
+                return _horseNick;
+            }
+            set
+            {
+                _horseNick = value;
+                RaisePropertyChanged(nameof(HorseNick));
+            }
+        }
 
         public ObservableCollection<Horse> SelectedHorseList
         {

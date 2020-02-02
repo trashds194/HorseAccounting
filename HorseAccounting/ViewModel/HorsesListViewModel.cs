@@ -21,6 +21,10 @@ namespace HorseAccounting.ViewModel
         public HorsesListViewModel(IPageNavigationService navigationService)
         {
             _navigationService = navigationService;
+        }
+
+        public void OnPageLoad()
+        {
             _horses = Horse.GetHorses();
             this.RaisePropertyChanged(() => this.HorsesList);
         }

@@ -8,10 +8,21 @@
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       xmlns:local="clr-namespace:HorseAccounting.View"
       xmlns:infra="clr-namespace:HorseAccounting.Infra"
+      
       mc:Ignorable="d" 
+      
       d:DesignHeight="700" d:DesignWidth="1200"
-      Title="AddHorsePage"
-      DataContext="{Binding AddHorseViewModel, Source={StaticResource Locator}}">
+      
+      DataContext="{Binding AddHorseViewModel, Source={StaticResource Locator}}"
+      
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"   
+      
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -19,24 +30,26 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
-        <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="20" Grid.Row="10" FontSize="18" Grid.RowSpan="2"/>
+        <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="40,20" Grid.Row="12" FontSize="18" Grid.RowSpan="2"/>
 
-        <Label Grid.Row="0" Grid.Column="1" Content="Добавление лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Segoe Print" FontWeight="Bold"/>
+        <Label Grid.Row="0" Grid.Column="1" Content="Добавление лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
         <Label Grid.Row="1" Content="№ по ГПК:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
         <Label Grid.Row="2" Content="Кличка:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
         <Label Grid.Row="3" Content="Тавро:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
