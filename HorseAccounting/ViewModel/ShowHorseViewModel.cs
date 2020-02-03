@@ -12,9 +12,16 @@ namespace HorseAccounting.ViewModel
         #region Vars
 
         private IPageNavigationService _navigationService = new PageNavigationService();
+        
         private string _horseNick;
-        private Horse _selectedHorse;
-        private ObservableCollection<Horse> _selectedHorseList;
+
+        private Horse _mainHorse;
+        //private Horse _motherHorse;
+        //private Horse _fatherHorse;
+
+        private ObservableCollection<Horse> _mainHorseList;
+        private ObservableCollection<Horse> _motherHorseList;
+        private ObservableCollection<Horse> _fatherHorseList;
 
         #endregion
 
@@ -27,10 +34,14 @@ namespace HorseAccounting.ViewModel
 
         public void OnPageLoad()
         {
-            this.SelectedHorse = (Horse)_navigationService.Parameter;
-            HorseNick = SelectedHorse.NickName;
-            _selectedHorseList = Horse.GetSelectedHorse(SelectedHorse.ID);
-            this.RaisePropertyChanged(() => this.SelectedHorseList);
+            this.MainHorse = (Horse)_navigationService.Parameter;
+            HorseNick = MainHorse.NickName;
+            _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
+            _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
+            _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
+            this.RaisePropertyChanged(() => this.MainHorseList);
+            this.RaisePropertyChanged(() => this.MotherHorseList);
+            this.RaisePropertyChanged(() => this.FatherHorseList);
         }
 
         #region Definitions
@@ -48,26 +59,42 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public ObservableCollection<Horse> SelectedHorseList
+        public ObservableCollection<Horse> MainHorseList
         {
             get
             {
-                return _selectedHorseList;
+                return _mainHorseList;
             }
         }
 
-        public Horse SelectedHorse
+        public ObservableCollection<Horse> MotherHorseList
         {
             get
             {
-                return _selectedHorse;
+                return _motherHorseList;
+            }
+        }
+
+        public ObservableCollection<Horse> FatherHorseList
+        {
+            get
+            {
+                return _fatherHorseList;
+            }
+        }
+
+        public Horse MainHorse
+        {
+            get
+            {
+                return _mainHorse;
             }
             set
             {
-                if (_selectedHorse != value)
+                if (_mainHorse != value)
                 {
-                    _selectedHorse = value;
-                    RaisePropertyChanged(nameof(SelectedHorse));
+                    _mainHorse = value;
+                    RaisePropertyChanged(nameof(MainHorse));
                 }
             }
         }

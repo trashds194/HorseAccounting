@@ -34,14 +34,14 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20px"/>
+            <RowDefinition Height="40px" MinHeight="35"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
             <MenuItem Header="О программе" Height="20"/>
         </Menu>
-        <ListView Name="HorseList" Margin="20" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1" HorizontalContentAlignment="Stretch">
+        <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <ei:CallMethodAction MethodName="DoubleClickMethod" TargetObject="{Binding}"/>
@@ -118,6 +118,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="20" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1"/>
+        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="8" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1" Height="Auto" MinHeight="35" VerticalAlignment="Top" Grid.RowSpan="2"/>
     </Grid>
 </Page>

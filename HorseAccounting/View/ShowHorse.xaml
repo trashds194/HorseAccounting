@@ -39,7 +39,7 @@
         </Grid>
         <Expander IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="16,0">
             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
-                <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,4" DataContext="{Binding SelectedHorseList}" MinHeight="200" MinWidth="500">
+                <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,4" MinHeight="200" MinWidth="500">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -51,8 +51,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" Grid.RowSpan="3">
-                        <Grid x:Name="List">
+                    <Border BorderBrush="Black" BorderThickness="1, 1, 1, 0" Grid.ColumnSpan="3" Grid.RowSpan="2">
+                        <Grid x:Name="List" DataContext="{Binding MainHorseList}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="2*"/>
@@ -64,7 +64,6 @@
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -84,13 +83,13 @@
                                 <TextBlock Text="{Binding BirthDate}" Grid.Column="4" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="5">
-                                <TextBlock Text="{Binding Color}" Grid.Column="5" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding Color}" Grid.Column="5" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="6">
-                                <TextBlock Text="{Binding BirthPlace}" Grid.Column="6" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding BirthPlace}" Grid.Column="6" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Column="7">
-                                <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1">
                                 <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,0,0,0"/>
@@ -108,19 +107,67 @@
                                 <TextBlock Text="Год рожд." Grid.Row="1" Grid.Column="4" Margin="10,0,0,0"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="5">
-                                <TextBlock Text="Масть" Grid.Row="1" Grid.Column="5" Margin="10,0,0,0"/>
+                                <TextBlock Text="Масть" Grid.Row="1" Grid.Column="5" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="6">
-                                <TextBlock Text="Место рождения" Grid.Row="1" Grid.Column="6" Margin="10,0,0,0"/>
+                                <TextBlock Text="Место рождения" Grid.Row="1" Grid.Column="6" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="7">
-                                <TextBlock Text="Владелец" Grid.Row="1" Grid.Column="7" Margin="10,0,0,0"/>
+                                <TextBlock Text="Владелец" Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
-                            <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="2" Grid.ColumnSpan="5">
-                                <TextBlock Text="М." Grid.Row="1" Grid.Column="7" Margin="10,0,0,0"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" Grid.Row="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border DataContext="{Binding MotherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="2">
+                                <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2} {3}">
+                                            <Binding Source="М." />
+                                            <Binding Path="GpkNum" />
+                                            <Binding Path="NickName" />
+                                            <Binding Path="Brand" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </Border>
-                            <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3">
-                                <TextBlock Text="О." Grid.Row="1" Grid.Column="7" Margin="10,0,0,0"/>
+                            <Border DataContext="{Binding MotherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Row="2" Grid.Column="1">
+                                <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Color" />
+                                            <Binding Path="BirthDate" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Border>
+                            <Border DataContext="{Binding FatherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="2">
+                                <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2} {3}">
+                                            <Binding Source="О." />
+                                            <Binding Path="GpkNum" />
+                                            <Binding Path="NickName" />
+                                            <Binding Path="Brand" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Border>
+                            <Border DataContext="{Binding FatherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="3">
+                                <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Color" />
+                                            <Binding Path="BirthDate" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </Border>
                         </Grid>
                     </Border>
