@@ -49,7 +49,7 @@ namespace HorseAccounting.Model
         {
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
-            string connectionString = "SERVER=127.0.0.1;" + "DATABASE=horseaccounting;" + "UID=root;" + "PASSWORD=" + "" + ";";
+            string connectionString = "SERVER = 127.0.0.1; " + "DATABASE = horseaccounting; " + "UID = root; " + "PASSWORD = " + "" + "";
             connection = new MySqlConnection(connectionString);
             string query = "SELECT * FROM лошадь";
 
