@@ -1,50 +1,80 @@
 ﻿using GalaSoft.MvvmLight;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
 {
-    class Scoring : ObservableObject
+    public class Scoring : ObservableObject
     {
         #region Vars
 
-        private int id;
-        private string date;
-        private int origin;
-        private int typicality;
-        private int measurements;
-        private int exterior;
-        private int workingCapacity;
-        private int offspringQuality;
-        private int theClass;
-        private int horseID;
+        private int _id;
+        private string _date;
+        private int _origin;
+        private int _typicality;
+        private int _measurements;
+        private int _exterior;
+        private int _workingCapacity;
+        private int _offspringQuality;
+        private int _theClass;
+        private int _horseID;
 
         #endregion
 
         #region Definitions
 
-        private static MySqlConnection connection { get; set; }
+        public int ID
+        {
+            get { return _id; } set { Set<int>(() => ID, ref _id, value); }
+        }
 
-        public int ID { get { return id; } set { Set<int>(() => this.ID, ref id, value); } }
-        public string Date { get { return date; } set { Set<string>(() => this.Date, ref date, value); } }
-        public int Origin { get { return origin; } set { Set<int>(() => this.Origin, ref origin, value); } }
-        public int Typicality { get { return typicality; } set { Set<int>(() => this.Typicality, ref typicality, value); } }
-        public int Measurements { get { return measurements; } set { Set<int>(() => this.Measurements, ref measurements, value); } }
-        public int Exterior { get { return exterior; } set { Set<int>(() => this.Exterior, ref exterior, value); } }
-        public int WorkingCapacity { get { return workingCapacity; } set { Set<int>(() => this.WorkingCapacity, ref workingCapacity, value); } }
-        public int OffspringQuality { get { return offspringQuality; } set { Set<int>(() => this.OffspringQuality, ref offspringQuality, value); } }
-        public int TheClass { get { return theClass; } set { Set<int>(() => this.TheClass, ref theClass, value); } }
-        public int HorseID { get { return horseID; } set { Set<int>(() => this.HorseID, ref horseID, value); } }
+        public string Date
+        {
+            get { return _date; } set { Set<string>(() => Date, ref _date, value); }
+        }
+
+        public int Origin
+        {
+            get { return _origin; } set { Set<int>(() => Origin, ref _origin, value); }
+        }
+
+        public int Typicality
+        {
+            get { return _typicality; } set { Set<int>(() => Typicality, ref _typicality, value); }
+        }
+
+        public int Measurements
+        {
+            get { return _measurements; } set { Set<int>(() => Measurements, ref _measurements, value); }
+        }
+
+        public int Exterior
+        {
+            get { return _exterior; } set { Set<int>(() => Exterior, ref _exterior, value); }
+        }
+
+        public int WorkingCapacity
+        {
+            get { return _workingCapacity; } set { Set<int>(() => WorkingCapacity, ref _workingCapacity, value); }
+        }
+
+        public int OffspringQuality
+        {
+            get { return _offspringQuality; } set { Set<int>(() => OffspringQuality, ref _offspringQuality, value); }
+        }
+
+        public int TheClass
+        {
+            get { return _theClass; } set { Set<int>(() => TheClass, ref _theClass, value); }
+        }
+
+        public int HorseID
+        {
+            get { return _horseID; } set { Set<int>(() => HorseID, ref _horseID, value); }
+        }
 
         #endregion
 
         #region ShowHorsePage
-
-
 
         #endregion
     }

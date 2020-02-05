@@ -1,10 +1,9 @@
-﻿using CommonServiceLocator;
+﻿using System;
+using System.Windows;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
-using HorseAccounting.Model;
-using System;
-using System.Windows;
 
 namespace HorseAccounting.ViewModel
 {
@@ -18,7 +17,6 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<HorsesListViewModel>();
             SimpleIoc.Default.Register<AddHorseViewModel>();
             SimpleIoc.Default.Register<ShowHorseViewModel>();
-            //SimpleIoc.Default.Register(() => new ShowHorseViewModel(new Horse()));
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
 
             SetupNavigation();

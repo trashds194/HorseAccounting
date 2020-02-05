@@ -1,9 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
@@ -12,13 +12,13 @@ namespace HorseAccounting.ViewModel
         #region Vars
 
         private IPageNavigationService _navigationService = new PageNavigationService();
-        
+
         private string _horseNick;
 
         private Horse _mainHorse;
-        //private Horse _motherHorse;
-        //private Horse _fatherHorse;
 
+        // private Horse _motherHorse;
+        // private Horse _fatherHorse;
         private ObservableCollection<Horse> _mainHorseList;
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
@@ -27,21 +27,19 @@ namespace HorseAccounting.ViewModel
 
         public ShowHorseViewModel(IPageNavigationService navigationService)
         {
-            //Title = "Просмотр лошади";
             _navigationService = navigationService;
-
         }
 
         public void OnPageLoad()
         {
-            this.MainHorse = (Horse)_navigationService.Parameter;
+            MainHorse = (Horse)_navigationService.Parameter;
             HorseNick = MainHorse.NickName;
             _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
             _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
             _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
-            this.RaisePropertyChanged(() => this.MainHorseList);
-            this.RaisePropertyChanged(() => this.MotherHorseList);
-            this.RaisePropertyChanged(() => this.FatherHorseList);
+            RaisePropertyChanged(() => MainHorseList);
+            RaisePropertyChanged(() => MotherHorseList);
+            RaisePropertyChanged(() => FatherHorseList);
         }
 
         #region Definitions
@@ -52,6 +50,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _horseNick;
             }
+
             set
             {
                 _horseNick = value;
@@ -89,6 +88,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _mainHorse;
             }
+
             set
             {
                 if (_mainHorse != value)
@@ -104,6 +104,7 @@ namespace HorseAccounting.ViewModel
         #region Commands
 
         private ICommand _backToHorsesList;
+
         public ICommand BackToList
         {
             get
@@ -115,9 +116,14 @@ namespace HorseAccounting.ViewModel
                         _navigationService.NavigateTo("Home");
                     });
                 }
+
                 return _backToHorsesList;
             }
-            set { _backToHorsesList = value; }
+
+            set
+            {
+                _backToHorsesList = value;
+            }
         }
 
         #endregion

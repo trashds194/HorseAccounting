@@ -1,47 +1,94 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using MySql.Data.MySqlClient;
 using Renci.SshNet;
-using System;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace HorseAccounting.Model
 {
     public class Horse : ObservableObject
     {
-        #region Vars 
+        #region Vars
 
-        private int id;
-        private int gpkNum;
-        private string nickName;
-        private int brand;
-        private string bloodiness;
-        private string color;
-        private string gender;
-        private string birthDate;
-        private string birthPlace;
-        private string owner;
-        private int motherID;
-        private int fatherID;
+        private int _id;
+        private int _gpkNum;
+        private string _nickName;
+        private int _brand;
+        private string _bloodiness;
+        private string _color;
+        private string _gender;
+        private string _birthDate;
+        private string _birthPlace;
+        private string _owner;
+        private int _motherID;
+        private int _fatherID;
+
         #endregion
 
         #region Definitions
 
-        private static SshClient SshConnection = new SshClient("hostru06.fornex.host", 20022, "t60064", "HR4M%rV~S8.pB$gc");
-        private static MySqlConnectionStringBuilder connection = new MySqlConnectionStringBuilder();
+        public int ID
+        {
+            get { return _id; } set { Set<int>(() => ID, ref _id, value); }
+        }
 
-        public int ID { get { return id; } set { Set<int>(() => this.ID, ref id, value); } }
-        public int GpkNum { get { return gpkNum; } set { Set<int>(() => this.GpkNum, ref gpkNum, value); } }
-        public string NickName { get { return nickName; } set { Set<string>(() => this.NickName, ref nickName, value); } }
-        public int Brand { get { return brand; } set { Set<int>(() => this.Brand, ref brand, value); } }
-        public string Bloodiness { get { return bloodiness; } set { Set<string>(() => this.Bloodiness, ref bloodiness, value); } }
-        public string Color { get { return color; } set { Set<string>(() => this.Color, ref color, value); } }
-        public string Gender { get { return gender; } set { Set<string>(() => this.Gender, ref gender, value); } }
-        public string BirthDate { get { return birthDate; } set { Set<string>(() => this.BirthDate, ref birthDate, value); } }
-        public string BirthPlace { get { return birthPlace; } set { Set<string>(() => this.BirthPlace, ref birthPlace, value); } }
-        public string Owner { get { return owner; } set { Set<string>(() => this.Owner, ref owner, value); } }
-        public int MotherID { get { return motherID; } set { Set<int>(() => this.MotherID, ref motherID, value); } }
-        public int FatherID { get { return fatherID; } set { Set<int>(() => this.FatherID, ref fatherID, value); } }
+        public int GpkNum
+        {
+            get { return _gpkNum; } set { Set<int>(() => GpkNum, ref _gpkNum, value); }
+        }
+
+        public string NickName
+        {
+            get { return _nickName; } set { Set<string>(() => NickName, ref _nickName, value); }
+        }
+
+        public int Brand
+        {
+            get { return _brand; } set { Set<int>(() => Brand, ref _brand, value); }
+        }
+
+        public string Bloodiness
+        {
+            get { return _bloodiness; } set { Set<string>(() => Bloodiness, ref _bloodiness, value); }
+        }
+
+        public string Color
+        {
+            get { return _color; } set { Set<string>(() => Color, ref _color, value); }
+        }
+
+        public string Gender
+        {
+            get { return _gender; } set { Set<string>(() => Gender, ref _gender, value); }
+        }
+
+        public string BirthDate
+        {
+            get { return _birthDate; } set { Set<string>(() => BirthDate, ref _birthDate, value); }
+        }
+
+        public string BirthPlace
+        {
+            get { return _birthPlace; } set { Set<string>(() => BirthPlace, ref _birthPlace, value); }
+        }
+
+        public string Owner
+        {
+            get { return _owner; } set { Set<string>(() => Owner, ref _owner, value); }
+        }
+
+        public int MotherID
+        {
+            get { return _motherID; } set { Set<int>(() => MotherID, ref _motherID, value); }
+        }
+
+        public int FatherID
+        {
+            get { return _fatherID; } set { Set<int>(() => FatherID, ref _fatherID, value); }
+        }
+
+        private static readonly SshClient SshConnection = new SshClient("hostru06.fornex.host", 20022, "t60064", "HR4M%rV~S8.pB$gc");
+        private static readonly MySqlConnectionStringBuilder Connection = new MySqlConnectionStringBuilder();
 
         #endregion
 
@@ -49,7 +96,6 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetHorses()
         {
-
             if (!SshConnection.IsConnected)
             {
                 SshConnection.Connect();
@@ -59,13 +105,13 @@ namespace HorseAccounting.Model
                 port.Start();
             }
 
-            connection.Server = "127.0.0.1";
-            connection.Port = 3306;
+            Connection.Server = "127.0.0.1";
+            Connection.Port = 3306;
 
-            connection.UserID = "t60064_dbuser";
-            connection.Password = "HR4M%rV~S8.pB$gc";
-            connection.Database = "t60064_db";
-            connection.CharacterSet = "utf8";
+            Connection.UserID = "t60064_dbuser";
+            Connection.Password = "HR4M%rV~S8.pB$gc";
+            Connection.Database = "t60064_db";
+            Connection.CharacterSet = "utf8";
 
             string query = "SELECT * FROM `лошадь`";
 
@@ -73,15 +119,14 @@ namespace HorseAccounting.Model
 
             try
             {
-                using (var sql = new MySqlConnection(connection.ConnectionString))
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
-                    //Create Command
+
                     MySqlCommand cmd = new MySqlCommand(query, sql);
-                    //Create a data reader and Execute the command
+
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    //Read the data and store them in the list
                     while (dataReader.Read())
                     {
                         horses.Add(
@@ -102,10 +147,8 @@ namespace HorseAccounting.Model
                             });
                     }
 
-                    //close Data Reader
                     dataReader.Close();
 
-                    //close Connection
                     sql.Close();
                 }
             }
@@ -116,7 +159,7 @@ namespace HorseAccounting.Model
                     new Horse
                     {
                         NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!"
+                        Bloodiness = "Обратитесь к разработчику приложения!",
                     });
             }
 
@@ -138,33 +181,28 @@ namespace HorseAccounting.Model
                 port.Start();
             }
 
-            connection.Server = "127.0.0.1";
-            connection.Port = 3306;
+            Connection.Server = "127.0.0.1";
+            Connection.Port = 3306;
 
-            connection.UserID = "t60064_dbuser";
-            connection.Password = "HR4M%rV~S8.pB$gc";
-            connection.Database = "t60064_db";
-            connection.CharacterSet = "utf8";
+            Connection.UserID = "t60064_dbuser";
+            Connection.Password = "HR4M%rV~S8.pB$gc";
+            Connection.Database = "t60064_db";
+            Connection.CharacterSet = "utf8";
 
             string query = "SELECT * FROM `лошадь` where Пол = 'Кобыла'";
-
-            Console.WriteLine(query);
 
             ObservableCollection<Horse> motherHorses = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(connection.ConnectionString))
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
-                    //Create Command
 
                     MySqlCommand cmd = new MySqlCommand(query, sql);
 
-                    //Create a data reader and Execute the command
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    //Read the data and store them in the list
                     while (dataReader.Read())
                     {
                         motherHorses.Add(
@@ -183,10 +221,8 @@ namespace HorseAccounting.Model
                             });
                     }
 
-                    //close Data Reader
                     dataReader.Close();
 
-                    //close Connection
                     sql.Close();
                 }
             }
@@ -197,7 +233,7 @@ namespace HorseAccounting.Model
                     new Horse
                     {
                         NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!"
+                        Bloodiness = "Обратитесь к разработчику приложения!",
                     });
             }
 
@@ -215,13 +251,13 @@ namespace HorseAccounting.Model
                 port.Start();
             }
 
-            connection.Server = "127.0.0.1";
-            connection.Port = 3306;
+            Connection.Server = "127.0.0.1";
+            Connection.Port = 3306;
 
-            connection.UserID = "t60064_dbuser";
-            connection.Password = "HR4M%rV~S8.pB$gc";
-            connection.Database = "t60064_db";
-            connection.CharacterSet = "utf8";
+            Connection.UserID = "t60064_dbuser";
+            Connection.Password = "HR4M%rV~S8.pB$gc";
+            Connection.Database = "t60064_db";
+            Connection.CharacterSet = "utf8";
 
             string query = "SELECT * FROM `лошадь` where Пол = 'Жеребец'";
 
@@ -229,15 +265,14 @@ namespace HorseAccounting.Model
 
             try
             {
-                using (var sql = new MySqlConnection(connection.ConnectionString))
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
-                    //Create Command
+
                     MySqlCommand cmd = new MySqlCommand(query, sql);
-                    //Create a data reader and Execute the command
+
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    //Read the data and store them in the list
                     while (dataReader.Read())
                     {
                         fatherHorses.Add(
@@ -256,10 +291,8 @@ namespace HorseAccounting.Model
                             });
                     }
 
-                    //close Data Reader
                     dataReader.Close();
 
-                    //close Connection
                     sql.Close();
                 }
             }
@@ -270,7 +303,7 @@ namespace HorseAccounting.Model
                     new Horse
                     {
                         NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!"
+                        Bloodiness = "Обратитесь к разработчику приложения!",
                     });
             }
 
@@ -290,30 +323,26 @@ namespace HorseAccounting.Model
                     port.Start();
                 }
 
-                connection.Server = "127.0.0.1";
-                connection.Port = 3306;
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
 
-                connection.UserID = "t60064_dbuser";
-                connection.Password = "HR4M%rV~S8.pB$gc";
-                connection.Database = "t60064_db";
-                connection.CharacterSet = "utf8";
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
 
                 string query = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Чип`, `Выбытие`) " +
                     "VALUES (" + gpk + ", '" + nick + "', '" + brand + "', '" + blodeness + "','" + color +
                     "', '" + gend + "', '" + Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") + "','" + placeBirth + "','" + owner + "', " + motherID + ", " + fatherID + ",2,2)";
 
-                using (var sql = new MySqlConnection(connection.ConnectionString))
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
-                    //Create Command
-                    MySqlCommand cmd = new MySqlCommand(query, sql);
-                    //Create a data reader and Execute the command
 
-                    //Execute command
+                    MySqlCommand cmd = new MySqlCommand(query, sql);
+
                     cmd.ExecuteNonQuery();
 
-
-                    //close Connection
                     sql.Close();
 
                     return true;
@@ -342,7 +371,7 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
-        public static ObservableCollection<Horse> GetSelectedHorse(int ID)
+        public static ObservableCollection<Horse> GetSelectedHorse(int iD)
         {
             if (!SshConnection.IsConnected)
             {
@@ -353,29 +382,28 @@ namespace HorseAccounting.Model
                 port.Start();
             }
 
-            connection.Server = "127.0.0.1";
-            connection.Port = 3306;
+            Connection.Server = "127.0.0.1";
+            Connection.Port = 3306;
 
-            connection.UserID = "t60064_dbuser";
-            connection.Password = "HR4M%rV~S8.pB$gc";
-            connection.Database = "t60064_db";
-            connection.CharacterSet = "utf8";
+            Connection.UserID = "t60064_dbuser";
+            Connection.Password = "HR4M%rV~S8.pB$gc";
+            Connection.Database = "t60064_db";
+            Connection.CharacterSet = "utf8";
 
-            string query = "SELECT * FROM `лошадь` Where ID = " + ID;
+            string query = "SELECT * FROM `лошадь` Where ID = " + iD;
 
             ObservableCollection<Horse> selectedHorse = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(connection.ConnectionString))
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
-                    //Create Command
+
                     MySqlCommand cmd = new MySqlCommand(query, sql);
-                    //Create a data reader and Execute the command
+
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    //Read the data and store them in the list
                     while (dataReader.Read())
                     {
                         selectedHorse.Add(
@@ -396,10 +424,8 @@ namespace HorseAccounting.Model
                             });
                     }
 
-                    //close Data Reader
                     dataReader.Close();
 
-                    //close Connection
                     sql.Close();
                 }
             }
@@ -410,7 +436,7 @@ namespace HorseAccounting.Model
                     new Horse
                     {
                         NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!"
+                        Bloodiness = "Обратитесь к разработчику приложения!",
                     });
             }
 

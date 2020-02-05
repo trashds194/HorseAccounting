@@ -1,17 +1,17 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
     public enum Gender
     {
         Stallion,
-        Mare
+        Mare,
     }
 
     public class AddHorseViewModel : ViewModelBase
@@ -38,7 +38,7 @@ namespace HorseAccounting.ViewModel
         private Horse _motherHorse;
         private Horse _fatherHorse;
 
-        Gender _gender = Gender.Mare;
+        private Gender _gender = Gender.Mare;
 
         #endregion
 
@@ -56,8 +56,8 @@ namespace HorseAccounting.ViewModel
         {
             _motherHorseList = Horse.GetMotherHorse();
             _fatherHorseList = Horse.GetFatherHorse();
-            this.RaisePropertyChanged(() => this.MotherHorseList);
-            this.RaisePropertyChanged(() => this.FatherHorseList);
+            RaisePropertyChanged(() => MotherHorseList);
+            RaisePropertyChanged(() => FatherHorseList);
         }
 
         #region Definitions
@@ -84,6 +84,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _addedHorse;
             }
+
             set
             {
                 _addedHorse = value;
@@ -97,6 +98,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _motherHorse;
             }
+
             set
             {
                 _motherHorse = value;
@@ -110,6 +112,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _fatherHorse;
             }
+
             set
             {
                 _fatherHorse = value;
@@ -119,7 +122,11 @@ namespace HorseAccounting.ViewModel
 
         public Gender Gender
         {
-            get { return _gender; }
+            get
+            {
+                return _gender;
+            }
+
             set
             {
                 if (_gender == value)
@@ -136,7 +143,9 @@ namespace HorseAccounting.ViewModel
         }
 
         public static string StudFarmName => _studFarmName;
+
         public static string StallionGender => _stallionGender;
+
         public static string MareGender => _mareGender;
 
         public string StudFarm
@@ -145,6 +154,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _studFarm;
             }
+
             set
             {
                 if (_studFarm == value)
@@ -165,6 +175,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _owner;
             }
+
             set
             {
                 if (_owner == value)
@@ -185,7 +196,11 @@ namespace HorseAccounting.ViewModel
 
         public bool IsStallion
         {
-            get { return Gender == Gender.Stallion; }
+            get
+            {
+                return Gender == Gender.Stallion;
+            }
+
             set
             {
                 Gender = value ? Gender.Stallion : Gender;
@@ -195,7 +210,11 @@ namespace HorseAccounting.ViewModel
 
         public bool IsMare
         {
-            get { return Gender == Gender.Mare; }
+            get
+            {
+                return Gender == Gender.Mare;
+            }
+
             set
             {
                 Gender = value ? Gender.Mare : Gender;
@@ -205,7 +224,11 @@ namespace HorseAccounting.ViewModel
 
         public bool IsStudFarm
         {
-            get { return StudFarm == StudFarmName; }
+            get
+            {
+                return StudFarm == StudFarmName;
+            }
+
             set
             {
                 StudFarm = value ? StudFarmName : StudFarm;
@@ -215,7 +238,11 @@ namespace HorseAccounting.ViewModel
 
         public bool IsOwner
         {
-            get { return Owner == StudFarmName; }
+            get
+            {
+                return Owner == StudFarmName;
+            }
+
             set
             {
                 Owner = value ? StudFarmName : Owner;
@@ -234,6 +261,7 @@ namespace HorseAccounting.ViewModel
                     case Gender.Mare:
                         return MareGender;
                 }
+
                 return null;
             }
         }
@@ -243,6 +271,7 @@ namespace HorseAccounting.ViewModel
         #region Commands
 
         private ICommand _horsesList;
+
         public ICommand BackToList
         {
             get
@@ -254,12 +283,18 @@ namespace HorseAccounting.ViewModel
                         _navigationService.NavigateTo("Home");
                     });
                 }
+
                 return _horsesList;
             }
-            set { _horsesList = value; }
+
+            set
+            {
+                _horsesList = value;
+            }
         }
 
         private ICommand _addHorse;
+
         public ICommand AddHorseToList
         {
             get
@@ -273,14 +308,15 @@ namespace HorseAccounting.ViewModel
                         {
                             StudFarm = AddedHorse.BirthPlace;
                         }
+
                         if (Owner == null)
                         {
                             Owner = AddedHorse.Owner;
                         }
+
                         if (MotherHorse != null && FatherHorse != null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult,
-                            AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
+                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
                                 AddedHorse.CleanHorseData();
@@ -293,8 +329,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse != null && FatherHorse == null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult,
-                            AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
+                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
                                 AddedHorse.CleanHorseData();
@@ -307,8 +342,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse == null && FatherHorse != null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult,
-                            AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
+                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
                                 AddedHorse.CleanHorseData();
@@ -321,8 +355,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult,
-                            AddedHorse.BirthDate, StudFarm, Owner, 0, 0))
+                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
                                 AddedHorse.CleanHorseData();
@@ -333,15 +366,20 @@ namespace HorseAccounting.ViewModel
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
                             }
                         }
-
                     });
                 }
+
                 return _addHorse;
             }
-            set { _addHorse = value; }
+
+            set
+            {
+                _addHorse = value;
+            }
         }
 
         private ICommand _dropStudFarm;
+
         public ICommand DropStudFarm
         {
             get
@@ -353,12 +391,18 @@ namespace HorseAccounting.ViewModel
                         StudFarm = null;
                     });
                 }
+
                 return _dropStudFarm;
             }
-            set { _dropStudFarm = value; }
+
+            set
+            {
+                _dropStudFarm = value;
+            }
         }
 
         private ICommand _dropOwner;
+
         public ICommand DropOwner
         {
             get
@@ -370,9 +414,14 @@ namespace HorseAccounting.ViewModel
                         Owner = null;
                     });
                 }
+
                 return _dropOwner;
             }
-            set { _dropOwner = value; }
+
+            set
+            {
+                _dropOwner = value;
+            }
         }
 
         #endregion

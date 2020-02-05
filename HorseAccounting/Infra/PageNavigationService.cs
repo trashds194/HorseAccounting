@@ -19,7 +19,7 @@ namespace HorseAccounting.Infra
 
         #endregion
 
-        #region Properties     
+        #region Properties
 
         public string CurrentPageKey
         {
@@ -36,9 +36,10 @@ namespace HorseAccounting.Infra
                 }
 
                 _currentPageKey = value;
-                OnPropertyChanged("CurrentPageKey");
+                OnPropertyChanged(nameof(CurrentPageKey));
             }
         }
+
         public object Parameter { get; private set; }
 
         #endregion
@@ -50,6 +51,7 @@ namespace HorseAccounting.Infra
             _pagesByKey = new Dictionary<string, Uri>();
             _historic = new List<string>();
         }
+
         public void GoBack()
         {
             if (_historic.Count > 1)
@@ -58,6 +60,7 @@ namespace HorseAccounting.Infra
                 NavigateTo(_historic.Last(), null);
             }
         }
+
         public void NavigateTo(string pageKey)
         {
             NavigateTo(pageKey, null);
@@ -78,6 +81,7 @@ namespace HorseAccounting.Infra
                 {
                     frame.Source = _pagesByKey[pageKey];
                 }
+
                 Parameter = parameter;
                 _historic.Add(pageKey);
                 CurrentPageKey = pageKey;
@@ -125,6 +129,7 @@ namespace HorseAccounting.Infra
                     }
                 }
             }
+
             return null;
         }
 
@@ -133,7 +138,10 @@ namespace HorseAccounting.Infra
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion

@@ -6,9 +6,9 @@ namespace HorseAccounting.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
         private IPageNavigationService _navigationService;
         private RelayCommand _loadedCommand;
+
         public RelayCommand LoadedCommand
         {
             get

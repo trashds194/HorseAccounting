@@ -1,9 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+using HorseAccounting.View;
 
 namespace HorseAccounting.ViewModel
 {
@@ -26,7 +26,7 @@ namespace HorseAccounting.ViewModel
         public void OnPageLoad()
         {
             _horses = Horse.GetHorses();
-            this.RaisePropertyChanged(() => this.HorsesList);
+            RaisePropertyChanged(() => HorsesList);
         }
 
         #region Definitions
@@ -45,14 +45,11 @@ namespace HorseAccounting.ViewModel
             {
                 return _horse;
             }
+
             set
             {
                 _horse = value;
                 RaisePropertyChanged(nameof(SelectedHorse));
-
-
-                //this.ShowHorse = new ShowHorseViewModel(value);
-                //_navigationService.NavigateTo("Просмотр лошади", value);
             }
         }
 
@@ -62,6 +59,7 @@ namespace HorseAccounting.ViewModel
             {
                 return _showHorse;
             }
+
             set
             {
                 if (_showHorse != null)
@@ -77,6 +75,7 @@ namespace HorseAccounting.ViewModel
         #region Commands
 
         private RelayCommand _addHorse;
+
         public RelayCommand AddHorse
         {
             get
@@ -88,7 +87,11 @@ namespace HorseAccounting.ViewModel
                         _navigationService.NavigateTo("AddHorsePage");
                     }));
             }
-            private set { _addHorse = value; }
+
+            private set
+            {
+                _addHorse = value;
+            }
         }
 
         #endregion
