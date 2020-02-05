@@ -2,23 +2,23 @@
 
 namespace HorseAccounting
 {
-    class DbConnection
+    public static class DbConnection
     {
-        public MySqlConnection connection { get; set; }
-        public string Server { get; set; }
-        public string Database { get; set; }
-        public string Uid { get; set; }
-        public string Password { get; set; }
+        private static MySqlConnectionStringBuilder connection;
 
-        public DbConnection()
+        public static MySqlConnectionStringBuilder Connection
         {
-            Server = "127.0.0.1:3306";
-            Database = "horseaccounting";
-            Uid = "root";
-            Password = "";
-            string connectionString = "SERVER=" + Server + ";" + "DATABASE=" + Database + ";" + "UID=" + Uid + ";" + "PASSWORD=" + Password + ";";
-            connection = new MySqlConnection(connectionString);
-        }
+            get
+            {
+                connection.Server = "127.0.0.1";
+                connection.Port = 3306;
+
+                connection.UserID = "t60064_dbuser";
+                connection.Password = "HR4M%rV~S8.pB$gc";
+                connection.Database = "t60064_db";
+                return connection;
+            }
+        }       
 
 
 

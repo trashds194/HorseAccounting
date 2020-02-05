@@ -40,6 +40,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
             <MenuItem Header="О программе" Height="20"/>
+            <MenuItem Header="Обратная связь" Height="20"/>
         </Menu>
         <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>
