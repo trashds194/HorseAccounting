@@ -141,6 +141,7 @@
     <Compile Include="Infra\IPageNavigationService.cs" />
     <Compile Include="Infra\PageNavigationService.cs" />
     <Compile Include="Model\Scoring.cs" />
+    <Compile Include="ViewModel\AddScoringViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\Horse.cs" />
@@ -149,6 +150,9 @@
     <Compile Include="ViewModel\ShowHorseViewModel.cs" />
     <Compile Include="View\AddHorse.xaml.cs">
       <DependentUpon>AddHorse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddScoring.xaml.cs">
+      <DependentUpon>AddScoring.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HorsesList.xaml.cs">
       <DependentUpon>HorsesList.xaml</DependentUpon>
@@ -169,6 +173,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AddHorse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddScoring.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

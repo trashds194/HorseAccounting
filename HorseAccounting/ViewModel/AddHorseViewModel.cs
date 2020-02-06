@@ -280,7 +280,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _horsesList = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("Home");
+                        _navigationService.NavigateTo("HorsesList");
                     });
                 }
 

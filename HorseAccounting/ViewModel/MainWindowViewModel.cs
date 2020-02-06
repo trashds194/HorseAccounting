@@ -17,7 +17,7 @@ namespace HorseAccounting.ViewModel
                     ?? (_loadedCommand = new RelayCommand(
                     () =>
                     {
-                        _navigationService.NavigateTo("Home");
+                        _navigationService.NavigateTo("HorsesList");
                     }));
             }
         }

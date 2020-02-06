@@ -14,6 +14,7 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private string _horseNick;
+        private int _horseID;
 
         private Horse _mainHorse;
 
@@ -34,11 +35,15 @@ namespace HorseAccounting.ViewModel
         public void OnPageLoad()
         {
             MainHorse = (Horse)_navigationService.Parameter;
+
             HorseNick = MainHorse.NickName;
+            HorseID = MainHorse.ID;
+
             _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
             _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
             _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
             _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
+            
             RaisePropertyChanged(() => MainHorseList);
             RaisePropertyChanged(() => MotherHorseList);
             RaisePropertyChanged(() => FatherHorseList);
@@ -58,6 +63,20 @@ namespace HorseAccounting.ViewModel
             {
                 _horseNick = value;
                 RaisePropertyChanged(nameof(HorseNick));
+            }
+        }
+
+        public int HorseID
+        {
+            get
+            {
+                return _horseID;
+            }
+
+            set
+            {
+                _horseID = value;
+                RaisePropertyChanged(nameof(HorseID));
             }
         }
 
@@ -124,7 +143,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _backToHorsesList = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("Home");
+                        _navigationService.NavigateTo("HorsesList");
                     });
                 }
 
@@ -134,6 +153,29 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _backToHorsesList = value;
+            }
+        }
+
+        private ICommand _addScoring;
+
+        public ICommand AddScoring
+        {
+            get
+            {
+                if (_addScoring == null)
+                {
+                    _addScoring = new RelayCommand(() =>
+                    {
+                        _navigationService.NavigateTo("AddScoringPage", HorseID);
+                    });
+                }
+
+                return _addScoring;
+            }
+
+            set
+            {
+                _addScoring = value;
             }
         }
 
