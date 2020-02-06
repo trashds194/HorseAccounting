@@ -22,6 +22,7 @@ namespace HorseAccounting.ViewModel
         private ObservableCollection<Horse> _mainHorseList;
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
+        private ObservableCollection<Scoring> _mainHorseScoring;
 
         #endregion
 
@@ -37,9 +38,11 @@ namespace HorseAccounting.ViewModel
             _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
             _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
             _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
+            _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
             RaisePropertyChanged(() => MainHorseList);
             RaisePropertyChanged(() => MotherHorseList);
             RaisePropertyChanged(() => FatherHorseList);
+            RaisePropertyChanged(() => MainHorseScoring);
         }
 
         #region Definitions
@@ -79,6 +82,14 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _fatherHorseList;
+            }
+        }
+
+        public ObservableCollection<Scoring> MainHorseScoring
+        {
+            get
+            {
+                return _mainHorseScoring;
             }
         }
 

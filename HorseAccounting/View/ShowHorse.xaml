@@ -38,7 +38,7 @@
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding HorseNick}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="roboto" FontWeight="Bold"/>
         </Grid>
         <materialDesign:Card Margin="16">
-            <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0">
+            <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
                     <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,8" MinHeight="200" MinWidth="500">
                         <Grid.ColumnDefinitions>
@@ -93,28 +93,28 @@
                                     <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1">
-                                    <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,0,0,0"/>
+                                    <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="1">
-                                    <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="8,0,0,0"/>
+                                    <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="8,8,0,0" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="2">
-                                    <TextBlock Text="тавро" Grid.Row="1" Grid.Column="2" Margin="0"/>
+                                    <TextBlock Text="тавро" Grid.Row="1" Grid.Column="2" Margin="0,8,0,0" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="3">
-                                    <TextBlock Text="Кровность" Grid.Row="1" Grid.Column="3" Margin="10,0,0,0"/>
+                                    <TextBlock Text="Кровность" Grid.Row="1" Grid.Column="3" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="4">
-                                    <TextBlock Text="Год рожд." Grid.Row="1" Grid.Column="4" Margin="10,0,0,0"/>
+                                    <TextBlock Text="Год рожд." Grid.Row="1" Grid.Column="4" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="5">
-                                    <TextBlock Text="Масть" Grid.Row="1" Grid.Column="5" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Масть" Grid.Row="1" Grid.Column="5" Margin="10,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="6">
-                                    <TextBlock Text="Место рождения" Grid.Row="1" Grid.Column="6" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Место рождения" Grid.Row="1" Grid.Column="6" Margin="10,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Normal"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="7">
-                                    <TextBlock Text="Владелец" Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Владелец" Grid.Row="1" Grid.Column="7" Margin="10,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Normal"/>
                                 </Border>
                             </Grid>
                         </Border>
@@ -139,7 +139,7 @@
                                     </TextBlock>
                                 </Border>
                                 <Border DataContext="{Binding MotherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Row="2" Grid.Column="1">
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
                                                 <Binding Path="Color" />
@@ -161,7 +161,7 @@
                                     </TextBlock>
                                 </Border>
                                 <Border DataContext="{Binding FatherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="3">
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
                                                 <Binding Path="Color" />
@@ -172,7 +172,7 @@
                                 </Border>
                             </Grid>
                         </Border>
-                        <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,8,0,8" Content="Изменить" HorizontalAlignment="Right" MinWidth="150"/>
+                        <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -181,7 +181,38 @@
         <materialDesign:Card Margin="16">
             <Expander Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Stretch" Header="Бонитировка" Margin="0">
                 <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
-                    <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0,16" CanUserSortColumns="True" CanUserAddRows="True" />
+                    <Grid Margin="16,16,16,8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainHorseScoring}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                <materialDesign:DataGridTextColumn Binding="{Binding Origin}" Header="Происхождение" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <!-- set a max length to get an indicator in the editor -->
+                                <materialDesign:DataGridTextColumn Binding="{Binding Typicality}" Header="Типичность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </materialDesign:DataGridTextColumn>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Exterior}" Header="Экстерьер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding WorkingCapacity}" Header="Работоспособность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding OffspringQuality}" Header="Качество потомства" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding TheClass}" Header="Класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Grid.Row="1" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Добавить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />
+                    </Grid>
                 </StackPanel>
             </Expander>
         </materialDesign:Card>
