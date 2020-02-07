@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
-using HorseAccounting.View;
+using System.Collections.ObjectModel;
 
 namespace HorseAccounting.ViewModel
 {

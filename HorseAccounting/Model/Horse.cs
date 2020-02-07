@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using MySql.Data.MySqlClient;
 using Renci.SshNet;
+using System;
+using System.Collections.ObjectModel;
 
 namespace HorseAccounting.Model
 {
@@ -29,62 +29,74 @@ namespace HorseAccounting.Model
 
         public int ID
         {
-            get { return _id; } set { Set<int>(() => ID, ref _id, value); }
+            get { return _id; }
+            set { Set<int>(() => ID, ref _id, value); }
         }
 
         public int GpkNum
         {
-            get { return _gpkNum; } set { Set<int>(() => GpkNum, ref _gpkNum, value); }
+            get { return _gpkNum; }
+            set { Set<int>(() => GpkNum, ref _gpkNum, value); }
         }
 
         public string NickName
         {
-            get { return _nickName; } set { Set<string>(() => NickName, ref _nickName, value); }
+            get { return _nickName; }
+            set { Set<string>(() => NickName, ref _nickName, value); }
         }
 
         public int Brand
         {
-            get { return _brand; } set { Set<int>(() => Brand, ref _brand, value); }
+            get { return _brand; }
+            set { Set<int>(() => Brand, ref _brand, value); }
         }
 
         public string Bloodiness
         {
-            get { return _bloodiness; } set { Set<string>(() => Bloodiness, ref _bloodiness, value); }
+            get { return _bloodiness; }
+            set { Set<string>(() => Bloodiness, ref _bloodiness, value); }
         }
 
         public string Color
         {
-            get { return _color; } set { Set<string>(() => Color, ref _color, value); }
+            get { return _color; }
+            set { Set<string>(() => Color, ref _color, value); }
         }
 
         public string Gender
         {
-            get { return _gender; } set { Set<string>(() => Gender, ref _gender, value); }
+            get { return _gender; }
+            set { Set<string>(() => Gender, ref _gender, value); }
         }
 
         public string BirthDate
         {
-            get { return _birthDate; } set { Set<string>(() => BirthDate, ref _birthDate, value); }
+            get { return _birthDate; }
+            set { Set<string>(() => BirthDate, ref _birthDate, value); }
         }
 
         public string BirthPlace
         {
-            get { return _birthPlace; } set { Set<string>(() => BirthPlace, ref _birthPlace, value); }
+            get { return _birthPlace; }
+            set { Set<string>(() => BirthPlace, ref _birthPlace, value); }
         }
 
         public string Owner
         {
-            get { return _owner; } set { Set<string>(() => Owner, ref _owner, value); }
+            get { return _owner; }
+            set { Set<string>(() => Owner, ref _owner, value); }
         }
 
         public int MotherID
         {
-            get { return _motherID; } set { Set<int>(() => MotherID, ref _motherID, value); }
+            get { return _motherID; }
+            set { Set<int>(() => MotherID, ref _motherID, value); }
         }
 
         public int FatherID
         {
-            get { return _fatherID; } set { Set<int>(() => FatherID, ref _fatherID, value); }
+            get { return _fatherID; }
+            set { Set<int>(() => FatherID, ref _fatherID, value); }
         }
 
         private static readonly SshClient SshConnection = new SshClient("hostru06.fornex.host", 20022, "t60064", "HR4M%rV~S8.pB$gc");

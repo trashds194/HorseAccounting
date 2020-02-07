@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
+using System;
+using System.Windows;
 
 namespace HorseAccounting.ViewModel
 {

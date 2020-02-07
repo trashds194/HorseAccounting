@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
@@ -42,7 +42,7 @@ namespace HorseAccounting.ViewModel
             _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
             _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
             _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
-            
+
             RaisePropertyChanged(() => MainHorseList);
             RaisePropertyChanged(() => MotherHorseList);
             RaisePropertyChanged(() => FatherHorseList);
