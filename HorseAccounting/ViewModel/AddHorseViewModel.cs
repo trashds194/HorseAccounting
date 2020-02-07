@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
@@ -318,7 +318,7 @@ namespace HorseAccounting.ViewModel
                         {
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
@@ -331,7 +331,7 @@ namespace HorseAccounting.ViewModel
                         {
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
@@ -344,7 +344,7 @@ namespace HorseAccounting.ViewModel
                         {
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
@@ -357,7 +357,7 @@ namespace HorseAccounting.ViewModel
                         {
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0))
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошадь"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }

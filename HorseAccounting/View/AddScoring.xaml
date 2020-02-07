@@ -4,6 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HorseAccounting.View"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+      xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       
       mc:Ignorable="d" 
       
@@ -20,7 +23,105 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}">
 
-    <Grid>
-        
-    </Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <ScrollViewer CanContentScroll="True">
+        <Grid AutomationProperties.IsOffscreenBehavior="Onscreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
+            <Button x:Name="button1" Command="{Binding AddScoringToList}" Content="Добавить" Grid.Column="1" Margin="40,20" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto"/>
+
+            <Label Grid.Row="0" Grid.Column="1" Content="Добавление бонитировки" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
+
+            <Border BorderBrush="Black" BorderThickness="1, 1, 1, 0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="16,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1">
+                        <TextBlock Text="Дата бонитировки" Grid.Row="1" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="1">
+                        <TextBlock Text="Происхождение" Grid.Row="1" Grid.Column="1" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="2">
+                        <TextBlock Text="Типичность" Grid.Row="1" Grid.Column="2" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="3">
+                        <TextBlock Text="Промеры" Grid.Row="1" Grid.Column="3" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="4">
+                        <TextBlock Text="Экстерьер" Grid.Row="1" Grid.Column="4" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="5">
+                        <TextBlock Text="Работоспособность" Grid.Row="1" Grid.Column="5" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="6">
+                        <TextBlock Text="Качество потомства" Grid.Row="1" Grid.Column="6" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Column="7">
+                        <TextBlock Text="Класс" Grid.Row="1" Grid.Column="7" Margin="10,8,0,0" FontWeight="Normal"/>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1">
+                        <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,0"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="1" >
+                        <TextBox Text="{Binding AddedScoring.Origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="2">
+                        <TextBox Text="{Binding AddedScoring.Typicality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="3">
+                        <TextBox Text="{Binding AddedScoring.Measurements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="4">
+                        <TextBox Text="{Binding AddedScoring.Exterior, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="5">
+                        <TextBox Text="{Binding AddedScoring.WorkingCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="6">
+                        <TextBox Text="{Binding AddedScoring.OffspringQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Row="1" Grid.Column="7">
+                        <TextBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>

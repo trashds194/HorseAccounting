@@ -14,12 +14,12 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private string _horseNick;
-        private int _horseID;
 
         private Horse _mainHorse;
 
         // private Horse _motherHorse;
         // private Horse _fatherHorse;
+
         private ObservableCollection<Horse> _mainHorseList;
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
@@ -37,7 +37,6 @@ namespace HorseAccounting.ViewModel
             MainHorse = (Horse)_navigationService.Parameter;
 
             HorseNick = MainHorse.NickName;
-            HorseID = MainHorse.ID;
 
             _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
             _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
@@ -63,20 +62,6 @@ namespace HorseAccounting.ViewModel
             {
                 _horseNick = value;
                 RaisePropertyChanged(nameof(HorseNick));
-            }
-        }
-
-        public int HorseID
-        {
-            get
-            {
-                return _horseID;
-            }
-
-            set
-            {
-                _horseID = value;
-                RaisePropertyChanged(nameof(HorseID));
             }
         }
 
@@ -166,7 +151,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _addScoring = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("AddScoringPage", HorseID);
+                        _navigationService.NavigateTo("AddScoringPage", MainHorse);
                     });
                 }
 

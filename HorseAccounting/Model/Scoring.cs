@@ -159,8 +159,67 @@ namespace HorseAccounting.Model
             }
 
             return selectedScoring;
-
-            #endregion
         }
+
+        #endregion
+
+        #region AddScoringPage
+
+        public static bool AddScoring(string date, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, int horseID)
+        {
+            try
+            {
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
+
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
+
+                string query = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `ID Лошади`) " +
+                    "VALUES ('" + Convert.ToDateTime(date).ToString("yyyy-MM-dd") + "'," + origin + "," + typicality + ", " + measure + ", " + exterior + ", " + workingCapacity + ", " + offspringQuality + ", '" + theClass + "', " + horseID + ")";
+
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, sql);
+
+                    cmd.ExecuteNonQuery();
+
+                    sql.Close();
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public void CleanScoringData()
+        {
+            Date = string.Empty;
+            Origin = 0;
+            Typicality = 0;
+            Measurements = 0;
+            Exterior = 0;
+            WorkingCapacity = 0;
+            OffspringQuality = 0;
+            TheClass = string.Empty;
+        }
+        #endregion
     }
 }
