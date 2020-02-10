@@ -75,6 +75,30 @@ namespace HorseAccounting.ViewModel
 
         #endregion
 
+        #region MenuCommands
+
+        private RelayCommand _openTaleMagazine;
+
+        public RelayCommand OpenTaleMagazine
+        {
+            get
+            {
+                return _openTaleMagazine
+                    ?? (_openTaleMagazine = new RelayCommand(
+                    () =>
+                    {
+                        _navigationService.NavigateTo("TaleMagazinePage");
+                    }));
+            }
+
+            private set
+            {
+                _openTaleMagazine = value;
+            }
+        }
+
+        #endregion
+
         #region Commands
 
         private RelayCommand _addHorse;

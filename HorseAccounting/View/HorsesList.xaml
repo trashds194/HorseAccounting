@@ -38,6 +38,26 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <MenuItem Header="Документы" Margin="0" MinHeight="40">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="FileDocumentBoxMultipleOutline"  />
+                </MenuItem.Icon>
+                <MenuItem Header="Журнал случки" MinHeight="40">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="FileTable" />
+                    </MenuItem.Icon>
+                    <MenuItem Header="Создать" MinHeight="40" Command="{Binding OpenTaleMagazine}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Add" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Открыть" MinHeight="40">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="О программе" Height="Auto" MinHeight="40">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="About" />
