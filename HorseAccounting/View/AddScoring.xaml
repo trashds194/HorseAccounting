@@ -50,7 +50,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
+            <Button x:Name="button" Command="{Binding Back}" Content="Назад" Margin="20,10" FontSize="18"/>
             <Button x:Name="button1" Command="{Binding AddScoringToList}" Content="Добавить" Grid.Column="1" Margin="40,20" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto"/>
 
             <Label Grid.Row="0" Grid.Column="1" Content="Добавление бонитировки" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>

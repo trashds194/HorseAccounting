@@ -148,6 +148,7 @@
     <Compile Include="ViewModel\AddHorseViewModel.cs" />
     <Compile Include="ViewModel\HorsesListViewModel.cs" />
     <Compile Include="ViewModel\ShowHorseViewModel.cs" />
+    <Compile Include="ViewModel\TaleMagazineViewModel.cs" />
     <Compile Include="View\AddHorse.xaml.cs">
       <DependentUpon>AddHorse.xaml</DependentUpon>
     </Compile>
@@ -159,6 +160,9 @@
     </Compile>
     <Compile Include="View\ShowHorse.xaml.cs">
       <DependentUpon>ShowHorse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaleMagazine.xaml.cs">
+      <DependentUpon>TaleMagazine.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ShowHorse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaleMagazine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

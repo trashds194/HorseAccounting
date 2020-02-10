@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace HorseAccounting.ViewModel
 {
@@ -22,10 +23,13 @@ namespace HorseAccounting.ViewModel
             _navigationService = navigationService;
         }
 
-        public void OnPageLoad()
+        public async void OnPageLoad()
         {
-            _horses = Horse.GetHorses();
-            RaisePropertyChanged(() => HorsesList);
+            await Task.Run(() =>
+            {
+                _horses = Horse.GetHorses();
+                RaisePropertyChanged(() => HorsesList);
+            }).ConfigureAwait(true);
         }
 
         #region Definitions

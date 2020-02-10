@@ -65,26 +65,26 @@ namespace HorseAccounting.ViewModel
 
         #region Commands
 
-        private ICommand _backToHorsesList;
+        private ICommand _backToHorse;
 
-        public ICommand BackToList
+        public ICommand Back
         {
             get
             {
-                if (_backToHorsesList == null)
+                if (_backToHorse == null)
                 {
-                    _backToHorsesList = new RelayCommand(() =>
+                    _backToHorse = new RelayCommand(() =>
                     {
                         _navigationService.NavigateTo("ShowHorsePage", MainHorse);
                     });
                 }
 
-                return _backToHorsesList;
-            }
+                return _backToHorse;
+            } 
 
             set
             {
-                _backToHorsesList = value;
+                _backToHorse = value;
             }
         }
 

@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -32,21 +33,24 @@ namespace HorseAccounting.ViewModel
             _navigationService = navigationService;
         }
 
-        public void OnPageLoad()
+        public async void OnPageLoad()
         {
-            MainHorse = (Horse)_navigationService.Parameter;
+            await Task.Run(() =>
+            {
+                MainHorse = (Horse)_navigationService.Parameter;
 
-            HorseNick = MainHorse.NickName;
+                HorseNick = MainHorse.NickName;
 
-            _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
-            _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
-            _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
-            _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
+                _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
+                _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
+                _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
+                _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
 
-            RaisePropertyChanged(() => MainHorseList);
-            RaisePropertyChanged(() => MotherHorseList);
-            RaisePropertyChanged(() => FatherHorseList);
-            RaisePropertyChanged(() => MainHorseScoring);
+                RaisePropertyChanged(() => MainHorseList);
+                RaisePropertyChanged(() => MotherHorseList);
+                RaisePropertyChanged(() => FatherHorseList);
+                RaisePropertyChanged(() => MainHorseScoring);
+            }).ConfigureAwait(true);
         }
 
         #region Definitions
@@ -70,6 +74,11 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _mainHorseList;
+            }
+
+            set
+            {
+                _mainHorseList = value;
             }
         }
 
@@ -116,7 +125,31 @@ namespace HorseAccounting.ViewModel
 
         #endregion
 
-        #region Commands
+        #region MenuCommands
+
+        private RelayCommand _openTaleMagazine;
+
+        public RelayCommand OpenTaleMagazine
+        {
+            get
+            {
+                return _openTaleMagazine
+                    ?? (_openTaleMagazine = new RelayCommand(
+                    () =>
+                    {
+                        _navigationService.NavigateTo("TaleMagazinePage", MainHorse);
+                    }));
+            }
+
+            private set
+            {
+                _openTaleMagazine = value;
+            }
+        }
+
+        #endregion
+
+        #region WindowCommands
 
         private ICommand _backToHorsesList;
 
@@ -128,6 +161,8 @@ namespace HorseAccounting.ViewModel
                 {
                     _backToHorsesList = new RelayCommand(() =>
                     {
+                        MainHorse = null;
+                        MainHorseList = null;
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }

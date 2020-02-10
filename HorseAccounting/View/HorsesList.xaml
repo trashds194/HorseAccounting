@@ -30,17 +30,36 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40px" MinHeight="35"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="3" Height="20px" VerticalAlignment="Top">
-            <MenuItem Header="О программе" Height="20"/>
-            <MenuItem Header="Обратная связь" Height="20"/>
+        <Menu Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <MenuItem Header="О программе" Height="Auto" MinHeight="40">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="About" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Справка" Height="Auto" MinHeight="40">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="HelpCircle" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Обратная связь" Height="Auto" MinHeight="40">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="MessageTextOutline" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <Menu Grid.Column="3" HorizontalAlignment="Right">
+            <MenuItem Header="Настройки" Height="Auto" MinHeight="40" MinWidth="180">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="Settings" />
+                </MenuItem.Icon>
+            </MenuItem>
         </Menu>
         <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>

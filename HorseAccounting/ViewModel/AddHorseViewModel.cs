@@ -204,7 +204,6 @@ namespace HorseAccounting.ViewModel
             set
             {
                 Gender = value ? Gender.Stallion : Gender;
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(GetGenderResult));
             }
         }
 
@@ -218,7 +217,6 @@ namespace HorseAccounting.ViewModel
             set
             {
                 Gender = value ? Gender.Mare : Gender;
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(GetGenderResult));
             }
         }
 
@@ -232,7 +230,6 @@ namespace HorseAccounting.ViewModel
             set
             {
                 StudFarm = value ? StudFarmName : StudFarm;
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(StudFarm));
             }
         }
 
@@ -246,7 +243,6 @@ namespace HorseAccounting.ViewModel
             set
             {
                 Owner = value ? StudFarmName : Owner;
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(Owner));
             }
         }
 

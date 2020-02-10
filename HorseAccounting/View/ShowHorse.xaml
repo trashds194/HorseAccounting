@@ -27,15 +27,37 @@
             <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    
     <StackPanel ScrollViewer.CanContentScroll="True">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="{Binding HorseNick}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="roboto" FontWeight="Bold"/>
+            <Menu Grid.ColumnSpan="2">
+                <MenuItem Header="Документы" Margin="0" MinHeight="40">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="FileDocumentBoxMultipleOutline"  />
+                    </MenuItem.Icon>
+                    <MenuItem Header="Журнал случки" MinHeight="40" Command="{Binding OpenTaleMagazine}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileTable" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Карточка лошади">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileDocument" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18" Grid.Row="1"/>
+            <Label Grid.Column="1" Content="{Binding HorseNick}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="roboto" FontWeight="Bold" Grid.Row="1"/>
         </Grid>
         <materialDesign:Card Margin="16">
             <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">

@@ -8,7 +8,7 @@
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       xmlns:local="clr-namespace:HorseAccounting.View"
       xmlns:infra="clr-namespace:HorseAccounting.Infra"
-      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       
       d:DesignHeight="700" d:DesignWidth="1200"
@@ -83,7 +83,7 @@
                 <RadioButton x:Name="mareButton" IsChecked="{Binding IsMare}" Content="Кобыла" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Grid.Row="1"/>
             </Grid>
 
-            <DatePicker x:Name="birthDateDatePicker" Margin="40,10" Grid.Row="7" Text="{Binding AddedHorse.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+            <DatePicker x:Name="birthDateDatePicker" Margin="40,10" Grid.Row="7" Text="{Binding AddedHorse.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Language="ru"/>
 
             <Grid Grid.Row="8" Grid.Column="1" Margin="0,0,40,0">
                 <Grid.RowDefinitions>
@@ -127,7 +127,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Мать:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left"/>
-                <ComboBox x:Name="motherComboBox" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
+                <ComboBox x:Name="motherComboBox" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
@@ -144,7 +144,7 @@
                 </ComboBox>
 
                 <Label Content="Отец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.Row="1" HorizontalAlignment="Left"/>
-                <ComboBox x:Name="fatherComboBox" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+                <ComboBox x:Name="fatherComboBox" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
