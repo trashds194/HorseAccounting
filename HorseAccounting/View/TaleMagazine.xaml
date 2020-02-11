@@ -57,15 +57,13 @@
             <Label Grid.Row="0" Grid.Column="1" Content="Журнал случки" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
             <Label x:Name="label" Content="Выберите жеребца производителя:" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="stallionComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding StallionHorse, Mode=TwoWay}" ItemsSource="{Binding StallionHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="stallionComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding StallionHorse, Mode=TwoWay}" ItemsSource="{Binding StallionHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -74,15 +72,13 @@
             </ComboBox>
 
             <Label x:Name="labe2" Content="Выберите первую кобылу:" Margin="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare1ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare1Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare1ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare1Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -91,15 +87,13 @@
             </ComboBox>
 
             <Label x:Name="labe3" Content="Выберите вторую кобылу:" Margin="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare2ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare2Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare2ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare2Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -108,15 +102,13 @@
             </ComboBox>
 
             <Label x:Name="labe4" Content="Выберите третью кобылу:" Margin="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare3ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare3Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare3ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare3Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -125,15 +117,13 @@
             </ComboBox>
 
             <Label x:Name="labe5" Content="Выберите четвертую кобылу:" Margin="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare4ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare4Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare4ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare4Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -142,15 +132,13 @@
             </ComboBox>
 
             <Label x:Name="labe6" Content="Выберите пятую кобылу:" Margin="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare5ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare5Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare5ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare5Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -159,15 +147,13 @@
             </ComboBox>
 
             <Label x:Name="labe7" Content="Выберите шестую кобылу:" Margin="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare6ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare6Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare6ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare6Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -176,15 +162,13 @@
             </ComboBox>
 
             <Label x:Name="labe8" Content="Выберите седьмую кобылу:" Margin="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare7ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare7Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare7ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare7Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -193,15 +177,13 @@
             </ComboBox>
 
             <Label x:Name="labe9" Content="Выберите восьмую кобылу:" Margin="0" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare8ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare8Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare8ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare8Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -210,15 +192,13 @@
             </ComboBox>
 
             <Label x:Name="labe10" Content="Выберите девятую кобылу:" Margin="0" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare9ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare9Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare9ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare9Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -227,15 +207,13 @@
             </ComboBox>
 
             <Label x:Name="labe11" Content="Выберите десятую кобылу:" Margin="0" Grid.Row="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare10ComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare10Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare10ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare10Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                    <Binding Path="GpkNum" />
-                                    <Binding Path="NickName" />
-                                    <Binding Path="Brand" />
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="FullName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

@@ -35,47 +35,54 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40px" MinHeight="35"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="2" VerticalAlignment="Top">
-            <MenuItem Header="Документы" Margin="0" MinHeight="40">
+            <MenuItem Header="Документы" Margin="0" MinHeight="40" Height="Auto" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="FileDocumentBoxMultipleOutline"  />
                 </MenuItem.Icon>
-                <MenuItem Header="Журнал случки" MinHeight="40">
+                <MenuItem Header="Открыть папку с документами" MinHeight="40" Command="{Binding OpenDocFolder}" Height="Auto" VerticalAlignment="Top">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Журнал случки" MinHeight="40" VerticalAlignment="Top">
                     <MenuItem.Icon>
                         <materialDesign:PackIcon Kind="FileTable" />
                     </MenuItem.Icon>
-                    <MenuItem Header="Создать" MinHeight="40" Command="{Binding OpenTaleMagazine}">
+                    <MenuItem Header="Создать" MinHeight="40" Command="{Binding OpenTaleMagazine}" Height="Auto" VerticalAlignment="Top">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Add" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Открыть" MinHeight="40">
+                    <MenuItem Header="Открыть" MinHeight="40" Command="{Binding OpenMagazineFolder}" Height="Auto" VerticalAlignment="Top">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="FolderOpenOutline" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="О программе" Height="Auto" MinHeight="40">
+            <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="About" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Справка" Height="Auto" MinHeight="40">
+            <MenuItem Header="Справка" Height="Auto" MinHeight="40" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="HelpCircle" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Обратная связь" Height="Auto" MinHeight="40">
+            <MenuItem Header="Обратная связь" Height="Auto" MinHeight="40" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="MessageTextOutline" />
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
         <Menu Grid.Column="3" HorizontalAlignment="Right">
-            <MenuItem Header="Настройки" Height="Auto" MinHeight="40" MinWidth="180">
+            <MenuItem Header="Настройки" Height="Auto" MinHeight="40" MinWidth="180" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="Settings" />
                 </MenuItem.Icon>
@@ -160,6 +167,14 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="8" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1" Height="Auto" MinHeight="35" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="8,8,16,8" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1" Height="Auto" MinHeight="35" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25px" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Magnify" Opacity="0.6" Height="Auto" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="Auto" Margin="0,0,0,2" />
+            <TextBox Grid.Column="1" Margin="4,0,16,0" materialDesign:TextFieldAssist.HasClearButton="True" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" materialDesign:HintAssist.Hint="Поиск" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Page>

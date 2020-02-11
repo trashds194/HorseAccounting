@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.ViewModel
@@ -16,6 +17,8 @@ namespace HorseAccounting.ViewModel
         private ObservableCollection<Horse> _horses;
         private ShowHorseViewModel _showHorse;
 
+        private string _searchQuery;
+
         #endregion
 
         public HorsesListViewModel(IPageNavigationService navigationService)
@@ -25,6 +28,8 @@ namespace HorseAccounting.ViewModel
 
         public async void OnPageLoad()
         {
+            SearchQuery = null;
+
             await Task.Run(() =>
             {
                 _horses = Horse.GetHorses();
@@ -39,6 +44,31 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _horses;
+            }
+        }
+
+        public string SearchQuery
+        {
+            get
+            {
+                return _searchQuery;
+            }
+
+            set
+            {
+                _searchQuery = value;
+                RaisePropertyChanged(nameof(SearchQuery));
+
+                if (string.IsNullOrEmpty(SearchQuery))
+                {
+                    _horses = Horse.GetHorses();
+                    RaisePropertyChanged(() => HorsesList);
+                }
+                else
+                {
+                    _horses = Horse.SearchHorses(SearchQuery);
+                    RaisePropertyChanged(() => HorsesList);
+                }
             }
         }
 
@@ -77,6 +107,26 @@ namespace HorseAccounting.ViewModel
 
         #region MenuCommands
 
+        private RelayCommand _openDocFolder;
+
+        public RelayCommand OpenDocFolder
+        {
+            get
+            {
+                return _openDocFolder
+                    ?? (_openDocFolder = new RelayCommand(
+                    () =>
+                    {
+                        Process.Start("explorer.exe", @"C:\Users\Public\Documents\Помощник коневода\");
+                    }));
+            }
+
+            private set
+            {
+                _openDocFolder = value;
+            }
+        }
+
         private RelayCommand _openTaleMagazine;
 
         public RelayCommand OpenTaleMagazine
@@ -97,9 +147,29 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        private RelayCommand _openMagazineFolder;
+
+        public RelayCommand OpenMagazineFolder
+        {
+            get
+            {
+                return _openMagazineFolder
+                    ?? (_openMagazineFolder = new RelayCommand(
+                    () =>
+                    {
+                        Process.Start("explorer.exe", @"C:\Users\Public\Documents\Помощник коневода\Журналы случки\");
+                    }));
+            }
+
+            private set
+            {
+                _openMagazineFolder = value;
+            }
+        }
+
         #endregion
 
-        #region Commands
+        #region WindowCommands
 
         private RelayCommand _addHorse;
 
@@ -120,6 +190,22 @@ namespace HorseAccounting.ViewModel
                 _addHorse = value;
             }
         }
+
+        //private RelayCommand _searchHorse;
+
+        //public RelayCommand SearchHorse
+        //{
+        //    get
+        //    {
+        //        return _searchHorse
+        //            ?? (_searchHorse = new RelayCommand(
+        //            () =>
+        //            {
+        //                _horses = Horse.SearchHorses(SearchQuery);
+        //                RaisePropertyChanged(() => HorsesList);
+        //            }));
+        //    }
+        //}
 
         #endregion
 

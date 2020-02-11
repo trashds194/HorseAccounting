@@ -1,10 +1,14 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HorseAccounting.ViewModel
 {
@@ -279,6 +283,93 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _backToHorse = value;
+            }
+        }
+
+
+        private ICommand _createTaleMagazine;
+
+        public ICommand CreateTaleMagazine
+        {
+            get
+            {
+                if (_createTaleMagazine == null)
+                {
+                    _createTaleMagazine = new RelayCommand(() =>
+                    {
+                        if (StallionHorse != null)
+                        {
+                            Directory.CreateDirectory(Path.Combine(@"C:\Users\Public\Documents\", "Помощник коневода"));
+                            string docPath = @"C:\Users\Public\Documents\Помощник коневода\";
+                            Directory.CreateDirectory(Path.Combine(docPath, "Журналы случки"));
+                            string magazinesPath = @"C:\Users\Public\Documents\Помощник коневода\Журналы случки\";
+                            if (!File.Exists(magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName + ".xlsx"))
+                            {
+                                Directory.CreateDirectory(Path.Combine(magazinesPath, StallionHorse.FullName));
+
+                                Excel.Application application = new Excel.Application();
+                                application.Visible = true;
+
+                                Excel.Workbook workbook;
+                                Excel.Worksheet worksheet;
+                                var path = System.IO.Path.GetFullPath(@"Files\Excel\Журнал случки 19г.xlsx");
+                                workbook = application.Workbooks.Open(path, 0, false);
+
+                                worksheet = (Excel.Worksheet)workbook.Sheets[1];
+                                worksheet.Name = StallionHorse.FullName;
+
+                                try
+                                {
+                                    worksheet.Cells[1, 1].Value = StallionHorse.FullName;
+                                    worksheet.Cells[3, 2].Value = Mare1Horse.FullName;
+                                    worksheet.Cells[8, 2].Value = Mare2Horse.FullName;
+                                    worksheet.Cells[13, 2].Value = Mare3Horse.FullName;
+                                    worksheet.Cells[18, 2].Value = Mare4Horse.FullName;
+                                    worksheet.Cells[23, 2].Value = Mare5Horse.FullName;
+                                    worksheet.Cells[28, 2].Value = Mare6Horse.FullName;
+                                    worksheet.Cells[33, 2].Value = Mare7Horse.FullName;
+                                    worksheet.Cells[38, 2].Value = Mare8Horse.FullName;
+                                    worksheet.Cells[43, 2].Value = Mare9Horse.FullName;
+                                    worksheet.Cells[48, 2].Value = Mare10Horse.FullName;
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+
+                                try
+                                {
+                                    workbook.SaveAs(Filename: magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName);
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно создали журнал случки"));
+                                }
+                                catch (System.Runtime.InteropServices.COMException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно создать журнал случки"));
+                                }
+                            }
+                            else
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Файл уже создан. Выполняется открытие файла"));
+                                //System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + StallionHorse.NickName + @"\" + StallionHorse.NickName + ".xlsx");
+                                Excel.Application excel = new Excel.Application();
+                                excel.Visible = true;
+                                Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName + ".xlsx", 0 , false);
+                            }
+                        }
+                        else
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не можете создать журнал случки без жеребца"));
+                        }
+                    });
+                }
+
+                return _createTaleMagazine;
+            }
+
+            set
+            {
+                _createTaleMagazine = value;
             }
         }
 

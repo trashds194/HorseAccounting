@@ -127,15 +127,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Мать:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left"/>
-                <ComboBox x:Name="motherComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True">
+                <ComboBox x:Name="motherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1} {2}">
-                                        <Binding Path="GpkNum" />
-                                        <Binding Path="NickName" />
-                                        <Binding Path="Brand" />
+                                    <MultiBinding StringFormat="{}{0}">
+                                        <Binding Path="FullName" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -144,15 +142,13 @@
                 </ComboBox>
 
                 <Label Content="Отец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.Row="1" HorizontalAlignment="Left"/>
-                <ComboBox x:Name="fatherComboBox" TextSearch.TextPath="NickName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
+                <ComboBox x:Name="fatherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1} {2}">
-                                        <Binding Path="GpkNum" />
-                                        <Binding Path="NickName" />
-                                        <Binding Path="Brand" />
+                                    <MultiBinding StringFormat="{}{0}">
+                                        <Binding Path="FullName" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>

@@ -22,6 +22,7 @@ namespace HorseAccounting.Model
         private string _owner;
         private int _motherID;
         private int _fatherID;
+        private string _fullName;
 
         #endregion
 
@@ -99,6 +100,12 @@ namespace HorseAccounting.Model
             set { Set<int>(() => FatherID, ref _fatherID, value); }
         }
 
+        public string FullName
+        {
+            get { return _fullName; }
+            set { Set<string>(() => FullName, ref _fullName, value); }
+        }
+
         private static readonly SshClient SshConnection = new SshClient("hostru06.fornex.host", 20022, "t60064", "HR4M%rV~S8.pB$gc");
         private static readonly MySqlConnectionStringBuilder Connection = new MySqlConnectionStringBuilder();
 
@@ -156,6 +163,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -176,6 +184,79 @@ namespace HorseAccounting.Model
             }
 
             return horses;
+        }
+
+        public static ObservableCollection<Horse> SearchHorses(string searchQuery)
+        {
+            if (!SshConnection.IsConnected)
+            {
+                SshConnection.Connect();
+                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                SshConnection.AddForwardedPort(port);
+
+                port.Start();
+            }
+
+            Connection.Server = "127.0.0.1";
+            Connection.Port = 3306;
+
+            Connection.UserID = "t60064_dbuser";
+            Connection.Password = "HR4M%rV~S8.pB$gc";
+            Connection.Database = "t60064_db";
+            Connection.CharacterSet = "utf8";
+
+            string query = "SELECT * FROM `лошадь` where `Кличка` Like '%" + searchQuery + "%'";
+
+            ObservableCollection<Horse> searchedHorses = new ObservableCollection<Horse>();
+
+            try
+            {
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, sql);
+
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        searchedHorses.Add(
+                            new Horse
+                            {
+                                ID = dataReader.GetInt32(0),
+                                GpkNum = dataReader.GetInt32(1),
+                                NickName = dataReader.GetString(2),
+                                Brand = dataReader.GetInt32(3),
+                                Bloodiness = dataReader.GetString(4),
+                                Color = dataReader.GetString(5),
+                                Gender = dataReader.GetString(6),
+                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+                                BirthPlace = dataReader.GetString(8),
+                                Owner = dataReader.GetString(9),
+                                MotherID = dataReader.GetInt32(10),
+                                FatherID = dataReader.GetInt32(11),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                            });
+                    }
+
+                    dataReader.Close();
+
+                    sql.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                searchedHorses.Add(
+                    new Horse
+                    {
+                        NickName = "База данных не найдена!",
+                        Bloodiness = "Обратитесь к разработчику приложения!",
+                    });
+            }
+
+            return searchedHorses;
         }
 
         #endregion
@@ -230,6 +311,7 @@ namespace HorseAccounting.Model
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -300,6 +382,7 @@ namespace HorseAccounting.Model
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -433,6 +516,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 

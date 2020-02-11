@@ -39,7 +39,7 @@ namespace HorseAccounting.ViewModel
             {
                 MainHorse = (Horse)_navigationService.Parameter;
 
-                HorseNick = MainHorse.NickName;
+                HorseNick = MainHorse.FullName;
 
                 _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
                 _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
