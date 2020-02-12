@@ -79,6 +79,7 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _mainHorseList = value;
+                RaisePropertyChanged(nameof(MainHorseList));
             }
         }
 
@@ -88,6 +89,12 @@ namespace HorseAccounting.ViewModel
             {
                 return _motherHorseList;
             }
+
+            set
+            {
+                _motherHorseList = value;
+                RaisePropertyChanged(nameof(MotherHorseList));
+            }
         }
 
         public ObservableCollection<Horse> FatherHorseList
@@ -95,6 +102,12 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _fatherHorseList;
+            }
+
+            set
+            {
+                _fatherHorseList = value;
+                RaisePropertyChanged(nameof(FatherHorseList));
             }
         }
 
@@ -143,6 +156,8 @@ namespace HorseAccounting.ViewModel
                     {
                         MainHorse = null;
                         MainHorseList = null;
+                        MotherHorseList = null;
+                        FatherHorseList = null;
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }
@@ -153,6 +168,29 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _backToHorsesList = value;
+            }
+        }
+
+        private ICommand _changeHorse;
+
+        public ICommand ChangeHorse
+        {
+            get
+            {
+                if (_changeHorse == null)
+                {
+                    _changeHorse = new RelayCommand(() =>
+                    {
+                        _navigationService.NavigateTo("ChangeHorsePage", MainHorse);
+                    });
+                }
+
+                return _changeHorse;
+            }
+
+            set
+            {
+                _changeHorse = value;
             }
         }
 

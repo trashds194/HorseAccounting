@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
@@ -8,13 +7,7 @@ using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
 {
-    public enum Gender
-    {
-        Stallion,
-        Mare,
-    }
-
-    public class AddHorseViewModel : ViewModelBase
+    public class ChangeHorseViewModel : ViewModelBase
     {
         #region Consts
 
@@ -26,29 +19,65 @@ namespace HorseAccounting.ViewModel
 
         #region Vars
 
-        private IPageNavigationService _navigationService;
-
         private string _studFarm;
         private string _owner;
 
-        private ObservableCollection<Horse> _motherHorseList;
-        private ObservableCollection<Horse> _fatherHorseList;
+        private IPageNavigationService _navigationService = new PageNavigationService();
 
-        private Horse _addedHorse;
+        private Horse _selectedHorse;
+        private Horse _mainHorse;
         private Horse _motherHorse;
         private Horse _fatherHorse;
+
+        private ObservableCollection<Horse> _motherHorseList;
+        private ObservableCollection<Horse> _fatherHorseList;
 
         private Gender _gender = Gender.Mare;
 
         #endregion
 
-        public AddHorseViewModel(IPageNavigationService navigationService)
+        public ChangeHorseViewModel(IPageNavigationService navigationService)
         {
             _navigationService = navigationService;
         }
 
         public void OnPageLoad()
         {
+            SelectedHorse = (Horse)_navigationService.Parameter;
+
+            MainHorse = Horse.GetSelectedHorse1(SelectedHorse.ID);
+
+            MotherHorse = Horse.GetSelectedHorse1(MainHorse.MotherID);
+
+            if (MainHorse.Gender.Equals("Кобыла"))
+            {
+                Gender = Gender.Mare;
+            }
+            else if (MainHorse.Gender.Equals("Жеребец"))
+            {
+                Gender = Gender.Stallion;
+            }
+
+            if(MainHorse.BirthPlace.Equals(StudFarmName))
+            {
+                StudFarm = StudFarmName;
+                MainHorse.BirthPlace = null;
+            }
+            else
+            {
+                StudFarm = null;
+            }
+
+            if (MainHorse.Owner.Equals(StudFarmName))
+            {
+                Owner = StudFarmName;
+                MainHorse.Owner = null;
+            }
+            else
+            {
+                Owner = null;
+            }
+
             ComboBoxesUpdate();
         }
 
@@ -78,17 +107,37 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public Horse AddedHorse
+        public Horse SelectedHorse
         {
             get
             {
-                return _addedHorse;
+                return _selectedHorse;
             }
 
             set
             {
-                _addedHorse = value;
-                RaisePropertyChanged(nameof(AddedHorse));
+                if (_selectedHorse != value)
+                {
+                    _selectedHorse = value;
+                    RaisePropertyChanged(nameof(SelectedHorse));
+                }
+            }
+        }
+
+        public Horse MainHorse
+        {
+            get
+            {
+                return _mainHorse;
+            }
+
+            set
+            {
+                if (_mainHorse != value)
+                {
+                    _mainHorse = value;
+                    RaisePropertyChanged(nameof(MainHorse));
+                }
             }
         }
 
@@ -163,7 +212,7 @@ namespace HorseAccounting.ViewModel
                 }
 
                 _studFarm = value;
-                AddedHorse.BirthPlace = null;
+                MainHorse.BirthPlace = null;
                 RaisePropertyChanged(nameof(StudFarm));
                 RaisePropertyChanged(nameof(IsStudFarm));
                 RaisePropertyChanged(nameof(DropStudFarm));
@@ -185,7 +234,7 @@ namespace HorseAccounting.ViewModel
                 }
 
                 _owner = value;
-                AddedHorse.Owner = null;
+                MainHorse.Owner = null;
                 RaisePropertyChanged(nameof(Owner));
                 RaisePropertyChanged(nameof(IsOwner));
                 RaisePropertyChanged(nameof(DropOwner));
@@ -268,111 +317,26 @@ namespace HorseAccounting.ViewModel
 
         #region Commands
 
-        private ICommand _horsesList;
+        private ICommand _backToHorse;
 
-        public ICommand BackToList
+        public ICommand Back
         {
             get
             {
-                if (_horsesList == null)
+                if (_backToHorse == null)
                 {
-                    _horsesList = new RelayCommand(() =>
+                    _backToHorse = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("HorsesList");
+                        _navigationService.NavigateTo("ShowHorsePage", MainHorse);
                     });
                 }
 
-                return _horsesList;
+                return _backToHorse;
             }
 
             set
             {
-                _horsesList = value;
-            }
-        }
-
-        private ICommand _addHorse;
-
-        public ICommand AddHorseToList
-        {
-            get
-            {
-                if (_addHorse == null)
-                {
-                    AddedHorse = new Horse();
-                    _addHorse = new RelayCommand(() =>
-                    {
-                        if (StudFarm == null)
-                        {
-                            StudFarm = AddedHorse.BirthPlace;
-                        }
-
-                        if (Owner == null)
-                        {
-                            Owner = AddedHorse.Owner;
-                        }
-
-                        if (MotherHorse != null && FatherHorse != null)
-                        {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
-                            }
-                        }
-                        else if (MotherHorse != null && FatherHorse == null)
-                        {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
-                            }
-                        }
-                        else if (MotherHorse == null && FatherHorse != null)
-                        {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
-                            }
-                        }
-                        else
-                        {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0))
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
-                            }
-                        }
-                    });
-                }
-
-                return _addHorse;
-            }
-
-            set
-            {
-                _addHorse = value;
+                _backToHorse = value;
             }
         }
 

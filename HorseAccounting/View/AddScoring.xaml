@@ -97,7 +97,7 @@
                     </Border>
 
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1">
-                        <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,0"/>
+                        <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,0" Language="ru"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="1" >
                         <TextBox Text="{Binding AddedScoring.Origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="8,0,8,0" VerticalAlignment="Center"/>

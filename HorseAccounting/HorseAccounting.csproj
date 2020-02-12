@@ -38,7 +38,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -143,6 +143,7 @@
     <Compile Include="Infra\PageNavigationService.cs" />
     <Compile Include="Model\Scoring.cs" />
     <Compile Include="ViewModel\AddScoringViewModel.cs" />
+    <Compile Include="ViewModel\ChangeHorseViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\Horse.cs" />
@@ -155,6 +156,9 @@
     </Compile>
     <Compile Include="View\AddScoring.xaml.cs">
       <DependentUpon>AddScoring.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangeHorse.xaml.cs">
+      <DependentUpon>ChangeHorse.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HorsesList.xaml.cs">
       <DependentUpon>HorsesList.xaml</DependentUpon>
@@ -182,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddScoring.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangeHorse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

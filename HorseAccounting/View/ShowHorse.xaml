@@ -96,19 +96,19 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 0, 0">
-                                    <TextBlock Text="{Binding GpkNum}" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding GpkNum}" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Column="1" >
-                                    <TextBlock Text="{Binding NickName}" Grid.Column="1" FontWeight="Bold" FontSize="16" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{Binding NickName}" Grid.Column="1" FontWeight="Bold" FontSize="16" Margin="8,0,0,0" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="2">
-                                    <TextBlock Text="{Binding Brand}" Grid.Column="2" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding Brand}" Grid.Column="2" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="3">
-                                    <TextBlock Text="{Binding Bloodiness}" Grid.Column="3" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding Bloodiness}" Grid.Column="3" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="4">
-                                    <TextBlock Text="{Binding BirthDate}" Grid.Column="4" FontWeight="Bold" FontSize="16" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding BirthDate}" Grid.Column="4" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="5">
                                     <TextBlock Text="{Binding Color}" Grid.Column="5" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>

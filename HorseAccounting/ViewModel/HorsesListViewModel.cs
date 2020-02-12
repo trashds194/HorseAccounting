@@ -28,10 +28,10 @@ namespace HorseAccounting.ViewModel
 
         public async void OnPageLoad()
         {
-            SearchQuery = null;
-
             await Task.Run(() =>
             {
+                SearchQuery = null;
+
                 _horses = Horse.GetHorses();
                 RaisePropertyChanged(() => HorsesList);
             }).ConfigureAwait(true);

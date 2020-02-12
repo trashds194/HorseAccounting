@@ -16,6 +16,7 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<MainWindowViewModel>();
             SimpleIoc.Default.Register<HorsesListViewModel>();
             SimpleIoc.Default.Register<AddHorseViewModel>();
+            SimpleIoc.Default.Register<ChangeHorseViewModel>();
             SimpleIoc.Default.Register<ShowHorseViewModel>();
             SimpleIoc.Default.Register<AddScoringViewModel>();
             SimpleIoc.Default.Register<TaleMagazineViewModel>();
@@ -29,6 +30,7 @@ namespace HorseAccounting.ViewModel
             var navigationService = new PageNavigationService();
             navigationService.Configure("HorsesList", new Uri("../View/HorsesList.xaml", UriKind.Relative));
             navigationService.Configure("AddHorsePage", new Uri("../View/AddHorse.xaml", UriKind.Relative));
+            navigationService.Configure("ChangeHorsePage", new Uri("../View/ChangeHorse.xaml", UriKind.Relative));
             navigationService.Configure("ShowHorsePage", new Uri("../View/ShowHorse.xaml", UriKind.Relative));
             navigationService.Configure("AddScoringPage", new Uri("../View/AddScoring.xaml", UriKind.Relative));
             navigationService.Configure("TaleMagazinePage", new Uri("../View/TaleMagazine.xaml", UriKind.Relative));
@@ -57,6 +59,14 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<AddHorseViewModel>();
+            }
+        }
+
+        public ChangeHorseViewModel ChangeHorseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ChangeHorseViewModel>();
             }
         }
 
