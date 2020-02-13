@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using MySql.Data.MySqlClient;
 using Renci.SshNet;
 using System;
@@ -115,22 +116,30 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetHorses()
         {
-            if (!SshConnection.IsConnected)
+            try
             {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
 
-                port.Start();
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
             }
-
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
@@ -187,22 +196,30 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> SearchHorses(string searchQuery)
         {
-            if (!SshConnection.IsConnected)
+            try
             {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
 
-                port.Start();
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
             }
-
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
 
             ObservableCollection<Horse> searchedHorses = new ObservableCollection<Horse>();
 
@@ -264,22 +281,30 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetMotherHorse()
         {
-            if (!SshConnection.IsConnected)
+            try
             {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
 
-                port.Start();
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
             }
-
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
 
             ObservableCollection<Horse> motherHorses = new ObservableCollection<Horse>();
 
@@ -334,22 +359,30 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetFatherHorse()
         {
-            if (!SshConnection.IsConnected)
+            try
             {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
 
-                port.Start();
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
             }
-
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
 
             ObservableCollection<Horse> fatherHorses = new ObservableCollection<Horse>();
 
@@ -473,101 +506,39 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
-        public static ObservableCollection<Horse> GetSelectedHorse(int ID)
-        {
-            if (!SshConnection.IsConnected)
-            {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
 
-                port.Start();
-            }
 
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
-
-            ObservableCollection<Horse> selectedHorse = new ObservableCollection<Horse>();
-
-            try
-            {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` Where ID = @id";
-                    cmd.Parameters.AddWithValue("@id", ID);
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        selectedHorse.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetInt32(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetInt32(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                selectedHorse.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
-
-            return selectedHorse;
-        }
 
         #endregion
 
         #region ChangeHorsePage
 
-        public static Horse GetSelectedHorse1(int ID)
+        public static Horse GetSelectedHorse(int ID)
         {
-            if (!SshConnection.IsConnected)
+            try
             {
-                SshConnection.Connect();
-                ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                SshConnection.AddForwardedPort(port);
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
 
-                port.Start();
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
             }
-
-            Connection.Server = "127.0.0.1";
-            Connection.Port = 3306;
-
-            Connection.UserID = "t60064_dbuser";
-            Connection.Password = "HR4M%rV~S8.pB$gc";
-            Connection.Database = "t60064_db";
-            Connection.CharacterSet = "utf8";
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
 
             Horse selectedHorse = new Horse();
 

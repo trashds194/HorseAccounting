@@ -66,59 +66,74 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+                    
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1">
-                        <TextBlock Text="Дата бонитировки" Grid.Row="1" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Дата бонитировки" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="1">
-                        <TextBlock Text="Происхождение" Grid.Row="1" Grid.Column="1" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Бонитер" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="2">
-                        <TextBlock Text="Типичность" Grid.Row="1" Grid.Column="2" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Происхождение" Grid.Row="1" Grid.Column="1" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="3">
-                        <TextBlock Text="Промеры" Grid.Row="1" Grid.Column="3" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Типичность" Grid.Row="1" Grid.Column="2" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="4">
-                        <TextBlock Text="Экстерьер" Grid.Row="1" Grid.Column="4" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Промеры" Grid.Row="1" Grid.Column="3" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="5">
-                        <TextBlock Text="Работоспособность" Grid.Row="1" Grid.Column="5" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Экстерьер" Grid.Row="1" Grid.Column="4" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="6">
-                        <TextBlock Text="Качество потомства" Grid.Row="1" Grid.Column="6" Margin="10,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Работоспособность" Grid.Row="1" Grid.Column="5" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Column="7">
-                        <TextBlock Text="Класс" Grid.Row="1" Grid.Column="7" Margin="10,8,0,0" FontWeight="Normal"/>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="7">
+                        <TextBlock Text="Качество потомства" Grid.Row="1" Grid.Column="6" Margin="8,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="8">
+                        <TextBlock Text="Класс" Grid.Row="1" Grid.Column="7" Margin="8,8,0,0" FontWeight="Normal"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Column="9">
+                        <TextBlock Text="Комментарий" Grid.Row="1" Grid.Column="7" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
 
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1">
                         <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,0" Language="ru"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="1" >
+                        <TextBox Text="{Binding AddedScoring.Boniter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="8,0,8,0" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="2" >
                         <TextBox Text="{Binding AddedScoring.Origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="2">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="3">
                         <TextBox Text="{Binding AddedScoring.Typicality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="3">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="4">
                         <TextBox Text="{Binding AddedScoring.Measurements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="4">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="5">
                         <TextBox Text="{Binding AddedScoring.Exterior, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="5">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="6">
                         <TextBox Text="{Binding AddedScoring.WorkingCapacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="6">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="7">
                         <TextBox Text="{Binding AddedScoring.OffspringQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Row="1" Grid.Column="7">
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="8">
                         <TextBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Row="1" Grid.Column="9">
+                        <TextBox Text="{Binding AddedScoring.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
             </Border>

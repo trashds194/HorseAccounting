@@ -99,7 +99,7 @@ namespace HorseAccounting.ViewModel
                     AddedScoring = new Scoring();
                     _addScoringToList = new RelayCommand(() =>
                     {
-                        if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, MainHorse.ID))
+                        if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID))
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили бонитировки"));
                             AddedScoring.CleanScoringData();

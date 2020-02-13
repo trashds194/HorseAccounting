@@ -45,9 +45,9 @@ namespace HorseAccounting.ViewModel
         {
             SelectedHorse = (Horse)_navigationService.Parameter;
 
-            MainHorse = Horse.GetSelectedHorse1(SelectedHorse.ID);
+            MainHorse = Horse.GetSelectedHorse(SelectedHorse.ID);
 
-            MotherHorse = Horse.GetSelectedHorse1(MainHorse.MotherID);
+            MotherHorse = Horse.GetSelectedHorse(MainHorse.MotherID);
 
             if (MainHorse.Gender.Equals("Кобыла"))
             {

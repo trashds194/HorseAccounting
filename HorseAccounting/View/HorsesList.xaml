@@ -141,7 +141,7 @@
                                     <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,0,0,0"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="1">
-                                    <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="0"/>
+                                    <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="4,0,0,0"/>
                                 </Border>
                                 <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="2">
                                     <TextBlock Text="тавро" Grid.Row="1" Grid.Column="2" Margin="0"/>

@@ -12,6 +12,7 @@ namespace HorseAccounting.Model
 
         private int _id;
         private string _date;
+        private string _boniter;
         private int _origin;
         private int _typicality;
         private int _measurements;
@@ -19,6 +20,7 @@ namespace HorseAccounting.Model
         private int _workingCapacity;
         private int _offspringQuality;
         private string _theClass;
+        private string _comment;
         private int _horseID;
 
         #endregion
@@ -37,46 +39,82 @@ namespace HorseAccounting.Model
             set { Set<string>(() => Date, ref _date, value); }
         }
 
+        public string Boniter
+        {
+            get { return _boniter; }
+            set { Set<string>(() => Boniter, ref _boniter, value); }
+        }
+
         public int Origin
         {
             get { return _origin; }
-            set { Set<int>(() => Origin, ref _origin, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => Origin, ref _origin, value);
+            }
         }
 
         public int Typicality
         {
             get { return _typicality; }
-            set { Set<int>(() => Typicality, ref _typicality, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => Typicality, ref _typicality, value);
+            }
         }
 
         public int Measurements
         {
             get { return _measurements; }
-            set { Set<int>(() => Measurements, ref _measurements, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => Measurements, ref _measurements, value);
+            }
         }
 
         public int Exterior
         {
             get { return _exterior; }
-            set { Set<int>(() => Exterior, ref _exterior, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => Exterior, ref _exterior, value);
+            }
         }
 
         public int WorkingCapacity
         {
             get { return _workingCapacity; }
-            set { Set<int>(() => WorkingCapacity, ref _workingCapacity, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => WorkingCapacity, ref _workingCapacity, value);
+            }
         }
 
         public int OffspringQuality
         {
             get { return _offspringQuality; }
-            set { Set<int>(() => OffspringQuality, ref _offspringQuality, value); }
+            set
+            {
+                if (value <= 10)
+                    Set<int>(() => OffspringQuality, ref _offspringQuality, value);
+            }
         }
 
         public string TheClass
         {
             get { return _theClass; }
             set { Set<string>(() => TheClass, ref _theClass, value); }
+        }
+
+        public string Comment
+        {
+            get { return _comment; }
+            set { Set<string>(() => Comment, ref _comment, value); }
         }
 
         public int HorseID
@@ -132,14 +170,16 @@ namespace HorseAccounting.Model
                             {
                                 ID = dataReader.GetInt32(0),
                                 Date = dataReader.GetDateTime(1).ToShortDateString(),
-                                Origin = dataReader.GetInt32(2),
-                                Typicality = dataReader.GetInt32(3),
-                                Measurements = dataReader.GetInt32(4),
-                                Exterior = dataReader.GetInt32(5),
-                                WorkingCapacity = dataReader.GetInt32(6),
-                                OffspringQuality = dataReader.GetInt32(7),
-                                TheClass = dataReader.GetString(8),
-                                HorseID = dataReader.GetInt32(9),
+                                Boniter = dataReader.GetString(2),
+                                Origin = dataReader.GetInt32(3),
+                                Typicality = dataReader.GetInt32(4),
+                                Measurements = dataReader.GetInt32(5),
+                                Exterior = dataReader.GetInt32(6),
+                                WorkingCapacity = dataReader.GetInt32(7),
+                                OffspringQuality = dataReader.GetInt32(8),
+                                TheClass = dataReader.GetString(9),
+                                Comment = dataReader.GetString(10),
+                                HorseID = dataReader.GetInt32(11),
                             });
                     }
 
@@ -165,7 +205,7 @@ namespace HorseAccounting.Model
 
         #region AddScoringPage
 
-        public static bool AddScoring(string date, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, int horseID)
+        public static bool AddScoring(string date, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
         {
             try
             {
@@ -186,14 +226,25 @@ namespace HorseAccounting.Model
                 Connection.Database = "t60064_db";
                 Connection.CharacterSet = "utf8";
 
-                string query = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `ID Лошади`) " +
-                    "VALUES ('" + Convert.ToDateTime(date).ToString("yyyy-MM-dd") + "'," + origin + "," + typicality + ", " + measure + ", " + exterior + ", " + workingCapacity + ", " + offspringQuality + ", '" + theClass + "', " + horseID + ")";
-
                 using (var sql = new MySqlConnection(Connection.ConnectionString))
                 {
                     sql.Open();
 
-                    MySqlCommand cmd = new MySqlCommand(query, sql);
+                    MySqlCommand cmd = sql.CreateCommand();
+                    cmd.CommandText = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Бонитер`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `Комментарий`, `ID Лошади`) " +
+                    "VALUES (@date, @boniter, @origin, @typicality, @measure, @exterior, @workingCapacity, @offspringQuality, @theClass, @comment, @horseID)";
+
+                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(date).ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@boniter", boniter);
+                    cmd.Parameters.AddWithValue("@origin", origin);
+                    cmd.Parameters.AddWithValue("@typicality", typicality);
+                    cmd.Parameters.AddWithValue("@measure", measure);
+                    cmd.Parameters.AddWithValue("@exterior", exterior);
+                    cmd.Parameters.AddWithValue("@workingCapacity", workingCapacity);
+                    cmd.Parameters.AddWithValue("@offspringQuality", offspringQuality);
+                    cmd.Parameters.AddWithValue("@theClass", theClass);
+                    cmd.Parameters.AddWithValue("@comment", comment);
+                    cmd.Parameters.AddWithValue("@horseID", horseID);
 
                     cmd.ExecuteNonQuery();
 
@@ -212,6 +263,7 @@ namespace HorseAccounting.Model
         public void CleanScoringData()
         {
             Date = string.Empty;
+            Boniter = string.Empty;
             Origin = 0;
             Typicality = 0;
             Measurements = 0;
@@ -219,6 +271,7 @@ namespace HorseAccounting.Model
             WorkingCapacity = 0;
             OffspringQuality = 0;
             TheClass = string.Empty;
+            Comment = string.Empty;
         }
         #endregion
     }

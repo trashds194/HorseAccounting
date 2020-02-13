@@ -80,7 +80,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border BorderBrush="Black" BorderThickness="1, 1, 1, 0" Grid.ColumnSpan="3" Grid.RowSpan="2">
-                            <Grid x:Name="List" DataContext="{Binding MainHorseList}">
+                            <Grid x:Name="List" DataContext="{Binding SelectedHorse}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="2*"/>
@@ -153,7 +153,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Border DataContext="{Binding MotherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="2">
+                                <Border DataContext="{Binding MotherHorse}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="2">
                                     <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1} {2} {3}">
@@ -165,7 +165,7 @@
                                         </TextBlock.Text>
                                     </TextBlock>
                                 </Border>
-                                <Border DataContext="{Binding MotherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Row="2" Grid.Column="1">
+                                <Border DataContext="{Binding MotherHorse}" BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Row="2" Grid.Column="1">
                                     <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
@@ -175,7 +175,7 @@
                                         </TextBlock.Text>
                                     </TextBlock>
                                 </Border>
-                                <Border DataContext="{Binding FatherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="2">
+                                <Border DataContext="{Binding FatherHorse}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="2">
                                     <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1} {2} {3}">
@@ -187,7 +187,7 @@
                                         </TextBlock.Text>
                                     </TextBlock>
                                 </Border>
-                                <Border DataContext="{Binding FatherHorseList}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="3">
+                                <Border DataContext="{Binding FatherHorse}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="1" Grid.Column="3">
                                     <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
@@ -222,20 +222,16 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                 <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                <materialDesign:DataGridTextColumn Binding="{Binding Boniter}" Header="Бонитер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                 <materialDesign:DataGridTextColumn Binding="{Binding Origin}" Header="Происхождение" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                 <!-- set a max length to get an indicator in the editor -->
                                 <materialDesign:DataGridTextColumn Binding="{Binding Typicality}" Header="Типичность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </materialDesign:DataGridTextColumn>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding Exterior}" Header="Экстерьер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding WorkingCapacity}" Header="Работоспособность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding OffspringQuality}" Header="Качество потомства" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding TheClass}" Header="Класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Comment}" Header="Комментарий" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Button Command="{Binding AddScoring}" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Добавить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />

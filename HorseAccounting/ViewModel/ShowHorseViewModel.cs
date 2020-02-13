@@ -17,13 +17,10 @@ namespace HorseAccounting.ViewModel
         private string _horseNick;
 
         private Horse _mainHorse;
+        private Horse _selectedHorse;
+        private Horse _motherHorse;
+        private Horse _fatherHorse;
 
-        // private Horse _motherHorse;
-        // private Horse _fatherHorse;
-
-        private ObservableCollection<Horse> _mainHorseList;
-        private ObservableCollection<Horse> _motherHorseList;
-        private ObservableCollection<Horse> _fatherHorseList;
         private ObservableCollection<Scoring> _mainHorseScoring;
 
         #endregion
@@ -41,14 +38,11 @@ namespace HorseAccounting.ViewModel
 
                 HorseNick = MainHorse.FullName;
 
-                _mainHorseList = Horse.GetSelectedHorse(MainHorse.ID);
-                _motherHorseList = Horse.GetSelectedHorse(MainHorse.MotherID);
-                _fatherHorseList = Horse.GetSelectedHorse(MainHorse.FatherID);
+                SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
+                MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
+                FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
                 _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
 
-                RaisePropertyChanged(() => MainHorseList);
-                RaisePropertyChanged(() => MotherHorseList);
-                RaisePropertyChanged(() => FatherHorseList);
                 RaisePropertyChanged(() => MainHorseScoring);
             }).ConfigureAwait(true);
         }
@@ -69,47 +63,6 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public ObservableCollection<Horse> MainHorseList
-        {
-            get
-            {
-                return _mainHorseList;
-            }
-
-            set
-            {
-                _mainHorseList = value;
-                RaisePropertyChanged(nameof(MainHorseList));
-            }
-        }
-
-        public ObservableCollection<Horse> MotherHorseList
-        {
-            get
-            {
-                return _motherHorseList;
-            }
-
-            set
-            {
-                _motherHorseList = value;
-                RaisePropertyChanged(nameof(MotherHorseList));
-            }
-        }
-
-        public ObservableCollection<Horse> FatherHorseList
-        {
-            get
-            {
-                return _fatherHorseList;
-            }
-
-            set
-            {
-                _fatherHorseList = value;
-                RaisePropertyChanged(nameof(FatherHorseList));
-            }
-        }
 
         public ObservableCollection<Scoring> MainHorseScoring
         {
@@ -136,6 +89,57 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public Horse SelectedHorse
+        {
+            get
+            {
+                return _selectedHorse;
+            }
+
+            set
+            {
+                if (_selectedHorse != value)
+                {
+                    _selectedHorse = value;
+                    RaisePropertyChanged(nameof(SelectedHorse));
+                }
+            }
+        }
+
+        public Horse MotherHorse
+        {
+            get
+            {
+                return _motherHorse;
+            }
+
+            set
+            {
+                if (_motherHorse != value)
+                {
+                    _motherHorse = value;
+                    RaisePropertyChanged(nameof(MotherHorse));
+                }
+            }
+        }
+
+        public Horse FatherHorse
+        {
+            get
+            {
+                return _fatherHorse;
+            }
+
+            set
+            {
+                if (_fatherHorse != value)
+                {
+                    _fatherHorse = value;
+                    RaisePropertyChanged(nameof(FatherHorse));
+                }
+            }
+        }
+
         #endregion
 
         #region MenuCommands
@@ -155,9 +159,9 @@ namespace HorseAccounting.ViewModel
                     _backToHorsesList = new RelayCommand(() =>
                     {
                         MainHorse = null;
-                        MainHorseList = null;
-                        MotherHorseList = null;
-                        FatherHorseList = null;
+                        SelectedHorse = null;
+                        MotherHorse = null;
+                        FatherHorse = null;
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }
