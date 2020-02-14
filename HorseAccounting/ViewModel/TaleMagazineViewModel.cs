@@ -29,6 +29,16 @@ namespace HorseAccounting.ViewModel
         private Horse _mare8Horse;
         private Horse _mare9Horse;
         private Horse _mare10Horse;
+        private Horse _mare11Horse;
+        private Horse _mare12Horse;
+        private Horse _mare13Horse;
+        private Horse _mare14Horse;
+        private Horse _mare15Horse;
+        private Horse _mare16Horse;
+        private Horse _mare17Horse;
+        private Horse _mare18Horse;
+        private Horse _mare19Horse;
+        private Horse _mare20Horse;
 
         private ObservableCollection<Horse> _stallionHorseList;
         private ObservableCollection<Horse> _mareHorseList;
@@ -239,6 +249,176 @@ namespace HorseAccounting.ViewModel
                 {
                     _mare10Horse = value;
                     RaisePropertyChanged(nameof(Mare10Horse));
+                }
+            }
+        }
+
+        public Horse Mare11Horse
+        {
+            get
+            {
+                return _mare11Horse;
+            }
+
+            set
+            {
+                if (_mare11Horse != value)
+                {
+                    _mare11Horse = value;
+                    RaisePropertyChanged(nameof(Mare11Horse));
+                }
+            }
+        }
+
+        public Horse Mare12Horse
+        {
+            get
+            {
+                return _mare12Horse;
+            }
+
+            set
+            {
+                if (_mare12Horse != value)
+                {
+                    _mare12Horse = value;
+                    RaisePropertyChanged(nameof(Mare12Horse));
+                }
+            }
+        }
+
+        public Horse Mare13Horse
+        {
+            get
+            {
+                return _mare13Horse;
+            }
+
+            set
+            {
+                if (_mare13Horse != value)
+                {
+                    _mare13Horse = value;
+                    RaisePropertyChanged(nameof(Mare13Horse));
+                }
+            }
+        }
+
+        public Horse Mare14Horse
+        {
+            get
+            {
+                return _mare14Horse;
+            }
+
+            set
+            {
+                if (_mare14Horse != value)
+                {
+                    _mare14Horse = value;
+                    RaisePropertyChanged(nameof(Mare14Horse));
+                }
+            }
+        }
+
+        public Horse Mare15Horse
+        {
+            get
+            {
+                return _mare15Horse;
+            }
+
+            set
+            {
+                if (_mare15Horse != value)
+                {
+                    _mare15Horse = value;
+                    RaisePropertyChanged(nameof(Mare15Horse));
+                }
+            }
+        }
+
+        public Horse Mare16Horse
+        {
+            get
+            {
+                return _mare16Horse;
+            }
+
+            set
+            {
+                if (_mare16Horse != value)
+                {
+                    _mare16Horse = value;
+                    RaisePropertyChanged(nameof(Mare16Horse));
+                }
+            }
+        }
+
+        public Horse Mare17Horse
+        {
+            get
+            {
+                return _mare17Horse;
+            }
+
+            set
+            {
+                if (_mare17Horse != value)
+                {
+                    _mare17Horse = value;
+                    RaisePropertyChanged(nameof(Mare17Horse));
+                }
+            }
+        }
+
+        public Horse Mare18Horse
+        {
+            get
+            {
+                return _mare18Horse;
+            }
+
+            set
+            {
+                if (_mare18Horse != value)
+                {
+                    _mare18Horse = value;
+                    RaisePropertyChanged(nameof(Mare18Horse));
+                }
+            }
+        }
+
+        public Horse Mare19Horse
+        {
+            get
+            {
+                return _mare19Horse;
+            }
+
+            set
+            {
+                if (_mare19Horse != value)
+                {
+                    _mare19Horse = value;
+                    RaisePropertyChanged(nameof(Mare19Horse));
+                }
+            }
+        }
+
+        public Horse Mare20Horse
+        {
+            get
+            {
+                return _mare20Horse;
+            }
+
+            set
+            {
+                if (_mare20Horse != value)
+                {
+                    _mare20Horse = value;
+                    RaisePropertyChanged(nameof(Mare20Horse));
                 }
             }
         }

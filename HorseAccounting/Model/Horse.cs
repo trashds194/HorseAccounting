@@ -12,7 +12,7 @@ namespace HorseAccounting.Model
         #region Vars
 
         private int _id;
-        private int _gpkNum;
+        private string _gpkNum;
         private string _nickName;
         private int _brand;
         private string _bloodiness;
@@ -35,10 +35,10 @@ namespace HorseAccounting.Model
             set { Set<int>(() => ID, ref _id, value); }
         }
 
-        public int GpkNum
+        public string GpkNum
         {
             get { return _gpkNum; }
-            set { Set<int>(() => GpkNum, ref _gpkNum, value); }
+            set { Set<string>(() => GpkNum, ref _gpkNum, value); }
         }
 
         public string NickName
@@ -160,7 +160,7 @@ namespace HorseAccounting.Model
                             new Horse
                             {
                                 ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetInt32(1),
+                                GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
                                 Brand = dataReader.GetInt32(3),
                                 Bloodiness = dataReader.GetString(4),
@@ -241,7 +241,7 @@ namespace HorseAccounting.Model
                             new Horse
                             {
                                 ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetInt32(1),
+                                GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
                                 Brand = dataReader.GetInt32(3),
                                 Bloodiness = dataReader.GetString(4),
@@ -325,7 +325,7 @@ namespace HorseAccounting.Model
                             new Horse
                             {
                                 ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetInt32(1),
+                                GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
                                 Brand = dataReader.GetInt32(3),
                                 Bloodiness = dataReader.GetString(4),
@@ -403,7 +403,7 @@ namespace HorseAccounting.Model
                             new Horse
                             {
                                 ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetInt32(1),
+                                GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
                                 Brand = dataReader.GetInt32(3),
                                 Bloodiness = dataReader.GetString(4),
@@ -435,7 +435,7 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static bool AddHorse(int gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static bool AddHorse(string gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
@@ -492,7 +492,7 @@ namespace HorseAccounting.Model
 
         public void CleanHorseData()
         {
-            GpkNum = 0;
+            GpkNum = string.Empty;
             NickName = string.Empty;
             Brand = 0;
             Bloodiness = string.Empty;
@@ -559,7 +559,7 @@ namespace HorseAccounting.Model
                         selectedHorse = new Horse
                         {
                             ID = dataReader.GetInt32(0),
-                            GpkNum = dataReader.GetInt32(1),
+                            GpkNum = dataReader.GetString(1),
                             NickName = dataReader.GetString(2),
                             Brand = dataReader.GetInt32(3),
                             Bloodiness = dataReader.GetString(4),
@@ -594,7 +594,7 @@ namespace HorseAccounting.Model
         }
 
 
-        public static bool ChangeHorse(int id, int gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static bool ChangeHorse(int id, string gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
