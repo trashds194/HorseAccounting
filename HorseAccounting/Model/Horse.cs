@@ -315,7 +315,7 @@ namespace HorseAccounting.Model
                     sql.Open();
 
                     MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Кобыла'";
+                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Кобыла' Order by `Кличка`";
 
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -393,7 +393,7 @@ namespace HorseAccounting.Model
                     sql.Open();
 
                     MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Жеребец'";
+                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Жеребец' Order by `Кличка`";
 
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 

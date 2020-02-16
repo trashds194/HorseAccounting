@@ -23,24 +23,36 @@ namespace HorseAccounting.ViewModel
 
         private ObservableCollection<Scoring> _mainHorseScoring;
 
+        private bool _parentsVis;
+
         #endregion
 
         public ShowHorseViewModel(IPageNavigationService navigationService)
         {
-            _navigationService = navigationService;
+            _navigationService = navigationService;          
         }
 
         public async void OnPageLoad()
         {
             await Task.Run(() =>
             {
+                ParentsVis = false;
                 MainHorse = (Horse)_navigationService.Parameter;
 
-                HorseNick = MainHorse.FullName;
-
                 SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
-                MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
-                FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+
+                HorseNick = SelectedHorse.FullName;
+
+                if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                {
+                    ParentsVis = true;
+                    MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
+                    FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+                }
+                else
+                {
+                    ParentsVis = false;
+                }
                 _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
 
                 RaisePropertyChanged(() => MainHorseScoring);
@@ -48,6 +60,20 @@ namespace HorseAccounting.ViewModel
         }
 
         #region Definitions
+
+        public bool ParentsVis
+        {
+            get
+            {
+                return _parentsVis;
+            }
+
+            set
+            {
+                _parentsVis = value;
+                RaisePropertyChanged(nameof(ParentsVis));
+            }
+        }
 
         public string HorseNick
         {

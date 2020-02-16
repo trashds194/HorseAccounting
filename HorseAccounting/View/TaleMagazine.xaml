@@ -60,7 +60,7 @@
             <Label Grid.Row="0" Grid.Column="2" Content="Журнал случки" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Grid.ColumnSpan="4"/>
 
             <Label Grid.Row="1" Grid.Column="4" Content="Год случки" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <DatePicker Grid.Row="1" Grid.Column="5" Margin="16,0" Language="ru"> </DatePicker>
+            <DatePicker Text="{Binding ChoosenDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="5" Margin="16,0" Language="ru"> </DatePicker>
 
             <Label x:Name="label" Content="Выберите жеребца производителя:" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             <ComboBox x:Name="stallionComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding StallionHorse, Mode=TwoWay}" ItemsSource="{Binding StallionHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Grid.ColumnSpan="2">
@@ -376,6 +376,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <Label x:Name="label1" Content="Выберите необходимый год и любой день и месяц,&#xD;&#xA;будет создана папка только с номером года." Grid.Column="4" Margin="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"/>
         </Grid>
     </ScrollViewer>
 </Page>

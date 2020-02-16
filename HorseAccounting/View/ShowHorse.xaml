@@ -22,6 +22,10 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}">
 
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </Page.Resources>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
@@ -119,33 +123,33 @@
                                 <Border BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Column="7">
                                     <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 1" Grid.Row="1">
                                     <TextBlock Text="№ по ГПК" Grid.Row="1" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="1">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 1" Grid.Row="1" Grid.Column="1">
                                     <TextBlock Text="кличка" Grid.Row="1" Grid.Column="1" Margin="8,8,0,0" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="2">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 1" Grid.Row="1" Grid.Column="2">
                                     <TextBlock Text="тавро" Grid.Row="1" Grid.Column="2" Margin="0,8,0,0" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="3">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 1" Grid.Row="1" Grid.Column="3">
                                     <TextBlock Text="Кровность" Grid.Row="1" Grid.Column="3" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="4">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 1" Grid.Row="1" Grid.Column="4">
                                     <TextBlock Text="Год рожд." Grid.Row="1" Grid.Column="4" Margin="10,8,0,0" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="5">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 1" Grid.Row="1" Grid.Column="5">
                                     <TextBlock Text="Масть" Grid.Row="1" Grid.Column="5" Margin="10,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 0" Grid.Row="1" Grid.Column="6">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 1, 1" Grid.Row="1" Grid.Column="6">
                                     <TextBlock Text="Место рождения" Grid.Row="1" Grid.Column="6" Margin="10,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Normal"/>
                                 </Border>
-                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 0" Grid.Row="1" Grid.Column="7">
+                                <Border BorderBrush="Black" BorderThickness="0, 1, 0, 1" Grid.Row="1" Grid.Column="7">
                                     <TextBlock Text="Владелец" Grid.Row="1" Grid.Column="7" Margin="10,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Normal"/>
                                 </Border>
                             </Grid>
                         </Border>
-                        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" Grid.Row="2">
+                        <Border Visibility="{Binding ParentsVis, Converter={StaticResource BoolToVisConverter}}" BorderBrush="Black" BorderThickness="1,0,1,1" Grid.ColumnSpan="3" Grid.Row="2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -199,7 +203,7 @@
                                 </Border>
                             </Grid>
                         </Border>
-                        <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
+                        <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
                     </Grid>
                 </StackPanel>
             </Expander>

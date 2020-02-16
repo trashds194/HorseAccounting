@@ -1,4 +1,4 @@
-﻿<Page x:Class="HorseAccounting.View.AddScoring"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +7,8 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+      
+      xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="HorseAccounting.View.AddScoring"
       
       mc:Ignorable="d" 
       
@@ -73,7 +75,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    
+
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1">
                         <TextBlock Text="Дата бонитировки" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
                     </Border>
@@ -130,7 +132,12 @@
                         <TextBox Text="{Binding AddedScoring.OffspringQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="8">
-                        <TextBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center"/>
+                        <ComboBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center">
+                            <System:String>эл.</System:String>
+                            <System:String>I</System:String>
+                            <System:String>II</System:String>
+                            <System:String>III</System:String>
+                        </ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Row="1" Grid.Column="9">
                         <TextBox Text="{Binding AddedScoring.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center"/>

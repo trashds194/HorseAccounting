@@ -43,6 +43,9 @@ namespace HorseAccounting.ViewModel
         private ObservableCollection<Horse> _stallionHorseList;
         private ObservableCollection<Horse> _mareHorseList;
 
+        private DateTime _choosenDate;
+        private string _year;
+
         #endregion
 
         public TaleMagazineViewModel(IPageNavigationService navigationService)
@@ -57,6 +60,7 @@ namespace HorseAccounting.ViewModel
 
                 _stallionHorseList = Horse.GetFatherHorse();
                 _mareHorseList = Horse.GetMotherHorse();
+                ChoosenDate = DateTime.Today;
 
                 RaisePropertyChanged(() => StallionHorseList);
                 RaisePropertyChanged(() => MareHorseList);
@@ -65,6 +69,34 @@ namespace HorseAccounting.ViewModel
         }
 
         #region Definitions
+
+        public DateTime ChoosenDate
+        {
+            get
+            {
+                return _choosenDate;
+            }
+
+            set
+            {
+                _choosenDate = value;
+                RaisePropertyChanged(nameof(ChoosenDate));
+            }
+        }
+
+        public string Year
+        {
+            get
+            {
+                return _year;
+            }
+
+            set
+            {
+                _year = value;
+                RaisePropertyChanged(nameof(Year));
+            }
+        }
 
         public Horse StallionHorse
         {
@@ -479,20 +511,21 @@ namespace HorseAccounting.ViewModel
                     {
                         if (StallionHorse != null)
                         {
+                            Year = ChoosenDate.ToString("yyyy");
                             Directory.CreateDirectory(Path.Combine(@"C:\Users\Public\Documents\", "Помощник коневода"));
                             string docPath = @"C:\Users\Public\Documents\Помощник коневода\";
                             Directory.CreateDirectory(Path.Combine(docPath, "Журналы случки"));
                             string magazinesPath = @"C:\Users\Public\Documents\Помощник коневода\Журналы случки\";
-                            if (!File.Exists(magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName + ".xlsx"))
+                            if (!File.Exists(magazinesPath + Year + @"\" + StallionHorse.FullName + ".xlsx"))
                             {
-                                Directory.CreateDirectory(Path.Combine(magazinesPath, StallionHorse.FullName));
+                                Directory.CreateDirectory(Path.Combine(magazinesPath, Year));
 
                                 Excel.Application application = new Excel.Application();
                                 application.Visible = true;
 
                                 Excel.Workbook workbook;
                                 Excel.Worksheet worksheet;
-                                var path = System.IO.Path.GetFullPath(@"Files\Excel\Журнал случки 19г.xlsx");
+                                var path = System.IO.Path.GetFullPath(@"Files\Excel\Журнал случки.xlsx");
                                 workbook = application.Workbooks.Open(path, 0, false);
 
                                 worksheet = (Excel.Worksheet)workbook.Sheets[1];
@@ -511,6 +544,16 @@ namespace HorseAccounting.ViewModel
                                     worksheet.Cells[38, 2].Value = Mare8Horse.FullName;
                                     worksheet.Cells[43, 2].Value = Mare9Horse.FullName;
                                     worksheet.Cells[48, 2].Value = Mare10Horse.FullName;
+                                    worksheet.Cells[53, 2].Value = Mare11Horse.FullName;
+                                    worksheet.Cells[58, 2].Value = Mare12Horse.FullName;
+                                    worksheet.Cells[63, 2].Value = Mare13Horse.FullName;
+                                    worksheet.Cells[68, 2].Value = Mare14Horse.FullName;
+                                    worksheet.Cells[73, 2].Value = Mare15Horse.FullName;
+                                    worksheet.Cells[78, 2].Value = Mare16Horse.FullName;
+                                    worksheet.Cells[83, 2].Value = Mare17Horse.FullName;
+                                    worksheet.Cells[88, 2].Value = Mare18Horse.FullName;
+                                    worksheet.Cells[93, 2].Value = Mare19Horse.FullName;
+                                    worksheet.Cells[98, 2].Value = Mare20Horse.FullName;
                                 }
                                 catch (Exception ex)
                                 {
@@ -519,7 +562,7 @@ namespace HorseAccounting.ViewModel
 
                                 try
                                 {
-                                    workbook.SaveAs(Filename: magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName);
+                                    workbook.SaveAs(Filename: magazinesPath + Year + @"\" + StallionHorse.FullName);
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно создали журнал случки"));
                                 }
                                 catch (System.Runtime.InteropServices.COMException ex)
@@ -534,7 +577,7 @@ namespace HorseAccounting.ViewModel
                                 //System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + StallionHorse.NickName + @"\" + StallionHorse.NickName + ".xlsx");
                                 Excel.Application excel = new Excel.Application();
                                 excel.Visible = true;
-                                Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + StallionHorse.FullName + @"\" + StallionHorse.FullName + ".xlsx", 0 , false);
+                                Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + Year + @"\" + StallionHorse.FullName + ".xlsx", 0 , false);
                             }
                         }
                         else
