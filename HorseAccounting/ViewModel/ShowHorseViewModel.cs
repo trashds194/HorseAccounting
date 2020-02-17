@@ -23,6 +23,8 @@ namespace HorseAccounting.ViewModel
 
         private ObservableCollection<Scoring> _mainHorseScoring;
 
+        private ObservableCollection<Progression> _mainHorseProgression;
+
         private bool _parentsVis;
 
         #endregion
@@ -53,8 +55,12 @@ namespace HorseAccounting.ViewModel
                 {
                     ParentsVis = false;
                 }
-                _mainHorseScoring = Scoring.GetSelectedScoring(MainHorse.ID);
 
+                _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+
+                _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID);
+
+                RaisePropertyChanged(() => MainHorseProgression);
                 RaisePropertyChanged(() => MainHorseScoring);
             }).ConfigureAwait(true);
         }
@@ -95,6 +101,14 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _mainHorseScoring;
+            }
+        }
+
+        public ObservableCollection<Progression> MainHorseProgression
+        {
+            get 
+            {
+                return _mainHorseProgression;
             }
         }
 

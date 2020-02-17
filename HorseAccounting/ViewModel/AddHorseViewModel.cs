@@ -31,12 +31,16 @@ namespace HorseAccounting.ViewModel
         private string _studFarm;
         private string _owner;
 
+        private int _lastHorseID;
+
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
 
         private Horse _addedHorse;
         private Horse _motherHorse;
         private Horse _fatherHorse;
+
+        private Progression _addedProgression;
 
         private Gender _gender = Gender.Mare;
 
@@ -120,6 +124,20 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public Progression AddedProgression
+        {
+            get
+            {
+                return _addedProgression;
+            }
+
+            set
+            {
+                _addedProgression = value;
+                RaisePropertyChanged(nameof(AddedProgression));
+            }
+        }
+
         public Gender Gender
         {
             get
@@ -189,6 +207,20 @@ namespace HorseAccounting.ViewModel
                 RaisePropertyChanged(nameof(Owner));
                 RaisePropertyChanged(nameof(IsOwner));
                 RaisePropertyChanged(nameof(DropOwner));
+            }
+        }
+
+        public int LastHorseID
+        {
+            get
+            {
+                return _lastHorseID;
+            }
+
+            set
+            {
+                _lastHorseID = value;
+                RaisePropertyChanged(nameof(LastHorseID));
             }
         }
 
@@ -300,6 +332,7 @@ namespace HorseAccounting.ViewModel
                 if (_addHorse == null)
                 {
                     AddedHorse = new Horse();
+                    AddedProgression = new Progression();
                     _addHorse = new RelayCommand(() =>
                     {
                         if (StudFarm == null)
@@ -317,12 +350,33 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
+                                LastHorseID = Horse.GetLastHorseID();
+                                if (LastHorseID != 0)
+                                {
+                                    if (AddedProgression.Comment == null)
+                                    {
+                                        AddedProgression.Comment = string.Empty;
+                                    }
+                                    if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                        AddedProgression.CleanProgressionData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
+                                }
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
                             else
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
                             }
                         }
                         else if (MotherHorse != null && FatherHorse == null)
@@ -330,12 +384,33 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
+                                LastHorseID = Horse.GetLastHorseID();
+                                if (LastHorseID != 0)
+                                {
+                                    if (AddedProgression.Comment == null)
+                                    {
+                                        AddedProgression.Comment = string.Empty;
+                                    }
+                                    if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                        AddedProgression.CleanProgressionData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
+                                }
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
                             else
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
                             }
                         }
                         else if (MotherHorse == null && FatherHorse != null)
@@ -343,12 +418,33 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
+                                LastHorseID = Horse.GetLastHorseID();
+                                if (LastHorseID != 0)
+                                {
+                                    if (AddedProgression.Comment == null)
+                                    {
+                                        AddedProgression.Comment = string.Empty;
+                                    }
+                                    if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                        AddedProgression.CleanProgressionData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
+                                }
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
                             else
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
                             }
                         }
                         else
@@ -356,12 +452,33 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0))
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
+                                LastHorseID = Horse.GetLastHorseID();
+                                if (LastHorseID != 0)
+                                {
+                                    if(AddedProgression.Comment == null)
+                                    {
+                                        AddedProgression.Comment = string.Empty;
+                                    }
+                                    if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                        AddedProgression.CleanProgressionData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
+                                }
                                 AddedHorse.CleanHorseData();
                                 ComboBoxesUpdate();
                             }
                             else
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
                             }
                         }
                     });

@@ -502,10 +502,67 @@ namespace HorseAccounting.Model
             Owner = string.Empty;
         }
 
+        public static int GetLastHorseID()
+        {
+            try
+            {
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
+
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+            }
+
+            int lastHorseID = 0;
+
+            try
+            {
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = sql.CreateCommand();
+                    cmd.CommandText = "SELECT MAX(ID) FROM `лошадь`";
+
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        lastHorseID = dataReader.GetInt32(0);
+                    }
+
+                    dataReader.Close();
+
+                    sql.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return lastHorseID;
+        }
+
         #endregion
 
         #region ShowHorsePage
-
 
 
 

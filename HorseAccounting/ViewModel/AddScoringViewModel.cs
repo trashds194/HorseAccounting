@@ -28,6 +28,22 @@ namespace HorseAccounting.ViewModel
             MainHorse = (Horse)_navigationService.Parameter;
         }
 
+        public void CheckForNull()
+        {
+            if (AddedScoring.Boniter == null)
+            {
+                AddedScoring.Boniter = string.Empty;
+            }
+            if (AddedScoring.Comment == null)
+            {
+                AddedScoring.Comment = string.Empty;
+            }
+            if (AddedScoring.TheClass == null)
+            {
+                AddedScoring.TheClass = string.Empty;
+            }
+        }
+
         #region Definitions
 
         public Horse MainHorse
@@ -80,7 +96,7 @@ namespace HorseAccounting.ViewModel
                 }
 
                 return _backToHorse;
-            } 
+            }
 
             set
             {
@@ -99,6 +115,7 @@ namespace HorseAccounting.ViewModel
                     AddedScoring = new Scoring();
                     _addScoringToList = new RelayCommand(() =>
                     {
+                        CheckForNull();
                         if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID))
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили бонитировки"));

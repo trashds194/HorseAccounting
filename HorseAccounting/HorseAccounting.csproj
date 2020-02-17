@@ -141,6 +141,7 @@
     </ApplicationDefinition>
     <Compile Include="Infra\IPageNavigationService.cs" />
     <Compile Include="Infra\PageNavigationService.cs" />
+    <Compile Include="Model\Progression.cs" />
     <Compile Include="Model\Scoring.cs" />
     <Compile Include="ViewModel\AddScoringViewModel.cs" />
     <Compile Include="ViewModel\ChangeHorseViewModel.cs" />
