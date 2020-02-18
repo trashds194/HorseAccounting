@@ -14,7 +14,7 @@ namespace HorseAccounting.Model
         private int _id;
         private string _gpkNum;
         private string _nickName;
-        private int _brand;
+        private string _brand;
         private string _bloodiness;
         private string _color;
         private string _gender;
@@ -47,10 +47,10 @@ namespace HorseAccounting.Model
             set { Set<string>(() => NickName, ref _nickName, value); }
         }
 
-        public int Brand
+        public string Brand
         {
             get { return _brand; }
-            set { Set<int>(() => Brand, ref _brand, value); }
+            set { Set<string>(() => Brand, ref _brand, value); }
         }
 
         public string Bloodiness
@@ -162,7 +162,7 @@ namespace HorseAccounting.Model
                                 ID = dataReader.GetInt32(0),
                                 GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetInt32(3),
+                                Brand = dataReader.GetString(3),
                                 Bloodiness = dataReader.GetString(4),
                                 Color = dataReader.GetString(5),
                                 Gender = dataReader.GetString(6),
@@ -171,7 +171,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -243,7 +243,7 @@ namespace HorseAccounting.Model
                                 ID = dataReader.GetInt32(0),
                                 GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetInt32(3),
+                                Brand = dataReader.GetString(3),
                                 Bloodiness = dataReader.GetString(4),
                                 Color = dataReader.GetString(5),
                                 Gender = dataReader.GetString(6),
@@ -252,7 +252,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -327,14 +327,14 @@ namespace HorseAccounting.Model
                                 ID = dataReader.GetInt32(0),
                                 GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetInt32(3),
+                                Brand = dataReader.GetString(3),
                                 Bloodiness = dataReader.GetString(4),
                                 Color = dataReader.GetString(5),
                                 Gender = dataReader.GetString(6),
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -405,14 +405,14 @@ namespace HorseAccounting.Model
                                 ID = dataReader.GetInt32(0),
                                 GpkNum = dataReader.GetString(1),
                                 NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetInt32(3),
+                                Brand = dataReader.GetString(3),
                                 Bloodiness = dataReader.GetString(4),
                                 Color = dataReader.GetString(5),
                                 Gender = dataReader.GetString(6),
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
 
@@ -435,7 +435,7 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static bool AddHorse(string gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static bool AddHorse(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
@@ -494,7 +494,7 @@ namespace HorseAccounting.Model
         {
             GpkNum = string.Empty;
             NickName = string.Empty;
-            Brand = 0;
+            Brand = string.Empty;
             Bloodiness = string.Empty;
             Color = string.Empty;
             BirthDate = string.Empty;
@@ -618,7 +618,7 @@ namespace HorseAccounting.Model
                             ID = dataReader.GetInt32(0),
                             GpkNum = dataReader.GetString(1),
                             NickName = dataReader.GetString(2),
-                            Brand = dataReader.GetInt32(3),
+                            Brand = dataReader.GetString(3),
                             Bloodiness = dataReader.GetString(4),
                             Color = dataReader.GetString(5),
                             Gender = dataReader.GetString(6),
@@ -627,7 +627,7 @@ namespace HorseAccounting.Model
                             Owner = dataReader.GetString(9),
                             MotherID = dataReader.GetInt32(10),
                             FatherID = dataReader.GetInt32(11),
-                            FullName = dataReader.GetString(2) + " " + dataReader.GetInt32(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                            FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                         };
                     }
 
@@ -651,7 +651,7 @@ namespace HorseAccounting.Model
         }
 
 
-        public static bool ChangeHorse(int id, string gpk, string nick, int brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static bool ChangeHorse(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {

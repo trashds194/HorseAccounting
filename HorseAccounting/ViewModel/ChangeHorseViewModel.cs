@@ -130,6 +130,38 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        private void CheckHorseDataForNull()
+        {
+            if (MainHorse.GpkNum == null)
+            {
+                MainHorse.GpkNum = string.Empty;
+            }
+            if (MainHorse.NickName == null)
+            {
+                MainHorse.NickName = string.Empty;
+            }
+            if (MainHorse.Brand == null)
+            {
+                MainHorse.Brand = string.Empty;
+            }
+            if (MainHorse.Bloodiness == null)
+            {
+                MainHorse.Bloodiness = string.Empty;
+            }
+            if (MainHorse.Color == null)
+            {
+                MainHorse.Color = string.Empty;
+            }
+            if (MainHorse.BirthPlace == null)
+            {
+                MainHorse.BirthPlace = string.Empty;
+            }
+            if (MainHorse.Owner == null)
+            {
+                MainHorse.Owner = string.Empty;
+            }
+        }
+
         #region Definitions
 
         public string MotherHorseFullName
@@ -435,6 +467,8 @@ namespace HorseAccounting.ViewModel
                     MainHorse = new Horse();
                     _changeHorse = new RelayCommand(() =>
                     {
+                        CheckHorseDataForNull();
+
                         if (StudFarm == null)
                         {
                             StudFarm = MainHorse.BirthPlace;
