@@ -12,6 +12,7 @@ namespace HorseAccounting.Model
 
         private int _id;
         private string _date;
+        private string _age;
         private string _boniter;
         private int _origin;
         private int _typicality;
@@ -37,6 +38,12 @@ namespace HorseAccounting.Model
         {
             get { return _date; }
             set { Set<string>(() => Date, ref _date, value); }
+        }
+
+        public string Age
+        {
+            get { return _age; }
+            set { Set<string>(() => Age, ref _age, value); }
         }
 
         public string Boniter
@@ -170,16 +177,17 @@ namespace HorseAccounting.Model
                             {
                                 ID = dataReader.GetInt32(0),
                                 Date = dataReader.GetDateTime(1).ToShortDateString(),
-                                Boniter = dataReader.GetString(2),
-                                Origin = dataReader.GetInt32(3),
-                                Typicality = dataReader.GetInt32(4),
-                                Measurements = dataReader.GetInt32(5),
-                                Exterior = dataReader.GetInt32(6),
-                                WorkingCapacity = dataReader.GetInt32(7),
-                                OffspringQuality = dataReader.GetInt32(8),
-                                TheClass = dataReader.GetString(9),
-                                Comment = dataReader.GetString(10),
-                                HorseID = dataReader.GetInt32(11),
+                                Age = dataReader.GetString(2),
+                                Boniter = dataReader.GetString(3),
+                                Origin = dataReader.GetInt32(4),
+                                Typicality = dataReader.GetInt32(5),
+                                Measurements = dataReader.GetInt32(6),
+                                Exterior = dataReader.GetInt32(7),
+                                WorkingCapacity = dataReader.GetInt32(8),
+                                OffspringQuality = dataReader.GetInt32(9),
+                                TheClass = dataReader.GetString(10),
+                                Comment = dataReader.GetString(11),
+                                HorseID = dataReader.GetInt32(12),
                             });
                     }
 
@@ -205,7 +213,7 @@ namespace HorseAccounting.Model
 
         #region AddScoringPage
 
-        public static bool AddScoring(string date, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
+        public static bool AddScoring(string date, string age, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
         {
             try
             {
@@ -231,10 +239,11 @@ namespace HorseAccounting.Model
                     sql.Open();
 
                     MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Бонитер`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `Комментарий`, `ID Лошади`) " +
-                    "VALUES (@date, @boniter, @origin, @typicality, @measure, @exterior, @workingCapacity, @offspringQuality, @theClass, @comment, @horseID)";
+                    cmd.CommandText = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Возраст`, `Бонитер`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `Комментарий`, `ID Лошади`) " +
+                    "VALUES (@date, @age, @boniter, @origin, @typicality, @measure, @exterior, @workingCapacity, @offspringQuality, @theClass, @comment, @horseID)";
 
                     cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(date).ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@age", age);
                     cmd.Parameters.AddWithValue("@boniter", boniter);
                     cmd.Parameters.AddWithValue("@origin", origin);
                     cmd.Parameters.AddWithValue("@typicality", typicality);
@@ -263,6 +272,7 @@ namespace HorseAccounting.Model
         public void CleanScoringData()
         {
             Date = string.Empty;
+            Age = string.Empty;
             Boniter = string.Empty;
             Origin = 0;
             Typicality = 0;

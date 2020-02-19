@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -16,6 +17,9 @@ namespace HorseAccounting.ViewModel
         private Horse _mainHorse;
         private Scoring _addedScoring;
 
+        private int _birthHorseYear;
+        private int _addedScoringYear;
+
         #endregion
 
         public AddScoringViewModel(IPageNavigationService navigationService)
@@ -26,6 +30,8 @@ namespace HorseAccounting.ViewModel
         public void OnPageLoad()
         {
             MainHorse = (Horse)_navigationService.Parameter;
+
+            BirthHorseYear = Convert.ToDateTime(MainHorse.BirthDate).Year;
         }
 
         public void CheckForNull()
@@ -45,6 +51,34 @@ namespace HorseAccounting.ViewModel
         }
 
         #region Definitions
+
+        public int BirthHorseYear
+        {
+            get
+            {
+                return _birthHorseYear;
+            }
+
+            set
+            {
+                _birthHorseYear = value;
+                RaisePropertyChanged(nameof(BirthHorseYear));
+            }
+        }
+
+        public int AddedScoringYear
+        {
+            get
+            {
+                return _addedScoringYear;
+            }
+
+            set
+            {
+                _addedScoringYear = value;
+                RaisePropertyChanged(nameof(AddedScoringYear));
+            }
+        }
 
         public Horse MainHorse
         {
@@ -92,6 +126,7 @@ namespace HorseAccounting.ViewModel
                     _backToHorse = new RelayCommand(() =>
                     {
                         _navigationService.NavigateTo("ShowHorsePage", MainHorse);
+                        AddedScoring.CleanScoringData();
                     });
                 }
 
@@ -101,6 +136,51 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _backToHorse = value;
+            }
+        }
+
+        private ICommand _setAge;
+
+        public ICommand SetAge
+        {
+            get
+            {
+                if (_setAge == null)
+                {
+                    _setAge = new RelayCommand(() =>
+                    {
+                        if (!string.IsNullOrEmpty(AddedScoring.Date))
+                        {
+                            AddedScoringYear = Convert.ToDateTime(AddedScoring.Date).Year;
+                            int n = AddedScoringYear - BirthHorseYear;
+                            int last;
+                            if (n > 19 || n < 10)
+                            {
+                                last = n % 10;
+                                if (last == 1) 
+                                { 
+                                    AddedScoring.Age = n + " год"; 
+                                }
+                                else if (last == 0 || last >= 5) 
+                                { 
+                                    AddedScoring.Age = n + " лет"; 
+                                }
+                                else 
+                                { 
+                                    AddedScoring.Age = n + " года"; 
+                                }
+                            }
+                            else AddedScoring.Age = n + " лет";
+                        }
+                    });
+                }
+
+                return _setAge;
+            }
+
+            set
+            {
+                _setAge = value;
             }
         }
 
@@ -116,7 +196,7 @@ namespace HorseAccounting.ViewModel
                     _addScoringToList = new RelayCommand(() =>
                     {
                         CheckForNull();
-                        if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID))
+                        if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Age, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID))
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили бонитировки"));
                             AddedScoring.CleanScoringData();

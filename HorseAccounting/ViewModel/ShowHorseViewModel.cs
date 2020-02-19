@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
@@ -25,7 +26,12 @@ namespace HorseAccounting.ViewModel
 
         private ObservableCollection<Progression> _mainHorseProgression;
 
+        private bool _addProgressionVisible;
         private bool _parentsVis;
+
+        private string _addProgressionButtonText;
+
+        private Progression _addedProgression;
 
         #endregion
 
@@ -36,9 +42,13 @@ namespace HorseAccounting.ViewModel
 
         public async void OnPageLoad()
         {
+            ParentsVis = false;
+            AddProgressionVisible = false;
+
+            AddProgressionButtonText = "Добавить";
+
             await Task.Run(() =>
             {
-                ParentsVis = false;
                 MainHorse = (Horse)_navigationService.Parameter;
 
                 SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
@@ -78,6 +88,47 @@ namespace HorseAccounting.ViewModel
             {
                 _parentsVis = value;
                 RaisePropertyChanged(nameof(ParentsVis));
+            }
+        }
+
+        public bool AddProgressionVisible
+        {
+            get
+            {
+                return _addProgressionVisible;
+            }
+
+            set
+            {
+                _addProgressionVisible = value;
+                RaisePropertyChanged(nameof(AddProgressionVisible));
+            }
+        }
+
+        public string AddProgressionButtonText {
+            get
+            {
+                return _addProgressionButtonText;
+            }
+
+            set
+            {
+                _addProgressionButtonText = value;
+                RaisePropertyChanged(nameof(AddProgressionButtonText));
+            }
+        }
+
+        public Progression AddedProgression
+        {
+            get
+            {
+                return _addedProgression;
+            }
+
+            set
+            {
+                _addedProgression = value;
+                RaisePropertyChanged(nameof(AddedProgression));
             }
         }
 
@@ -235,6 +286,52 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _changeHorse = value;
+            }
+        }
+
+        private ICommand _addProgression;
+
+        public ICommand AddProgression
+        {
+            get
+            {
+                if(_addProgression == null)
+                {
+                    AddedProgression = new Progression();
+                    _addProgression = new RelayCommand(() =>
+                    {
+                        if (AddProgressionButtonText.Equals("Добавить"))
+                        {
+                            AddProgressionVisible = true;
+                            AddProgressionButtonText = "Сохранить";
+                        }
+                        else
+                        {
+                            if (AddedProgression.Comment == null)
+                            {
+                                AddedProgression.Comment = string.Empty;
+                            }
+                            if (!string.IsNullOrEmpty(AddedProgression.Date))
+                            {
+                                if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID))
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                    AddedProgression.CleanProgressionData();
+                                    AddProgressionVisible = false;
+                                    AddProgressionButtonText = "Добавить";
+                                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+                                    RaisePropertyChanged(nameof(MainHorseProgression));
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
+                                }
+                            }
+                        }
+                    });
+                }
+
+                return _addProgression;
             }
         }
 
