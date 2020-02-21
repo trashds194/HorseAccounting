@@ -12,7 +12,7 @@
       xmlns:System="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       
-      d:DesignHeight="700" d:DesignWidth="1200"
+      d:DesignHeight="800" d:DesignWidth="1200"
       
       DataContext="{Binding ChangeHorseViewModel, Source={StaticResource Locator}}"
       
@@ -80,11 +80,16 @@
                     <Label Grid.Row="3" Content="Кровность:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
                     <Label Grid.Row="4" Content="Масть:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
 
-                    <TextBox x:Name="gpkNumTextBox" materialDesign:HintAssist.Hint="Введите № по ГПК" Margin="40,10" Grid.Row="0" TextWrapping="Wrap" Text="{Binding GpkNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1"/>
-                    <TextBox x:Name="nickNameTextBox" materialDesign:HintAssist.Hint="Введите Кличку" Margin="40,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding NickName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1"/>
-                    <TextBox x:Name="brandTextBox" materialDesign:HintAssist.Hint="Введите Тавро" Margin="40,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
-                    <TextBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="40,10" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
-                    <ComboBox x:Name="colorComboBox" Grid.Row="5" Grid.Column="1" Margin="40,4" materialDesign:HintAssist.Hint="Введите Масть или выберите Масть из списка" IsEditable="True" IsTextSearchEnabled="True" Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" materialDesign:TextFieldAssist.HasClearButton="True">
+                    <TextBox x:Name="gpkNumTextBox" materialDesign:HintAssist.Hint="Введите № по ГПК" Margin="40,10" Grid.Row="0" TextWrapping="Wrap" Text="{Binding GpkNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <TextBox x:Name="nickNameTextBox" materialDesign:HintAssist.Hint="Введите Кличку" Margin="40,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding NickName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <TextBox x:Name="brandTextBox" materialDesign:HintAssist.Hint="Введите Тавро" Margin="40,10" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <TextBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="40,10" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <ComboBox x:Name="colorComboBox" Grid.Row="5" Grid.Column="1" Margin="40,10" materialDesign:HintAssist.Hint="Введите Масть или выберите Масть из списка" IsEditable="True" IsTextSearchEnabled="True" Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
                         <System:String>рыж</System:String>
                         <System:String>св-рыж</System:String>
                         <System:String>т-рыж</System:String>
@@ -114,8 +119,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <RadioButton x:Name="stallionButton" IsChecked="{Binding IsStallion}" Content="Жеребец" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
-                        <RadioButton x:Name="mareButton" IsChecked="{Binding IsMare}" Content="Кобыла" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Grid.Row="1"/>
+                        <RadioButton x:Name="stallionButton" IsChecked="{Binding IsStallion}" Content="Жеребец" HorizontalAlignment="Left" Margin="40,4,0,4" VerticalAlignment="Center"/>
+                        <RadioButton x:Name="mareButton" IsChecked="{Binding IsMare}" Content="Кобыла" HorizontalAlignment="Left" Margin="40,4,0,4" VerticalAlignment="Center" Grid.Row="1"/>
                     </Grid>
                 </Grid>
                 
@@ -126,8 +131,8 @@
                     </Grid.ColumnDefinitions>
                     
                     <Label Content="Дата рождения:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-                    
-                    <DatePicker x:Name="birthDateDatePicker" Margin="40,10" Text="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Language="ru"/>
+
+                    <DatePicker x:Name="birthDateDatePicker" Margin="40,8" Text="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Language="ru" materialDesign:HintAssist.Hint="Выберите дату рождения" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.ColumnSpan="2">
@@ -144,8 +149,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <RadioButton x:Name="birthPlaceButton" IsChecked="{Binding IsStudFarm}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="birthPlaceTextBox" Margin="40,0,0,4" TextWrapping="Wrap" Text="{Binding MainHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Center">
+                        <RadioButton x:Name="birthPlaceButton" IsChecked="{Binding IsStudFarm}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,4,0,4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="birthPlaceTextBox" Margin="40,4,0,4" TextWrapping="Wrap" Text="{Binding MainHorse.BirthPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Введите место рождения или выберите К/З им 1КА">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="GotFocus">
                                     <cmd:EventToCommand Command="{Binding DropStudFarm, Mode=OneWay}" MustToggleIsEnabledValue="True"/>
@@ -169,8 +174,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <RadioButton x:Name="ownerButton" IsChecked="{Binding IsOwner}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="ownerTextBox" Margin="40,0,0,4" Grid.Row="1" TextWrapping="Wrap" Text="{Binding MainHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
+                        <RadioButton x:Name="ownerButton" IsChecked="{Binding IsOwner}" Content="К/З им 1КА" HorizontalAlignment="Left" Margin="40,4,0,4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="ownerTextBox" Margin="40,4,0,4" Grid.Row="1" TextWrapping="Wrap" Text="{Binding MainHorse.Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Введите владельца или выберите К/З им 1КА">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="GotFocus">
                                     <cmd:EventToCommand Command="{Binding DropOwner, Mode=OneWay}" MustToggleIsEnabledValue="True"/>
@@ -190,16 +195,21 @@
 
                     <Grid Grid.Row="9" Grid.Column="1" Margin="0,4,40,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="1.3*"/>
+                            <RowDefinition Height="1.3*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="Мать:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="4,0,0,0"/>
-                        <ComboBox x:Name="motherComboBox" TextSearch.TextPath="FullName" Text="{Binding MotherHorseFullName}" IsEditable="True" IsTextSearchEnabled="True" StaysOpenOnEdit="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True">
+                        <Label Content="Мать:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="motherComboBox" TextSearch.TextPath="FullName" Text="{Binding MotherHorseFullName}" IsEditable="True" IsTextSearchEnabled="True" StaysOpenOnEdit="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,4,0,4" VerticalAlignment="Center" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Выберите мать из списка кобыл">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -213,8 +223,13 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Label Content="Отец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0"/>
-                        <ComboBox x:Name="fatherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" StaysOpenOnEdit="True" Text="{Binding FatherHorseFullName}" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True">
+                        <Label Content="Отец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="fatherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" StaysOpenOnEdit="True" Text="{Binding FatherHorseFullName}" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,4,0,4" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Выберите отца из списка жеребцов">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock>

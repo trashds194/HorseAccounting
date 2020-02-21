@@ -7,9 +7,10 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       
-      d:DesignHeight="700" d:DesignWidth="1200"
+      d:DesignHeight="800" d:DesignWidth="1200"
       
       DataContext="{Binding ShowHorseViewModel, Source={StaticResource Locator}}"
       
@@ -204,6 +205,18 @@
                                     </Border>
                                 </Grid>
                             </Border>
+                            <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                                <Label.Content>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Source="Состояние:" />
+                                                <Binding Path="State" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Label.Content>
+                            </Label>
                             <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
                         </Grid>
                     </StackPanel>
@@ -223,8 +236,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition Width="0.8*"/>
                             </Grid.ColumnDefinitions>
-                            <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainHorseProgression}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
+                            <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="4" ItemsSource="{Binding MainHorseProgression}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
@@ -233,18 +247,29 @@
                                     <!-- set a max length to get an indicator in the editor -->
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Grid Visibility="{Binding AddProgressionVisible, Converter={StaticResource BoolToVisConverter}}" Grid.Row="1" Grid.Column="0" Margin="0,16,0,8" Grid.ColumnSpan="2">
+                            <Grid Visibility="{Binding AddProgressionVisible, Converter={StaticResource BoolToVisConverter}}" Grid.Row="1" Grid.Column="0" Margin="0,16,0,8" Grid.ColumnSpan="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <DatePicker Text="{Binding AddedProgression.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Language="ru" Margin="0,4,10,4" materialDesign:HintAssist.Hint="Выберите дату последнего движения" VerticalAlignment="Stretch" FontWeight="Normal"/>
-                                <TextBox Text="{Binding AddedProgression.Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="10,4" materialDesign:HintAssist.Hint="Введите назначение" TextWrapping="Wrap" FontWeight="Normal"/>
-                                <TextBox Text="{Binding AddedProgression.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Margin="10,4,0,4" materialDesign:HintAssist.Hint="Введите комментарий" TextWrapping="Wrap" FontWeight="Normal"/>
+                                <DatePicker Text="{Binding AddedProgression.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Language="ru" Margin="0,4,10,4" materialDesign:HintAssist.Hint="Выберите дату последнего движения" VerticalAlignment="Stretch" FontWeight="Normal" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                                <ComboBox IsEditable="True" IsTextSearchEnabled="True" Text="{Binding AddedProgression.Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="10,4" materialDesign:HintAssist.Hint="Введите назначение или выберите из списка" materialDesign:TextFieldAssist.HasClearButton="True" FontWeight="Normal" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                    <System:String>продажа</System:String>
+                                    <System:String>списание</System:String>
+                                    <Separator/>
+                                    <System:String>маточный состав</System:String>
+                                    <System:String>жеребец производитель</System:String>
+                                </ComboBox>
+                                <TextBox Text="{Binding AddedProgression.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Margin="10,4,0,4" materialDesign:HintAssist.Hint="Введите комментарий" TextWrapping="Wrap" FontWeight="Normal" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
                             </Grid>
-                            <Button Command="{Binding AddProgression}" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="{Binding AddProgressionButtonText}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />
+                            <Button Command="{Binding AddProgression}" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="0,16,0,8" Content="{Binding AddProgressionButtonText}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />
                         </Grid>
                     </StackPanel>
                 </Expander>

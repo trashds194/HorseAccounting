@@ -24,6 +24,7 @@ namespace HorseAccounting.Model
         private int _motherID;
         private int _fatherID;
         private string _fullName;
+        private string _state;
 
         #endregion
 
@@ -101,6 +102,12 @@ namespace HorseAccounting.Model
             set { Set<int>(() => FatherID, ref _fatherID, value); }
         }
 
+        public string State
+        {
+            get { return _state; }
+            set { Set<string>(() => State, ref _state, value); }
+        }
+
         public string FullName
         {
             get { return _fullName; }
@@ -171,6 +178,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
                                 FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
@@ -252,6 +260,7 @@ namespace HorseAccounting.Model
                                 Owner = dataReader.GetString(9),
                                 MotherID = dataReader.GetInt32(10),
                                 FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
                                 FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
@@ -334,6 +343,9 @@ namespace HorseAccounting.Model
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
+                                MotherID = dataReader.GetInt32(10),
+                                FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
                                 FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
@@ -412,6 +424,9 @@ namespace HorseAccounting.Model
                                 BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
                                 BirthPlace = dataReader.GetString(8),
                                 Owner = dataReader.GetString(9),
+                                MotherID = dataReader.GetInt32(10),
+                                FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
                                 FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                             });
                     }
@@ -435,7 +450,7 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static bool AddHorse(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static bool AddHorse(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
             {
@@ -461,8 +476,8 @@ namespace HorseAccounting.Model
                     sql.Open();
 
                     MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`) " +
-                    "VALUES (@gpk, @nick, @brand, @blodeness, @color, @gend, @date, @place, @owner, @mother, @father)";
+                    cmd.CommandText = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Состояние`) " +
+                    "VALUES (@gpk, @nick, @brand, @blodeness, @color, @gend, @date, @place, @owner, @mother, @father, @state)";
 
                     cmd.Parameters.AddWithValue("@gpk", gpk);
                     cmd.Parameters.AddWithValue("@nick", nick);
@@ -475,6 +490,7 @@ namespace HorseAccounting.Model
                     cmd.Parameters.AddWithValue("@owner", owner);
                     cmd.Parameters.AddWithValue("@mother", motherID);
                     cmd.Parameters.AddWithValue("@father", fatherID);
+                    cmd.Parameters.AddWithValue("@state", state);
 
                     cmd.ExecuteNonQuery();
 
@@ -560,6 +576,48 @@ namespace HorseAccounting.Model
             return lastHorseID;
         }
 
+        public static void ChangeHorseState(int id, string state)
+        {
+            try
+            {
+                if (!SshConnection.IsConnected)
+                {
+                    SshConnection.Connect();
+                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
+                    SshConnection.AddForwardedPort(port);
+
+                    port.Start();
+                }
+
+                Connection.Server = "127.0.0.1";
+                Connection.Port = 3306;
+
+                Connection.UserID = "t60064_dbuser";
+                Connection.Password = "HR4M%rV~S8.pB$gc";
+                Connection.Database = "t60064_db";
+                Connection.CharacterSet = "utf8";
+
+                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = sql.CreateCommand();
+                    cmd.CommandText = "Update `лошадь` set `Состояние` = @state WHERE ID = @id";
+
+                    cmd.Parameters.AddWithValue("@state", state);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    sql.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         #endregion
 
         #region ShowHorsePage
@@ -627,6 +685,7 @@ namespace HorseAccounting.Model
                             Owner = dataReader.GetString(9),
                             MotherID = dataReader.GetInt32(10),
                             FatherID = dataReader.GetInt32(11),
+                            State = dataReader.GetString(12),
                             FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
                         };
                     }

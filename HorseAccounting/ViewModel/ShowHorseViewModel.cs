@@ -316,11 +316,34 @@ namespace HorseAccounting.ViewModel
                                 if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID))
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                    if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
+                                    {
+                                        if (SelectedHorse.Gender.Equals("Жеребец"))
+                                        {
+                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыл");
+                                        }
+                                        else
+                                        {
+                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыла");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (SelectedHorse.Gender.Equals("Жеребец"))
+                                        {
+                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующий");
+                                        }
+                                        else
+                                        {
+                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующая");
+                                        }
+                                    }
                                     AddedProgression.CleanProgressionData();
                                     AddProgressionVisible = false;
                                     AddProgressionButtonText = "Добавить";
                                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
                                     RaisePropertyChanged(nameof(MainHorseProgression));
+                                    RaisePropertyChanged(nameof(SelectedHorse));
                                 }
                                 else
                                 {

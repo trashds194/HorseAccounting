@@ -12,7 +12,7 @@
       
       mc:Ignorable="d" 
       
-      d:DesignHeight="700" d:DesignWidth="1200"
+      d:DesignHeight="800" d:DesignWidth="1200"
      
       DataContext="{Binding AddScoringViewModel, Source={StaticResource Locator}}"
       
