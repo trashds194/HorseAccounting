@@ -59,5 +59,77 @@ namespace HorseAccounting.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на utf8.
+        /// </summary>
+        internal static string DbCharSet {
+            get {
+                return ResourceManager.GetString("DbCharSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на t60064_db.
+        /// </summary>
+        internal static string DbName {
+            get {
+                return ResourceManager.GetString("DbName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на HR4M%rV~S8.pB$gc.
+        /// </summary>
+        internal static string DbPassword {
+            get {
+                return ResourceManager.GetString("DbPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на t60064_dbuser.
+        /// </summary>
+        internal static string DbUser {
+            get {
+                return ResourceManager.GetString("DbUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на t60064.
+        /// </summary>
+        internal static string HostLogin {
+            get {
+                return ResourceManager.GetString("HostLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на hostru06.fornex.host.
+        /// </summary>
+        internal static string HostName {
+            get {
+                return ResourceManager.GetString("HostName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на HR4M%rV~S8.pB$gc.
+        /// </summary>
+        internal static string HostPassword {
+            get {
+                return ResourceManager.GetString("HostPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 127.0.0.1.
+        /// </summary>
+        internal static string LocalIP {
+            get {
+                return ResourceManager.GetString("LocalIP", resourceCulture);
+            }
+        }
     }
 }

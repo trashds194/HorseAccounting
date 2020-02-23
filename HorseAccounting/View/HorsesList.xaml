@@ -34,6 +34,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40px" MinHeight="35"/>
+            <RowDefinition Height="50px"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
@@ -88,7 +89,14 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="3" Grid.Row="1" HorizontalContentAlignment="Stretch">
+        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Весь племсостав" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Действующие" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Выбывшие" />
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="4" Grid.Row="2" HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <ei:CallMethodAction MethodName="DoubleClickMethod" TargetObject="{Binding}"/>
@@ -167,7 +175,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="8,8,16,8" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1" Height="Auto" MinHeight="35" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <Button x:Name="button" Command="{Binding AddHorse}" Content="Добавить лошадь"  Grid.Column="1" Margin="16,0" FontSize="16" Grid.Row="1" Height="Auto" MinHeight="35" VerticalAlignment="Center"/>
         <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25px" />

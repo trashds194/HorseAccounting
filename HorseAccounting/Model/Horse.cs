@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using HorseAccounting.Infra;
 using MySql.Data.MySqlClient;
 using Renci.SshNet;
 using System;
@@ -114,45 +115,19 @@ namespace HorseAccounting.Model
             set { Set<string>(() => FullName, ref _fullName, value); }
         }
 
-        private static readonly SshClient SshConnection = new SshClient("hostru06.fornex.host", 20022, "t60064", "HR4M%rV~S8.pB$gc");
-        private static readonly MySqlConnectionStringBuilder Connection = new MySqlConnectionStringBuilder();
-
         #endregion
 
         #region HorsesListPage
 
         public static ObservableCollection<Horse> GetHorses()
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -204,36 +179,13 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> SearchHorses(string searchQuery)
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             ObservableCollection<Horse> searchedHorses = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -290,36 +242,13 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetMotherHorse()
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             ObservableCollection<Horse> motherHorses = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -371,36 +300,13 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetFatherHorse()
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             ObservableCollection<Horse> fatherHorses = new ObservableCollection<Horse>();
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -454,24 +360,9 @@ namespace HorseAccounting.Model
         {
             try
             {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
+                DbConnection.CreateConnection();
 
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -520,36 +411,13 @@ namespace HorseAccounting.Model
 
         public static int GetLastHorseID()
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             int lastHorseID = 0;
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -580,24 +448,9 @@ namespace HorseAccounting.Model
         {
             try
             {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
+                DbConnection.CreateConnection();
 
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -630,36 +483,13 @@ namespace HorseAccounting.Model
 
         public static Horse GetSelectedHorse(int ID)
         {
-            try
-            {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
-
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
-            }
+            DbConnection.CreateConnection();
 
             Horse selectedHorse = new Horse();
 
             try
             {
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
@@ -714,24 +544,9 @@ namespace HorseAccounting.Model
         {
             try
             {
-                if (!SshConnection.IsConnected)
-                {
-                    SshConnection.Connect();
-                    ForwardedPortLocal port = new ForwardedPortLocal("127.0.0.1", 3306, "127.0.0.1", 3306);
-                    SshConnection.AddForwardedPort(port);
+                DbConnection.CreateConnection();
 
-                    port.Start();
-                }
-
-                Connection.Server = "127.0.0.1";
-                Connection.Port = 3306;
-
-                Connection.UserID = "t60064_dbuser";
-                Connection.Password = "HR4M%rV~S8.pB$gc";
-                Connection.Database = "t60064_db";
-                Connection.CharacterSet = "utf8";
-
-                using (var sql = new MySqlConnection(Connection.ConnectionString))
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
 
