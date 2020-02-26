@@ -19,6 +19,7 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private Horse _stallionHorse;
+
         private Horse _mare1Horse;
         private Horse _mare2Horse;
         private Horse _mare3Horse;
@@ -39,6 +40,48 @@ namespace HorseAccounting.ViewModel
         private Horse _mare18Horse;
         private Horse _mare19Horse;
         private Horse _mare20Horse;
+
+        private Horse _mother1Horse;
+        private Horse _mother2Horse;
+        private Horse _mother3Horse;
+        private Horse _mother4Horse;
+        private Horse _mother5Horse;
+        private Horse _mother6Horse;
+        private Horse _mother7Horse;
+        private Horse _mother8Horse;
+        private Horse _mother9Horse;
+        private Horse _mother10Horse;
+        private Horse _mother11Horse;
+        private Horse _mother12Horse;
+        private Horse _mother13Horse;
+        private Horse _mother14Horse;
+        private Horse _mother15Horse;
+        private Horse _mother16Horse;
+        private Horse _mother17Horse;
+        private Horse _mother18Horse;
+        private Horse _mother19Horse;
+        private Horse _mother20Horse;
+
+        private Horse _father1Horse;
+        private Horse _father2Horse;
+        private Horse _father3Horse;
+        private Horse _father4Horse;
+        private Horse _father5Horse;
+        private Horse _father6Horse;
+        private Horse _father7Horse;
+        private Horse _father8Horse;
+        private Horse _father9Horse;
+        private Horse _father10Horse;
+        private Horse _father11Horse;
+        private Horse _father12Horse;
+        private Horse _father13Horse;
+        private Horse _father14Horse;
+        private Horse _father15Horse;
+        private Horse _father16Horse;
+        private Horse _father17Horse;
+        private Horse _father18Horse;
+        private Horse _father19Horse;
+        private Horse _father20Horse;
 
         private ObservableCollection<Horse> _stallionHorseList;
         private ObservableCollection<Horse> _mareHorseList;
@@ -66,6 +109,74 @@ namespace HorseAccounting.ViewModel
                 RaisePropertyChanged(() => MareHorseList);
 
             }).ConfigureAwait(true);
+        }
+
+        private void ClearHorses()
+        {
+            StallionHorse = null;
+
+            Mare1Horse = null;
+            Mare2Horse = null;
+            Mare3Horse = null;
+            Mare4Horse = null;
+            Mare5Horse = null;
+            Mare6Horse = null;
+            Mare7Horse = null;
+            Mare8Horse = null;
+            Mare9Horse = null;
+            Mare10Horse = null;
+            Mare11Horse = null;
+            Mare12Horse = null;
+            Mare13Horse = null;
+            Mare14Horse = null;
+            Mare15Horse = null;
+            Mare16Horse = null;
+            Mare17Horse = null;
+            Mare18Horse = null;
+            Mare19Horse = null;
+            Mare20Horse = null;
+
+            Mother1Horse = null;
+            Mother2Horse = null;
+            Mother3Horse = null;
+            Mother4Horse = null;
+            Mother5Horse = null;
+            Mother6Horse = null;
+            Mother7Horse = null;
+            Mother8Horse = null;
+            Mother9Horse = null;
+            Mother10Horse = null;
+            Mother11Horse = null;
+            Mother12Horse = null;
+            Mother13Horse = null;
+            Mother14Horse = null;
+            Mother15Horse = null;
+            Mother16Horse = null;
+            Mother17Horse = null;
+            Mother18Horse = null;
+            Mother19Horse = null;
+            Mother20Horse = null;
+
+            Father1Horse = null;
+            Father2Horse = null;
+            Father3Horse = null;
+            Father4Horse = null;
+            Father5Horse = null;
+            Father6Horse = null;
+            Father7Horse = null;
+            Father8Horse = null;
+            Father9Horse = null;
+            Father10Horse = null;
+            Father11Horse = null;
+            Father12Horse = null;
+            Father13Horse = null;
+            Father14Horse = null;
+            Father15Horse = null;
+            Father16Horse = null;
+            Father17Horse = null;
+            Father18Horse = null;
+            Father19Horse = null;
+            Father20Horse = null;
         }
 
         #region Definitions
@@ -114,6 +225,8 @@ namespace HorseAccounting.ViewModel
                 }
             }
         }
+
+        #region MareHorses
 
         public Horse Mare1Horse
         {
@@ -455,6 +568,696 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        #endregion
+
+        #region MotherHorses
+
+        public Horse Mother1Horse
+        {
+            get
+            {
+                return _mother1Horse;
+            }
+
+            set
+            {
+                if (_mother1Horse != value)
+                {
+                    _mother1Horse = value;
+                    RaisePropertyChanged(nameof(Mother1Horse));
+                }
+            }
+        }
+
+        public Horse Mother2Horse
+        {
+            get
+            {
+                return _mother2Horse;
+            }
+
+            set
+            {
+                if (_mother2Horse != value)
+                {
+                    _mother2Horse = value;
+                    RaisePropertyChanged(nameof(Mother2Horse));
+                }
+            }
+        }
+
+        public Horse Mother3Horse
+        {
+            get
+            {
+                return _mother3Horse;
+            }
+
+            set
+            {
+                if (_mother3Horse != value)
+                {
+                    _mother3Horse = value;
+                    RaisePropertyChanged(nameof(Mother3Horse));
+                }
+            }
+        }
+
+        public Horse Mother4Horse
+        {
+            get
+            {
+                return _mother4Horse;
+            }
+
+            set
+            {
+                if (_mother4Horse != value)
+                {
+                    _mother4Horse = value;
+                    RaisePropertyChanged(nameof(Mother4Horse));
+                }
+            }
+        }
+
+        public Horse Mother5Horse
+        {
+            get
+            {
+                return _mother5Horse;
+            }
+
+            set
+            {
+                if (_mother5Horse != value)
+                {
+                    _mother5Horse = value;
+                    RaisePropertyChanged(nameof(Mother5Horse));
+                }
+            }
+        }
+
+        public Horse Mother6Horse
+        {
+            get
+            {
+                return _mother6Horse;
+            }
+
+            set
+            {
+                if (_mother6Horse != value)
+                {
+                    _mother6Horse = value;
+                    RaisePropertyChanged(nameof(Mother6Horse));
+                }
+            }
+        }
+
+        public Horse Mother7Horse
+        {
+            get
+            {
+                return _mother7Horse;
+            }
+
+            set
+            {
+                if (_mother7Horse != value)
+                {
+                    _mother7Horse = value;
+                    RaisePropertyChanged(nameof(Mother7Horse));
+                }
+            }
+        }
+
+        public Horse Mother8Horse
+        {
+            get
+            {
+                return _mother8Horse;
+            }
+
+            set
+            {
+                if (_mother8Horse != value)
+                {
+                    _mother8Horse = value;
+                    RaisePropertyChanged(nameof(Mother8Horse));
+                }
+            }
+        }
+
+        public Horse Mother9Horse
+        {
+            get
+            {
+                return _mother9Horse;
+            }
+
+            set
+            {
+                if (_mother9Horse != value)
+                {
+                    _mother9Horse = value;
+                    RaisePropertyChanged(nameof(Mother9Horse));
+                }
+            }
+        }
+
+        public Horse Mother10Horse
+        {
+            get
+            {
+                return _mother10Horse;
+            }
+
+            set
+            {
+                if (_mother10Horse != value)
+                {
+                    _mother10Horse = value;
+                    RaisePropertyChanged(nameof(Mother10Horse));
+                }
+            }
+        }
+
+        public Horse Mother11Horse
+        {
+            get
+            {
+                return _mother11Horse;
+            }
+
+            set
+            {
+                if (_mother11Horse != value)
+                {
+                    _mother11Horse = value;
+                    RaisePropertyChanged(nameof(Mother11Horse));
+                }
+            }
+        }
+
+        public Horse Mother12Horse
+        {
+            get
+            {
+                return _mother12Horse;
+            }
+
+            set
+            {
+                if (_mother12Horse != value)
+                {
+                    _mother12Horse = value;
+                    RaisePropertyChanged(nameof(Mother12Horse));
+                }
+            }
+        }
+
+        public Horse Mother13Horse
+        {
+            get
+            {
+                return _mother13Horse;
+            }
+
+            set
+            {
+                if (_mother13Horse != value)
+                {
+                    _mother13Horse = value;
+                    RaisePropertyChanged(nameof(Mother13Horse));
+                }
+            }
+        }
+
+        public Horse Mother14Horse
+        {
+            get
+            {
+                return _mother14Horse;
+            }
+
+            set
+            {
+                if (_mother14Horse != value)
+                {
+                    _mother14Horse = value;
+                    RaisePropertyChanged(nameof(Mother14Horse));
+                }
+            }
+        }
+
+        public Horse Mother15Horse
+        {
+            get
+            {
+                return _mother15Horse;
+            }
+
+            set
+            {
+                if (_mother15Horse != value)
+                {
+                    _mother15Horse = value;
+                    RaisePropertyChanged(nameof(Mother15Horse));
+                }
+            }
+        }
+
+        public Horse Mother16Horse
+        {
+            get
+            {
+                return _mother16Horse;
+            }
+
+            set
+            {
+                if (_mother16Horse != value)
+                {
+                    _mother16Horse = value;
+                    RaisePropertyChanged(nameof(Mother16Horse));
+                }
+            }
+        }
+
+        public Horse Mother17Horse
+        {
+            get
+            {
+                return _mother17Horse;
+            }
+
+            set
+            {
+                if (_mother17Horse != value)
+                {
+                    _mother17Horse = value;
+                    RaisePropertyChanged(nameof(Mother17Horse));
+                }
+            }
+        }
+
+        public Horse Mother18Horse
+        {
+            get
+            {
+                return _mother18Horse;
+            }
+
+            set
+            {
+                if (_mother18Horse != value)
+                {
+                    _mother18Horse = value;
+                    RaisePropertyChanged(nameof(Mother18Horse));
+                }
+            }
+        }
+
+        public Horse Mother19Horse
+        {
+            get
+            {
+                return _mother19Horse;
+            }
+
+            set
+            {
+                if (_mother19Horse != value)
+                {
+                    _mother19Horse = value;
+                    RaisePropertyChanged(nameof(Mother19Horse));
+                }
+            }
+        }
+
+        public Horse Mother20Horse
+        {
+            get
+            {
+                return _mother20Horse;
+            }
+
+            set
+            {
+                if (_mother20Horse != value)
+                {
+                    _mother20Horse = value;
+                    RaisePropertyChanged(nameof(Mother20Horse));
+                }
+            }
+        }
+
+        #endregion
+
+        #region FatherHorses
+
+        public Horse Father1Horse
+        {
+            get
+            {
+                return _father1Horse;
+            }
+
+            set
+            {
+                if (_father1Horse != value)
+                {
+                    _father1Horse = value;
+                    RaisePropertyChanged(nameof(Father1Horse));
+                }
+            }
+        }
+
+        public Horse Father2Horse
+        {
+            get
+            {
+                return _father2Horse;
+            }
+
+            set
+            {
+                if (_father2Horse != value)
+                {
+                    _father2Horse = value;
+                    RaisePropertyChanged(nameof(Father2Horse));
+                }
+            }
+        }
+
+        public Horse Father3Horse
+        {
+            get
+            {
+                return _father3Horse;
+            }
+
+            set
+            {
+                if (_father3Horse != value)
+                {
+                    _father3Horse = value;
+                    RaisePropertyChanged(nameof(Father3Horse));
+                }
+            }
+        }
+
+        public Horse Father4Horse
+        {
+            get
+            {
+                return _father4Horse;
+            }
+
+            set
+            {
+                if (_father4Horse != value)
+                {
+                    _father4Horse = value;
+                    RaisePropertyChanged(nameof(Father4Horse));
+                }
+            }
+        }
+
+        public Horse Father5Horse
+        {
+            get
+            {
+                return _father5Horse;
+            }
+
+            set
+            {
+                if (_father5Horse != value)
+                {
+                    _father5Horse = value;
+                    RaisePropertyChanged(nameof(Father5Horse));
+                }
+            }
+        }
+
+        public Horse Father6Horse
+        {
+            get
+            {
+                return _father6Horse;
+            }
+
+            set
+            {
+                if (_father6Horse != value)
+                {
+                    _father6Horse = value;
+                    RaisePropertyChanged(nameof(Father6Horse));
+                }
+            }
+        }
+
+        public Horse Father7Horse
+        {
+            get
+            {
+                return _father7Horse;
+            }
+
+            set
+            {
+                if (_father7Horse != value)
+                {
+                    _father7Horse = value;
+                    RaisePropertyChanged(nameof(Father7Horse));
+                }
+            }
+        }
+
+        public Horse Father8Horse
+        {
+            get
+            {
+                return _father8Horse;
+            }
+
+            set
+            {
+                if (_father8Horse != value)
+                {
+                    _father8Horse = value;
+                    RaisePropertyChanged(nameof(Father8Horse));
+                }
+            }
+        }
+
+        public Horse Father9Horse
+        {
+            get
+            {
+                return _father9Horse;
+            }
+
+            set
+            {
+                if (_father9Horse != value)
+                {
+                    _father9Horse = value;
+                    RaisePropertyChanged(nameof(Father9Horse));
+                }
+            }
+        }
+
+        public Horse Father10Horse
+        {
+            get
+            {
+                return _father10Horse;
+            }
+
+            set
+            {
+                if (_father10Horse != value)
+                {
+                    _father10Horse = value;
+                    RaisePropertyChanged(nameof(Father10Horse));
+                }
+            }
+        }
+
+        public Horse Father11Horse
+        {
+            get
+            {
+                return _father11Horse;
+            }
+
+            set
+            {
+                if (_father11Horse != value)
+                {
+                    _father11Horse = value;
+                    RaisePropertyChanged(nameof(Father11Horse));
+                }
+            }
+        }
+
+        public Horse Father12Horse
+        {
+            get
+            {
+                return _father12Horse;
+            }
+
+            set
+            {
+                if (_father12Horse != value)
+                {
+                    _father12Horse = value;
+                    RaisePropertyChanged(nameof(Father12Horse));
+                }
+            }
+        }
+
+        public Horse Father13Horse
+        {
+            get
+            {
+                return _father13Horse;
+            }
+
+            set
+            {
+                if (_father13Horse != value)
+                {
+                    _father13Horse = value;
+                    RaisePropertyChanged(nameof(Father13Horse));
+                }
+            }
+        }
+
+        public Horse Father14Horse
+        {
+            get
+            {
+                return _father14Horse;
+            }
+
+            set
+            {
+                if (_father14Horse != value)
+                {
+                    _father14Horse = value;
+                    RaisePropertyChanged(nameof(Father14Horse));
+                }
+            }
+        }
+
+        public Horse Father15Horse
+        {
+            get
+            {
+                return _father15Horse;
+            }
+
+            set
+            {
+                if (_father15Horse != value)
+                {
+                    _father15Horse = value;
+                    RaisePropertyChanged(nameof(Father15Horse));
+                }
+            }
+        }
+
+        public Horse Father16Horse
+        {
+            get
+            {
+                return _father16Horse;
+            }
+
+            set
+            {
+                if (_father16Horse != value)
+                {
+                    _father16Horse = value;
+                    RaisePropertyChanged(nameof(Father16Horse));
+                }
+            }
+        }
+
+        public Horse Father17Horse
+        {
+            get
+            {
+                return _father17Horse;
+            }
+
+            set
+            {
+                if (_father17Horse != value)
+                {
+                    _father17Horse = value;
+                    RaisePropertyChanged(nameof(Father17Horse));
+                }
+            }
+        }
+
+        public Horse Father18Horse
+        {
+            get
+            {
+                return _father18Horse;
+            }
+
+            set
+            {
+                if (_father18Horse != value)
+                {
+                    _father18Horse = value;
+                    RaisePropertyChanged(nameof(Father18Horse));
+                }
+            }
+        }
+
+        public Horse Father19Horse
+        {
+            get
+            {
+                return _father19Horse;
+            }
+
+            set
+            {
+                if (_father19Horse != value)
+                {
+                    _father19Horse = value;
+                    RaisePropertyChanged(nameof(Father19Horse));
+                }
+            }
+        }
+
+        public Horse Father20Horse
+        {
+            get
+            {
+                return _father20Horse;
+            }
+
+            set
+            {
+                if (_father20Horse != value)
+                {
+                    _father20Horse = value;
+                    RaisePropertyChanged(nameof(Father20Horse));
+                }
+            }
+        }
+
+        #endregion
+
         public ObservableCollection<Horse> StallionHorseList
         {
             get
@@ -485,6 +1288,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _backToHorse = new RelayCommand(() =>
                     {
+                        ClearHorses();
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }
@@ -534,26 +1338,166 @@ namespace HorseAccounting.ViewModel
                                 try
                                 {
                                     worksheet.Cells[1, 1].Value = StallionHorse.FullName;
-                                    worksheet.Cells[3, 2].Value = Mare1Horse.FullName;
-                                    worksheet.Cells[8, 2].Value = Mare2Horse.FullName;
-                                    worksheet.Cells[13, 2].Value = Mare3Horse.FullName;
-                                    worksheet.Cells[18, 2].Value = Mare4Horse.FullName;
-                                    worksheet.Cells[23, 2].Value = Mare5Horse.FullName;
-                                    worksheet.Cells[28, 2].Value = Mare6Horse.FullName;
-                                    worksheet.Cells[33, 2].Value = Mare7Horse.FullName;
-                                    worksheet.Cells[38, 2].Value = Mare8Horse.FullName;
-                                    worksheet.Cells[43, 2].Value = Mare9Horse.FullName;
-                                    worksheet.Cells[48, 2].Value = Mare10Horse.FullName;
-                                    worksheet.Cells[53, 2].Value = Mare11Horse.FullName;
-                                    worksheet.Cells[58, 2].Value = Mare12Horse.FullName;
-                                    worksheet.Cells[63, 2].Value = Mare13Horse.FullName;
-                                    worksheet.Cells[68, 2].Value = Mare14Horse.FullName;
-                                    worksheet.Cells[73, 2].Value = Mare15Horse.FullName;
-                                    worksheet.Cells[78, 2].Value = Mare16Horse.FullName;
-                                    worksheet.Cells[83, 2].Value = Mare17Horse.FullName;
-                                    worksheet.Cells[88, 2].Value = Mare18Horse.FullName;
-                                    worksheet.Cells[93, 2].Value = Mare19Horse.FullName;
-                                    worksheet.Cells[98, 2].Value = Mare20Horse.FullName;
+                                    if (Mare1Horse != null)
+                                    {
+                                        worksheet.Cells[3, 2].Value = Mare1Horse.FullName;
+                                        Mother1Horse = Horse.GetSelectedHorse(Mare1Horse.MotherID);
+                                        worksheet.Cells[4, 2].Value = Mother1Horse.FullName;
+                                        Father1Horse = Horse.GetSelectedHorse(Mare1Horse.FatherID);
+                                        worksheet.Cells[4, 3].Value = Father1Horse.FullName;
+                                    }
+                                    if (Mare2Horse != null)
+                                    {
+                                        worksheet.Cells[8, 2].Value = Mare2Horse.FullName;
+                                        Mother2Horse = Horse.GetSelectedHorse(Mare2Horse.MotherID);
+                                        worksheet.Cells[9, 2].Value = Mother2Horse.FullName;
+                                        Father2Horse = Horse.GetSelectedHorse(Mare2Horse.FatherID);
+                                        worksheet.Cells[9, 3].Value = Father2Horse.FullName;
+                                    }
+                                    if (Mare3Horse != null)
+                                    {
+                                        worksheet.Cells[13, 2].Value = Mare3Horse.FullName;
+                                        Mother3Horse = Horse.GetSelectedHorse(Mare3Horse.MotherID);
+                                        worksheet.Cells[14, 2].Value = Mother3Horse.FullName;
+                                        Father3Horse = Horse.GetSelectedHorse(Mare3Horse.FatherID);
+                                        worksheet.Cells[14, 3].Value = Father3Horse.FullName;
+                                    }
+                                    if (Mare4Horse != null)
+                                    {
+                                        worksheet.Cells[18, 2].Value = Mare4Horse.FullName;
+                                        Mother4Horse = Horse.GetSelectedHorse(Mare4Horse.MotherID);
+                                        worksheet.Cells[19, 2].Value = Mother4Horse.FullName;
+                                        Father4Horse = Horse.GetSelectedHorse(Mare4Horse.FatherID);
+                                        worksheet.Cells[19, 3].Value = Father4Horse.FullName;
+                                    }
+                                    if (Mare5Horse != null)
+                                    {
+                                        worksheet.Cells[23, 2].Value = Mare5Horse.FullName;
+                                        Mother5Horse = Horse.GetSelectedHorse(Mare5Horse.MotherID);
+                                        worksheet.Cells[24, 2].Value = Mother5Horse.FullName;
+                                        Father5Horse = Horse.GetSelectedHorse(Mare5Horse.FatherID);
+                                        worksheet.Cells[24, 3].Value = Father5Horse.FullName;
+                                    }
+                                    if (Mare6Horse != null)
+                                    {
+                                        worksheet.Cells[28, 2].Value = Mare6Horse.FullName;
+                                        Mother6Horse = Horse.GetSelectedHorse(Mare6Horse.MotherID);
+                                        worksheet.Cells[29, 2].Value = Mother6Horse.FullName;
+                                        Father6Horse = Horse.GetSelectedHorse(Mare6Horse.FatherID);
+                                        worksheet.Cells[29, 3].Value = Father6Horse.FullName;
+                                    }
+                                    if (Mare7Horse != null)
+                                    {
+                                        worksheet.Cells[33, 2].Value = Mare7Horse.FullName;
+                                        Mother7Horse = Horse.GetSelectedHorse(Mare7Horse.MotherID);
+                                        worksheet.Cells[34, 2].Value = Mother7Horse.FullName;
+                                        Father7Horse = Horse.GetSelectedHorse(Mare7Horse.FatherID);
+                                        worksheet.Cells[34, 3].Value = Father7Horse.FullName;
+                                    }
+                                    if (Mare8Horse != null)
+                                    {
+                                        worksheet.Cells[38, 2].Value = Mare8Horse.FullName;
+                                        Mother8Horse = Horse.GetSelectedHorse(Mare8Horse.MotherID);
+                                        worksheet.Cells[39, 2].Value = Mother8Horse.FullName;
+                                        Father8Horse = Horse.GetSelectedHorse(Mare8Horse.FatherID);
+                                        worksheet.Cells[39, 3].Value = Father8Horse.FullName;
+                                    }
+                                    if (Mare9Horse != null)
+                                    {
+                                        worksheet.Cells[43, 2].Value = Mare9Horse.FullName;
+                                        Mother9Horse = Horse.GetSelectedHorse(Mare9Horse.MotherID);
+                                        worksheet.Cells[44, 2].Value = Mother9Horse.FullName;
+                                        Father9Horse = Horse.GetSelectedHorse(Mare9Horse.FatherID);
+                                        worksheet.Cells[44, 3].Value = Father9Horse.FullName;
+                                    }
+                                    if (Mare10Horse != null)
+                                    {
+                                        worksheet.Cells[48, 2].Value = Mare10Horse.FullName;
+                                        Mother10Horse = Horse.GetSelectedHorse(Mare10Horse.MotherID);
+                                        worksheet.Cells[49, 2].Value = Mother10Horse.FullName;
+                                        Father10Horse = Horse.GetSelectedHorse(Mare10Horse.FatherID);
+                                        worksheet.Cells[49, 3].Value = Father10Horse.FullName;
+                                    }
+                                    if (Mare11Horse != null)
+                                    {
+                                        worksheet.Cells[53, 2].Value = Mare11Horse.FullName;
+                                        Mother11Horse = Horse.GetSelectedHorse(Mare11Horse.MotherID);
+                                        worksheet.Cells[54, 2].Value = Mother1Horse.FullName;
+                                        Father11Horse = Horse.GetSelectedHorse(Mare11Horse.FatherID);
+                                        worksheet.Cells[54, 3].Value = Father11Horse.FullName;
+                                    }
+                                    if (Mare12Horse != null)
+                                    {
+                                        worksheet.Cells[58, 2].Value = Mare12Horse.FullName;
+                                        Mother12Horse = Horse.GetSelectedHorse(Mare12Horse.MotherID);
+                                        worksheet.Cells[59, 2].Value = Mother12Horse.FullName;
+                                        Father12Horse = Horse.GetSelectedHorse(Mare12Horse.FatherID);
+                                        worksheet.Cells[59, 3].Value = Father12Horse.FullName;
+                                    }
+                                    if (Mare13Horse != null)
+                                    {
+                                        worksheet.Cells[63, 2].Value = Mare13Horse.FullName;
+                                        Mother13Horse = Horse.GetSelectedHorse(Mare13Horse.MotherID);
+                                        worksheet.Cells[64, 2].Value = Mother13Horse.FullName;
+                                        Father13Horse = Horse.GetSelectedHorse(Mare13Horse.FatherID);
+                                        worksheet.Cells[64, 3].Value = Father13Horse.FullName;
+                                    }
+                                    if (Mare14Horse != null)
+                                    {
+                                        worksheet.Cells[68, 2].Value = Mare14Horse.FullName;
+                                        Mother14Horse = Horse.GetSelectedHorse(Mare14Horse.MotherID);
+                                        worksheet.Cells[69, 2].Value = Mother14Horse.FullName;
+                                        Father14Horse = Horse.GetSelectedHorse(Mare14Horse.FatherID);
+                                        worksheet.Cells[69, 3].Value = Father14Horse.FullName;
+                                    }
+                                    if (Mare15Horse != null)
+                                    {
+                                        worksheet.Cells[73, 2].Value = Mare15Horse.FullName;
+                                        Mother15Horse = Horse.GetSelectedHorse(Mare15Horse.MotherID);
+                                        worksheet.Cells[74, 2].Value = Mother15Horse.FullName;
+                                        Father15Horse = Horse.GetSelectedHorse(Mare15Horse.FatherID);
+                                        worksheet.Cells[74, 3].Value = Father15Horse.FullName;
+                                    }
+                                    if (Mare16Horse != null)
+                                    {
+                                        worksheet.Cells[78, 2].Value = Mare16Horse.FullName;
+                                        Mother16Horse = Horse.GetSelectedHorse(Mare16Horse.MotherID);
+                                        worksheet.Cells[79, 2].Value = Mother16Horse.FullName;
+                                        Father16Horse = Horse.GetSelectedHorse(Mare16Horse.FatherID);
+                                        worksheet.Cells[79, 3].Value = Father16Horse.FullName;
+                                    }
+                                    if (Mare17Horse != null)
+                                    {
+                                        worksheet.Cells[83, 2].Value = Mare17Horse.FullName;
+                                        Mother17Horse = Horse.GetSelectedHorse(Mare17Horse.MotherID);
+                                        worksheet.Cells[84, 2].Value = Mother17Horse.FullName;
+                                        Father17Horse = Horse.GetSelectedHorse(Mare17Horse.FatherID);
+                                        worksheet.Cells[84, 3].Value = Father17Horse.FullName;
+                                    }
+                                    if (Mare18Horse != null)
+                                    {
+                                        worksheet.Cells[88, 2].Value = Mare18Horse.FullName;
+                                        Mother18Horse = Horse.GetSelectedHorse(Mare18Horse.MotherID);
+                                        worksheet.Cells[89, 2].Value = Mother18Horse.FullName;
+                                        Father18Horse = Horse.GetSelectedHorse(Mare18Horse.FatherID);
+                                        worksheet.Cells[89, 3].Value = Father18Horse.FullName;
+                                    }
+                                    if (Mare19Horse != null)
+                                    {
+                                        worksheet.Cells[93, 2].Value = Mare19Horse.FullName;
+                                        Mother19Horse = Horse.GetSelectedHorse(Mare19Horse.MotherID);
+                                        worksheet.Cells[94, 2].Value = Mother19Horse.FullName;
+                                        Father19Horse = Horse.GetSelectedHorse(Mare19Horse.FatherID);
+                                        worksheet.Cells[94, 3].Value = Father19Horse.FullName;
+                                    }
+                                    if (Mare20Horse != null)
+                                    {
+                                        worksheet.Cells[98, 2].Value = Mare20Horse.FullName;
+                                        Mother20Horse = Horse.GetSelectedHorse(Mare20Horse.MotherID);
+                                        worksheet.Cells[99, 2].Value = Mother20Horse.FullName;
+                                        Father20Horse = Horse.GetSelectedHorse(Mare20Horse.FatherID);
+                                        worksheet.Cells[99, 3].Value = Father20Horse.FullName;
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -577,7 +1521,7 @@ namespace HorseAccounting.ViewModel
                                 //System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + StallionHorse.NickName + @"\" + StallionHorse.NickName + ".xlsx");
                                 Excel.Application excel = new Excel.Application();
                                 excel.Visible = true;
-                                Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + Year + @"\" + StallionHorse.FullName + ".xlsx", 0 , false);
+                                Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + Year + @"\" + StallionHorse.FullName + ".xlsx", 0, false);
                             }
                         }
                         else

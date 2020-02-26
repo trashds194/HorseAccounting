@@ -63,7 +63,7 @@
             <DatePicker Text="{Binding ChoosenDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="5" Margin="16,0" Language="ru"> </DatePicker>
 
             <Label x:Name="label" Content="Выберите жеребца производителя:" Margin="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-            <ComboBox x:Name="stallionComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding StallionHorse, Mode=TwoWay}" ItemsSource="{Binding StallionHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Grid.ColumnSpan="2">
+            <ComboBox x:Name="stallionComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding StallionHorse, Mode=TwoWay}" ItemsSource="{Binding StallionHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Grid.ColumnSpan="2">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -78,7 +78,7 @@
             </ComboBox>
 
             <Label x:Name="labe2" Content="1." Margin="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare1ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare1Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare1ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare1Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -93,7 +93,7 @@
             </ComboBox>
 
             <Label x:Name="labe3" Content="2." Margin="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare2ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare2Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare2ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare2Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -108,7 +108,7 @@
             </ComboBox>
 
             <Label x:Name="labe4" Content="3." Margin="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare3ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare3Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare3ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare3Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -123,7 +123,7 @@
             </ComboBox>
 
             <Label x:Name="labe5" Content="4." Margin="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare4ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare4Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare4ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare4Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -138,7 +138,7 @@
             </ComboBox>
 
             <Label x:Name="labe6" Content="5." Margin="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare5ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare5Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare5ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare5Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -153,7 +153,7 @@
             </ComboBox>
 
             <Label x:Name="labe7" Content="6." Margin="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare6ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare6Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare6ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare6Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -168,7 +168,7 @@
             </ComboBox>
 
             <Label x:Name="labe8" Content="7." Margin="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare7ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare7Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare7ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare7Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -183,7 +183,7 @@
             </ComboBox>
 
             <Label x:Name="labe9" Content="8." Margin="0" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare8ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare8Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare8ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare8Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -198,7 +198,7 @@
             </ComboBox>
 
             <Label x:Name="labe10" Content="9." Margin="0" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare9ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare9Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare9ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare9Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -213,7 +213,7 @@
             </ComboBox>
 
             <Label x:Name="labe11" Content="10." Margin="0" Grid.Row="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare10ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare10Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare10ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare10Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -228,7 +228,7 @@
             </ComboBox>
 
             <Label x:Name="labe12" Content="11." Margin="0" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare11ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare11Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare11ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare11Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -243,7 +243,7 @@
             </ComboBox>
 
             <Label x:Name="labe13" Content="12." Margin="0" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare12ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare12Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare12ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare12Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -258,7 +258,7 @@
             </ComboBox>
 
             <Label x:Name="labe14" Content="13." Margin="0" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare13ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare13Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare13ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare13Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="4" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -273,7 +273,7 @@
             </ComboBox>
 
             <Label x:Name="labe15" Content="14." Margin="0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare14ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare14Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare14ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare14Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -288,7 +288,7 @@
             </ComboBox>
 
             <Label x:Name="labe16" Content="15." Margin="0" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare15ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare15Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare15ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare15Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="6" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -303,7 +303,7 @@
             </ComboBox>
 
             <Label x:Name="labe17" Content="16." Margin="0" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare16ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare16Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare16ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare16Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="7" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -318,7 +318,7 @@
             </ComboBox>
 
             <Label x:Name="labe18" Content="17." Margin="0" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare17ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare17Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare17ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare17Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="8" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -333,7 +333,7 @@
             </ComboBox>
 
             <Label x:Name="labe19" Content="18." Margin="0" Grid.Row="9" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare18ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare18Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare18ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare18Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="9" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -348,7 +348,7 @@
             </ComboBox>
 
             <Label x:Name="labe20" Content="19." Margin="0" Grid.Row="10" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare19ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare19Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare19ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare19Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="10" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
@@ -363,7 +363,7 @@
             </ComboBox>
 
             <Label x:Name="labe21" Content="20." Margin="0" Grid.Row="11" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="mare20ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare20Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
+            <ComboBox x:Name="mare20ComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding Mare20Horse, Mode=TwoWay}" ItemsSource="{Binding MareHorseList}" Margin="16,8" VerticalAlignment="Center" Grid.Column="3" Grid.Row="11" materialDesign:TextFieldAssist.HasClearButton="True">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock DataContext="{Binding}">
