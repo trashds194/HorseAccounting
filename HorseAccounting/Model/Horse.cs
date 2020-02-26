@@ -177,6 +177,122 @@ namespace HorseAccounting.Model
             return horses;
         }
 
+        public static ObservableCollection<Horse> GetActingHorses()
+        {
+            DbConnection.CreateConnection();
+
+            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+
+            try
+            {
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = sql.CreateCommand();
+                    cmd.CommandText = "SELECT * FROM `лошадь` where `Состояние` = 'Действующая' or `Состояние` = 'Действующий'";
+
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        horses.Add(
+                            new Horse
+                            {
+                                ID = dataReader.GetInt32(0),
+                                GpkNum = dataReader.GetString(1),
+                                NickName = dataReader.GetString(2),
+                                Brand = dataReader.GetString(3),
+                                Bloodiness = dataReader.GetString(4),
+                                Color = dataReader.GetString(5),
+                                Gender = dataReader.GetString(6),
+                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+                                BirthPlace = dataReader.GetString(8),
+                                Owner = dataReader.GetString(9),
+                                MotherID = dataReader.GetInt32(10),
+                                FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                            });
+                    }
+
+                    dataReader.Close();
+
+                    sql.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                horses.Add(
+                    new Horse
+                    {
+                        NickName = "База данных не найдена!",
+                        Bloodiness = "Обратитесь к разработчику приложения!",
+                    });
+            }
+
+            return horses;
+        }
+
+        public static ObservableCollection<Horse> GetRetiredHorses()
+        {
+            DbConnection.CreateConnection();
+
+            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+
+            try
+            {
+                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+                {
+                    sql.Open();
+
+                    MySqlCommand cmd = sql.CreateCommand();
+                    cmd.CommandText = "SELECT * FROM `лошадь` where `Состояние` = 'Выбыла' or `Состояние` = 'Выбыл'";
+
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        horses.Add(
+                            new Horse
+                            {
+                                ID = dataReader.GetInt32(0),
+                                GpkNum = dataReader.GetString(1),
+                                NickName = dataReader.GetString(2),
+                                Brand = dataReader.GetString(3),
+                                Bloodiness = dataReader.GetString(4),
+                                Color = dataReader.GetString(5),
+                                Gender = dataReader.GetString(6),
+                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+                                BirthPlace = dataReader.GetString(8),
+                                Owner = dataReader.GetString(9),
+                                MotherID = dataReader.GetInt32(10),
+                                FatherID = dataReader.GetInt32(11),
+                                State = dataReader.GetString(12),
+                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+                            });
+                    }
+
+                    dataReader.Close();
+
+                    sql.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                horses.Add(
+                    new Horse
+                    {
+                        NickName = "База данных не найдена!",
+                        Bloodiness = "Обратитесь к разработчику приложения!",
+                    });
+            }
+
+            return horses;
+        }
+
         public static ObservableCollection<Horse> SearchHorses(string searchQuery)
         {
             DbConnection.CreateConnection();

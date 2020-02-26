@@ -343,6 +343,7 @@ namespace HorseAccounting.ViewModel
                                     AddProgressionButtonText = "Добавить";
                                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
                                     RaisePropertyChanged(nameof(MainHorseProgression));
+                                    SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
                                     RaisePropertyChanged(nameof(SelectedHorse));
                                 }
                                 else

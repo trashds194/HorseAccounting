@@ -91,9 +91,9 @@
         </Menu>
         <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="2">
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Весь племсостав" />
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Действующие" />
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Выбывшие" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Весь племсостав" Command="{Binding ShowAllHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Действующие" Command="{Binding ShowActingHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Выбывшие" Command="{Binding ShowRetiredHorses}" />
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="4" Grid.Row="2" HorizontalContentAlignment="Stretch">

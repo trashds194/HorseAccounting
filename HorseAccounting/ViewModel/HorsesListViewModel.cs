@@ -171,6 +171,69 @@ namespace HorseAccounting.ViewModel
 
         #region WindowCommands
 
+        private RelayCommand _showAllHorses;
+
+        public RelayCommand ShowAllHorses
+        {
+            get
+            {
+                return _showAllHorses
+                    ?? (_showAllHorses = new RelayCommand(
+                    () =>
+                    {
+                        _horses = Horse.GetHorses();
+                        RaisePropertyChanged(() => HorsesList);
+                    }));
+            }
+
+            private set
+            {
+                _showAllHorses = value;
+            }
+        }
+
+        private RelayCommand _showActingHorses;
+
+        public RelayCommand ShowActingHorses
+        {
+            get
+            {
+                return _showActingHorses
+                    ?? (_showActingHorses = new RelayCommand(
+                    () =>
+                    {
+                        _horses = Horse.GetActingHorses();
+                        RaisePropertyChanged(() => HorsesList);
+                    }));
+            }
+
+            private set
+            {
+                _showActingHorses = value;
+            }
+        }
+
+        private RelayCommand _showRetiredHorses;
+
+        public RelayCommand ShowRetiredHorses
+        {
+            get
+            {
+                return _showRetiredHorses
+                    ?? (_showRetiredHorses = new RelayCommand(
+                    () =>
+                    {
+                        _horses = Horse.GetRetiredHorses();
+                        RaisePropertyChanged(() => HorsesList);
+                    }));
+            }
+
+            private set
+            {
+                _showRetiredHorses = value;
+            }
+        }
+
         private RelayCommand _addHorse;
 
         public RelayCommand AddHorse
