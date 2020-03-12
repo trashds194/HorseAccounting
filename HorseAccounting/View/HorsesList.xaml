@@ -182,7 +182,13 @@
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <materialDesign:PackIcon Kind="Magnify" Opacity="0.6" Height="Auto" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="Auto" Margin="0,0,0,2" />
-            <TextBox Grid.Column="1" Margin="4,0,16,0" materialDesign:TextFieldAssist.HasClearButton="True" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" materialDesign:HintAssist.Hint="Поиск" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" VerticalAlignment="Center" />
+            <TextBox Grid.Column="1" Margin="4,0,16,0" materialDesign:TextFieldAssist.HasClearButton="True" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" materialDesign:HintAssist.Hint="Поиск" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <ei:CallMethodAction MethodName="OnSearch" TargetObject="{Binding}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
         </Grid>
     </Grid>
 </Page>

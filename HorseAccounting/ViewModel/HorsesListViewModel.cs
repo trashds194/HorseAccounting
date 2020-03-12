@@ -37,6 +37,23 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        public async void OnSearch()
+        {
+            await Task.Run(() =>
+            {
+                if (string.IsNullOrEmpty(SearchQuery))
+                {
+                    _horses = Horse.GetHorses();
+                    RaisePropertyChanged(() => HorsesList);
+                }
+                else
+                {
+                    _horses = Horse.SearchHorses(SearchQuery);
+                    RaisePropertyChanged(() => HorsesList);
+                }
+            }).ConfigureAwait(true);
+        }
+
         #region Definitions
 
         public ObservableCollection<Horse> HorsesList
@@ -56,19 +73,9 @@ namespace HorseAccounting.ViewModel
 
             set
             {
+
                 _searchQuery = value;
                 RaisePropertyChanged(nameof(SearchQuery));
-
-                if (string.IsNullOrEmpty(SearchQuery))
-                {
-                    _horses = Horse.GetHorses();
-                    RaisePropertyChanged(() => HorsesList);
-                }
-                else
-                {
-                    _horses = Horse.SearchHorses(SearchQuery);
-                    RaisePropertyChanged(() => HorsesList);
-                }
             }
         }
 
@@ -179,10 +186,13 @@ namespace HorseAccounting.ViewModel
             {
                 return _showAllHorses
                     ?? (_showAllHorses = new RelayCommand(
-                    () =>
+                    async () =>
                     {
-                        _horses = Horse.GetHorses();
-                        RaisePropertyChanged(() => HorsesList);
+                        await Task.Run(() =>
+                        {
+                            _horses = Horse.GetHorses();
+                            RaisePropertyChanged(() => HorsesList);
+                        }).ConfigureAwait(true);
                     }));
             }
 
@@ -200,10 +210,13 @@ namespace HorseAccounting.ViewModel
             {
                 return _showActingHorses
                     ?? (_showActingHorses = new RelayCommand(
-                    () =>
+                    async () =>
                     {
-                        _horses = Horse.GetActingHorses();
-                        RaisePropertyChanged(() => HorsesList);
+                        await Task.Run(() =>
+                        {
+                            _horses = Horse.GetActingHorses();
+                            RaisePropertyChanged(() => HorsesList);
+                        }).ConfigureAwait(true);
                     }));
             }
 
@@ -221,10 +234,13 @@ namespace HorseAccounting.ViewModel
             {
                 return _showRetiredHorses
                     ?? (_showRetiredHorses = new RelayCommand(
-                    () =>
+                    async () =>
                     {
-                        _horses = Horse.GetRetiredHorses();
-                        RaisePropertyChanged(() => HorsesList);
+                        await Task.Run(() =>
+                        {
+                            _horses = Horse.GetRetiredHorses();
+                            RaisePropertyChanged(() => HorsesList);
+                        }).ConfigureAwait(true);
                     }));
             }
 

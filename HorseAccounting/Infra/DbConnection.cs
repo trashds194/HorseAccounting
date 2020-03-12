@@ -53,7 +53,8 @@ namespace HorseAccounting.Infra
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! Обратитесь к разработчику!"));
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Невозможно подключиться к серверу! " +
+                    "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
         }
     }

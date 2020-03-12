@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -60,74 +61,94 @@ namespace HorseAccounting.ViewModel
 
             MainHorse = Horse.GetSelectedHorse(SelectedHorse.ID);
 
-            MotherHorse = Horse.GetSelectedHorse(MainHorse.MotherID);
-            MotherHorseFullName = MotherHorse.FullName;
-
-            FatherHorse = Horse.GetSelectedHorse(MainHorse.FatherID);
-            FatherHorseFullName = FatherHorse.FullName;
-
-            TakenBirthPlace = MainHorse.BirthPlace;
-            TakenOwner = MainHorse.Owner;
-
-            if (MainHorse.Gender.Equals("Кобыла"))
+            if (MainHorse != null)
             {
-                Gender = Gender.Mare;
-            }
-            else if (MainHorse.Gender.Equals("Жеребец"))
-            {
-                Gender = Gender.Stallion;
-            }
+                MotherHorse = Horse.GetSelectedHorse(MainHorse.MotherID);
+                MotherHorseFullName = MotherHorse.FullName;
 
-            if (MainHorse.BirthPlace.Equals(StudFarmName))
-            {
-                StudFarm = StudFarmName;
-                MainHorse.BirthPlace = null;
+                FatherHorse = Horse.GetSelectedHorse(MainHorse.FatherID);
+                FatherHorseFullName = FatherHorse.FullName;
+
+                TakenBirthPlace = MainHorse.BirthPlace;
+                TakenOwner = MainHorse.Owner;
+
+                if (MainHorse.Gender.Equals("Кобыла"))
+                {
+                    Gender = Gender.Mare;
+                }
+                else if (MainHorse.Gender.Equals("Жеребец"))
+                {
+                    Gender = Gender.Stallion;
+                }
+
+                if (MainHorse.BirthPlace.Equals(StudFarmName))
+                {
+                    StudFarm = StudFarmName;
+                    MainHorse.BirthPlace = null;
+                }
+                else
+                {
+                    StudFarm = null;
+                    MainHorse.BirthPlace = TakenBirthPlace;
+                }
+
+                if (MainHorse.Owner.Equals(StudFarmName))
+                {
+                    Owner = StudFarmName;
+                    MainHorse.Owner = null;
+                }
+                else
+                {
+                    Owner = null;
+                    MainHorse.Owner = TakenOwner;
+                }
             }
             else
             {
-                StudFarm = null;
-                MainHorse.BirthPlace = TakenBirthPlace;
-            }
-
-            if (MainHorse.Owner.Equals(StudFarmName))
-            {
-                Owner = StudFarmName;
-                MainHorse.Owner = null;
-            }
-            else
-            {
-                Owner = null;
-                MainHorse.Owner = TakenOwner;
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
+                    "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
         }
 
-        private void ComboBoxesUpdate()
+        private async void ComboBoxesUpdate()
         {
-            _motherHorseList = Horse.GetMotherHorse();
-            _fatherHorseList = Horse.GetFatherHorse();
-            RaisePropertyChanged(() => MotherHorseList);
-            RaisePropertyChanged(() => FatherHorseList);
+            await Task.Run(() =>
+            {
+                _motherHorseList = Horse.GetMotherHorse();
+                _fatherHorseList = Horse.GetFatherHorse();
+                RaisePropertyChanged(() => MotherHorseList);
+                RaisePropertyChanged(() => FatherHorseList);
+            }).ConfigureAwait(true);
         }
 
         private void CheckFields()
         {
             MainHorse = Horse.GetSelectedHorse(SelectedHorse.ID);
-            if (!MainHorse.BirthPlace.Equals(StudFarmName))
+            if (MainHorse != null)
             {
-                MainHorse.BirthPlace = StudFarm;
+                if (!MainHorse.BirthPlace.Equals(StudFarmName))
+                {
+                    MainHorse.BirthPlace = StudFarm;
+                }
+                else
+                {
+                    MainHorse.BirthPlace = null;
+                }
+                if (!MainHorse.Owner.Equals(StudFarmName))
+                {
+                    MainHorse.Owner = Owner;
+                }
+                else
+                {
+                    MainHorse.Owner = null;
+                }
             }
             else
             {
-                MainHorse.BirthPlace = null;
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
+    "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
-            if (!MainHorse.Owner.Equals(StudFarmName))
-            {
-                MainHorse.Owner = Owner;
-            }
-            else
-            {
-                MainHorse.Owner = null;
-            }
+
         }
 
         private void CheckHorseDataForNull()

@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -52,17 +53,23 @@ namespace HorseAccounting.ViewModel
             _navigationService = navigationService;
         }
 
-        public void OnPageLoad()
+        public async void OnPageLoad()
         {
-            ComboBoxesUpdate();
+            await Task.Run(() =>
+            {
+                ComboBoxesUpdate();
+            }).ConfigureAwait(true);
         }
 
-        private void ComboBoxesUpdate()
+        private async void ComboBoxesUpdate()
         {
-            _motherHorseList = Horse.GetMotherHorse();
-            _fatherHorseList = Horse.GetFatherHorse();
-            RaisePropertyChanged(() => MotherHorseList);
-            RaisePropertyChanged(() => FatherHorseList);
+            await Task.Run(() =>
+            {
+                _motherHorseList = Horse.GetMotherHorse();
+                _fatherHorseList = Horse.GetFatherHorse();
+                RaisePropertyChanged(() => MotherHorseList);
+                RaisePropertyChanged(() => FatherHorseList);
+            }).ConfigureAwait(true);
         }
 
         private void CheckHorseDataForNull()

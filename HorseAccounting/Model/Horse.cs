@@ -1,8 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using MySql.Data.MySqlClient;
-using Renci.SshNet;
 using System;
 using System.Collections.ObjectModel;
 
@@ -174,6 +172,7 @@ namespace HorseAccounting.Model
                     });
             }
 
+            Console.WriteLine("List Updated");
             return horses;
         }
 
@@ -601,7 +600,7 @@ namespace HorseAccounting.Model
         {
             DbConnection.CreateConnection();
 
-            Horse selectedHorse = new Horse();
+            Horse selectedHorse = null;
 
             try
             {
@@ -644,12 +643,6 @@ namespace HorseAccounting.Model
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                selectedHorse =
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    };
             }
 
             return selectedHorse;

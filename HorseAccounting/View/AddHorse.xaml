@@ -147,6 +147,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
+                <!--<TextBox materialDesign:HintAssist.Hint="Введите кличку новой кобылы по типу Кличка 00-00" TextWrapping="Wrap" Text="{Binding AddedHorse.Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="40,4,0,4" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>-->
                 <ComboBox materialDesign:HintAssist.Hint="Выберите мать из списка кобыл" x:Name="motherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="40,2,0,2" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" StaysOpenOnEdit="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
