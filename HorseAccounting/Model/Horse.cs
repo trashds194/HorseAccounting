@@ -522,6 +522,10 @@ namespace HorseAccounting.Model
             BirthDate = string.Empty;
             BirthPlace = string.Empty;
             Owner = string.Empty;
+            MotherID = 0;
+            FatherID = 0;
+            State = null;
+            FullName = null;
         }
 
         public static int GetLastHorseID()

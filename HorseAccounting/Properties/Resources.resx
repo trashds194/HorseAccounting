@@ -117,17 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LocalIP" xml:space="preserve">
+    <value>127.0.0.1</value>
+    <comment>Локальный IP-адрес</comment>
+  </data>
   <data name="DbCharSet" xml:space="preserve">
     <value>utf8</value>
     <comment>Кодировка БД</comment>
   </data>
-  <data name="DbName" xml:space="preserve">
-    <value>t60064_db</value>
-    <comment>Название БД</comment>
-  </data>
-  <data name="DbPassword" xml:space="preserve">
+  <data name="HostPassword" xml:space="preserve">
     <value>HR4M%rV~S8.pB$gc</value>
-    <comment>Пароль от БД</comment>
+    <comment>Пароль хоста</comment>
+  </data>
+  <data name="HostName" xml:space="preserve">
+    <value>hostru06.fornex.host</value>
+    <comment>Имя хоста для подключения по SSH</comment>
   </data>
   <data name="DbUser" xml:space="preserve">
     <value>t60064_dbuser</value>
@@ -137,16 +141,16 @@
     <value>t60064</value>
     <comment>Логин хоста</comment>
   </data>
-  <data name="HostName" xml:space="preserve">
-    <value>hostru06.fornex.host</value>
-    <comment>Имя хоста для подключения по SSH</comment>
+  <data name="DbName" xml:space="preserve">
+    <value>t60064_db</value>
+    <comment>Название БД</comment>
   </data>
-  <data name="HostPassword" xml:space="preserve">
+  <data name="DbPassword" xml:space="preserve">
     <value>HR4M%rV~S8.pB$gc</value>
-    <comment>Пароль хоста</comment>
+    <comment>Пароль от БД</comment>
   </data>
-  <data name="LocalIP" xml:space="preserve">
-    <value>127.0.0.1</value>
-    <comment>Локальный IP-адрес</comment>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="horseArt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\horseArt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

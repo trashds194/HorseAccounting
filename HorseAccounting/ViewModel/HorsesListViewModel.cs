@@ -174,6 +174,26 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        private RelayCommand _showAbout;
+
+        public RelayCommand ShowAbout
+        {
+            get
+            {
+                return _showAbout
+                    ?? (_showAbout = new RelayCommand(
+                    () =>
+                    {
+
+                    }));
+            }
+
+            private set
+            {
+                _showAbout = value;
+            }
+        }
+
         #endregion
 
         #region WindowCommands

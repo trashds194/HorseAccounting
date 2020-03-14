@@ -66,7 +66,7 @@
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top">
+            <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top" Command="{Binding ShowAbout}">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="About" />
                 </MenuItem.Icon>

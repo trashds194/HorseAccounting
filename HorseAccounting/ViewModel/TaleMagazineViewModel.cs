@@ -1341,162 +1341,282 @@ namespace HorseAccounting.ViewModel
                                     if (Mare1Horse != null)
                                     {
                                         worksheet.Cells[3, 2].Value = Mare1Horse.FullName;
-                                        Mother1Horse = Horse.GetSelectedHorse(Mare1Horse.MotherID);
-                                        worksheet.Cells[4, 2].Value = Mother1Horse.FullName;
-                                        Father1Horse = Horse.GetSelectedHorse(Mare1Horse.FatherID);
-                                        worksheet.Cells[4, 3].Value = Father1Horse.FullName;
+                                        if (Mare1Horse.MotherID != 0)
+                                        {
+                                            Mother1Horse = Horse.GetSelectedHorse(Mare1Horse.MotherID);
+                                            worksheet.Cells[4, 2].Value = Mother1Horse.FullName;
+                                        }
+                                        if (Mare1Horse.FatherID != 0)
+                                        {
+                                            Father1Horse = Horse.GetSelectedHorse(Mare1Horse.FatherID);
+                                            worksheet.Cells[4, 3].Value = Father1Horse.FullName;
+                                        }
                                     }
                                     if (Mare2Horse != null)
                                     {
                                         worksheet.Cells[8, 2].Value = Mare2Horse.FullName;
-                                        Mother2Horse = Horse.GetSelectedHorse(Mare2Horse.MotherID);
-                                        worksheet.Cells[9, 2].Value = Mother2Horse.FullName;
-                                        Father2Horse = Horse.GetSelectedHorse(Mare2Horse.FatherID);
-                                        worksheet.Cells[9, 3].Value = Father2Horse.FullName;
+                                        if (Mare2Horse.MotherID != 0)
+                                        {
+                                            Mother2Horse = Horse.GetSelectedHorse(Mare2Horse.MotherID);
+                                            worksheet.Cells[9, 2].Value = Mother2Horse.FullName;
+                                        }
+                                        if (Mare2Horse.FatherID != 0)
+                                        {
+                                            Father2Horse = Horse.GetSelectedHorse(Mare2Horse.FatherID);
+                                            worksheet.Cells[9, 3].Value = Father2Horse.FullName;
+                                        }
                                     }
                                     if (Mare3Horse != null)
                                     {
                                         worksheet.Cells[13, 2].Value = Mare3Horse.FullName;
-                                        Mother3Horse = Horse.GetSelectedHorse(Mare3Horse.MotherID);
-                                        worksheet.Cells[14, 2].Value = Mother3Horse.FullName;
-                                        Father3Horse = Horse.GetSelectedHorse(Mare3Horse.FatherID);
-                                        worksheet.Cells[14, 3].Value = Father3Horse.FullName;
+                                        if (Mare3Horse.MotherID != 0)
+                                        {
+                                            Mother3Horse = Horse.GetSelectedHorse(Mare3Horse.MotherID);
+                                            worksheet.Cells[14, 2].Value = Mother3Horse.FullName;
+                                        }
+                                        if (Mare3Horse.FatherID != 0)
+                                        {
+                                            Father3Horse = Horse.GetSelectedHorse(Mare3Horse.FatherID);
+                                            worksheet.Cells[14, 3].Value = Father3Horse.FullName;
+                                        }
                                     }
                                     if (Mare4Horse != null)
                                     {
                                         worksheet.Cells[18, 2].Value = Mare4Horse.FullName;
-                                        Mother4Horse = Horse.GetSelectedHorse(Mare4Horse.MotherID);
-                                        worksheet.Cells[19, 2].Value = Mother4Horse.FullName;
-                                        Father4Horse = Horse.GetSelectedHorse(Mare4Horse.FatherID);
-                                        worksheet.Cells[19, 3].Value = Father4Horse.FullName;
+                                        if (Mare4Horse.MotherID != 0)
+                                        {
+                                            Mother4Horse = Horse.GetSelectedHorse(Mare4Horse.MotherID);
+                                            worksheet.Cells[19, 2].Value = Mother4Horse.FullName;
+                                        }
+                                        if (Mare4Horse.FatherID != 0)
+                                        {
+                                            Father4Horse = Horse.GetSelectedHorse(Mare4Horse.FatherID);
+                                            worksheet.Cells[19, 3].Value = Father4Horse.FullName;
+                                        }
                                     }
                                     if (Mare5Horse != null)
                                     {
                                         worksheet.Cells[23, 2].Value = Mare5Horse.FullName;
-                                        Mother5Horse = Horse.GetSelectedHorse(Mare5Horse.MotherID);
-                                        worksheet.Cells[24, 2].Value = Mother5Horse.FullName;
-                                        Father5Horse = Horse.GetSelectedHorse(Mare5Horse.FatherID);
-                                        worksheet.Cells[24, 3].Value = Father5Horse.FullName;
+                                        if (Mare5Horse.MotherID != 0)
+                                        {
+                                            Mother5Horse = Horse.GetSelectedHorse(Mare5Horse.MotherID);
+                                            worksheet.Cells[24, 2].Value = Mother5Horse.FullName;
+                                        }
+                                        if (Mare5Horse.FatherID != 0)
+                                        {
+                                            Father5Horse = Horse.GetSelectedHorse(Mare5Horse.FatherID);
+                                            worksheet.Cells[24, 3].Value = Father5Horse.FullName;
+                                        }
                                     }
                                     if (Mare6Horse != null)
                                     {
                                         worksheet.Cells[28, 2].Value = Mare6Horse.FullName;
-                                        Mother6Horse = Horse.GetSelectedHorse(Mare6Horse.MotherID);
-                                        worksheet.Cells[29, 2].Value = Mother6Horse.FullName;
-                                        Father6Horse = Horse.GetSelectedHorse(Mare6Horse.FatherID);
-                                        worksheet.Cells[29, 3].Value = Father6Horse.FullName;
+                                        if (Mare6Horse.MotherID != 0)
+                                        {
+                                            Mother6Horse = Horse.GetSelectedHorse(Mare6Horse.MotherID);
+                                            worksheet.Cells[29, 2].Value = Mother6Horse.FullName;
+                                        }
+                                        if (Mare6Horse.FatherID != 0)
+                                        {
+                                            Father6Horse = Horse.GetSelectedHorse(Mare6Horse.FatherID);
+                                            worksheet.Cells[29, 3].Value = Father6Horse.FullName;
+                                        }
                                     }
                                     if (Mare7Horse != null)
                                     {
                                         worksheet.Cells[33, 2].Value = Mare7Horse.FullName;
-                                        Mother7Horse = Horse.GetSelectedHorse(Mare7Horse.MotherID);
-                                        worksheet.Cells[34, 2].Value = Mother7Horse.FullName;
-                                        Father7Horse = Horse.GetSelectedHorse(Mare7Horse.FatherID);
-                                        worksheet.Cells[34, 3].Value = Father7Horse.FullName;
+                                        if (Mare7Horse.MotherID != 0)
+                                        {
+                                            Mother7Horse = Horse.GetSelectedHorse(Mare7Horse.MotherID);
+                                            worksheet.Cells[34, 2].Value = Mother7Horse.FullName;
+                                        }
+                                        if (Mare7Horse.FatherID != 0)
+                                        {
+                                            Father7Horse = Horse.GetSelectedHorse(Mare7Horse.FatherID);
+                                            worksheet.Cells[34, 3].Value = Father7Horse.FullName;
+                                        }
                                     }
                                     if (Mare8Horse != null)
                                     {
                                         worksheet.Cells[38, 2].Value = Mare8Horse.FullName;
-                                        Mother8Horse = Horse.GetSelectedHorse(Mare8Horse.MotherID);
-                                        worksheet.Cells[39, 2].Value = Mother8Horse.FullName;
-                                        Father8Horse = Horse.GetSelectedHorse(Mare8Horse.FatherID);
-                                        worksheet.Cells[39, 3].Value = Father8Horse.FullName;
+                                        if (Mare8Horse.MotherID != 0)
+                                        {
+                                            Mother8Horse = Horse.GetSelectedHorse(Mare8Horse.MotherID);
+                                            worksheet.Cells[39, 2].Value = Mother8Horse.FullName;
+                                        }
+                                        if (Mare8Horse.FatherID != 0)
+                                        {
+                                            Father8Horse = Horse.GetSelectedHorse(Mare8Horse.FatherID);
+                                            worksheet.Cells[39, 3].Value = Father8Horse.FullName;
+                                        }
                                     }
                                     if (Mare9Horse != null)
                                     {
                                         worksheet.Cells[43, 2].Value = Mare9Horse.FullName;
-                                        Mother9Horse = Horse.GetSelectedHorse(Mare9Horse.MotherID);
-                                        worksheet.Cells[44, 2].Value = Mother9Horse.FullName;
-                                        Father9Horse = Horse.GetSelectedHorse(Mare9Horse.FatherID);
-                                        worksheet.Cells[44, 3].Value = Father9Horse.FullName;
+                                        if (Mare9Horse.MotherID != 0)
+                                        {
+                                            Mother9Horse = Horse.GetSelectedHorse(Mare9Horse.MotherID);
+                                            worksheet.Cells[44, 2].Value = Mother9Horse.FullName;
+                                        }
+                                        if (Mare9Horse.FatherID != 0)
+                                        {
+                                            Father9Horse = Horse.GetSelectedHorse(Mare9Horse.FatherID);
+                                            worksheet.Cells[44, 3].Value = Father9Horse.FullName;
+                                        }
                                     }
                                     if (Mare10Horse != null)
                                     {
                                         worksheet.Cells[48, 2].Value = Mare10Horse.FullName;
-                                        Mother10Horse = Horse.GetSelectedHorse(Mare10Horse.MotherID);
-                                        worksheet.Cells[49, 2].Value = Mother10Horse.FullName;
-                                        Father10Horse = Horse.GetSelectedHorse(Mare10Horse.FatherID);
-                                        worksheet.Cells[49, 3].Value = Father10Horse.FullName;
+                                        if (Mare10Horse.MotherID != 0)
+                                        {
+                                            Mother10Horse = Horse.GetSelectedHorse(Mare10Horse.MotherID);
+                                            worksheet.Cells[49, 2].Value = Mother10Horse.FullName;
+                                        }
+                                        if (Mare10Horse.FatherID != 0)
+                                        {
+                                            Father10Horse = Horse.GetSelectedHorse(Mare10Horse.FatherID);
+                                            worksheet.Cells[49, 3].Value = Father10Horse.FullName;
+                                        }
                                     }
                                     if (Mare11Horse != null)
                                     {
                                         worksheet.Cells[53, 2].Value = Mare11Horse.FullName;
-                                        Mother11Horse = Horse.GetSelectedHorse(Mare11Horse.MotherID);
-                                        worksheet.Cells[54, 2].Value = Mother1Horse.FullName;
-                                        Father11Horse = Horse.GetSelectedHorse(Mare11Horse.FatherID);
-                                        worksheet.Cells[54, 3].Value = Father11Horse.FullName;
+                                        if (Mare11Horse.MotherID != 0)
+                                        {
+                                            Mother11Horse = Horse.GetSelectedHorse(Mare11Horse.MotherID);
+                                            worksheet.Cells[54, 2].Value = Mother1Horse.FullName;
+                                        }
+                                        if (Mare11Horse.FatherID != 0)
+                                        {
+                                            Father11Horse = Horse.GetSelectedHorse(Mare11Horse.FatherID);
+                                            worksheet.Cells[54, 3].Value = Father11Horse.FullName;
+                                        }
                                     }
                                     if (Mare12Horse != null)
                                     {
                                         worksheet.Cells[58, 2].Value = Mare12Horse.FullName;
-                                        Mother12Horse = Horse.GetSelectedHorse(Mare12Horse.MotherID);
-                                        worksheet.Cells[59, 2].Value = Mother12Horse.FullName;
-                                        Father12Horse = Horse.GetSelectedHorse(Mare12Horse.FatherID);
-                                        worksheet.Cells[59, 3].Value = Father12Horse.FullName;
+                                        if (Mare12Horse.MotherID != 0)
+                                        {
+                                            Mother12Horse = Horse.GetSelectedHorse(Mare12Horse.MotherID);
+                                            worksheet.Cells[59, 2].Value = Mother12Horse.FullName;
+                                        }
+                                        if (Mare12Horse.FatherID != 0)
+                                        {
+                                            Father12Horse = Horse.GetSelectedHorse(Mare12Horse.FatherID);
+                                            worksheet.Cells[59, 3].Value = Father12Horse.FullName;
+                                        }
                                     }
                                     if (Mare13Horse != null)
                                     {
                                         worksheet.Cells[63, 2].Value = Mare13Horse.FullName;
-                                        Mother13Horse = Horse.GetSelectedHorse(Mare13Horse.MotherID);
-                                        worksheet.Cells[64, 2].Value = Mother13Horse.FullName;
-                                        Father13Horse = Horse.GetSelectedHorse(Mare13Horse.FatherID);
-                                        worksheet.Cells[64, 3].Value = Father13Horse.FullName;
+                                        if (Mare13Horse.MotherID != 0)
+                                        {
+                                            Mother13Horse = Horse.GetSelectedHorse(Mare13Horse.MotherID);
+                                            worksheet.Cells[64, 2].Value = Mother13Horse.FullName;
+                                        }
+                                        if (Mare13Horse.FatherID != 0)
+                                        {
+                                            Father13Horse = Horse.GetSelectedHorse(Mare13Horse.FatherID);
+                                            worksheet.Cells[64, 3].Value = Father13Horse.FullName;
+                                        }
                                     }
                                     if (Mare14Horse != null)
                                     {
                                         worksheet.Cells[68, 2].Value = Mare14Horse.FullName;
-                                        Mother14Horse = Horse.GetSelectedHorse(Mare14Horse.MotherID);
-                                        worksheet.Cells[69, 2].Value = Mother14Horse.FullName;
-                                        Father14Horse = Horse.GetSelectedHorse(Mare14Horse.FatherID);
-                                        worksheet.Cells[69, 3].Value = Father14Horse.FullName;
+                                        if (Mare14Horse.MotherID != 0)
+                                        {
+                                            Mother14Horse = Horse.GetSelectedHorse(Mare14Horse.MotherID);
+                                            worksheet.Cells[69, 2].Value = Mother14Horse.FullName;
+                                        }
+                                        if (Mare14Horse.FatherID != 0)
+                                        {
+                                            Father14Horse = Horse.GetSelectedHorse(Mare14Horse.FatherID);
+                                            worksheet.Cells[69, 3].Value = Father14Horse.FullName;
+                                        }
                                     }
                                     if (Mare15Horse != null)
                                     {
                                         worksheet.Cells[73, 2].Value = Mare15Horse.FullName;
-                                        Mother15Horse = Horse.GetSelectedHorse(Mare15Horse.MotherID);
-                                        worksheet.Cells[74, 2].Value = Mother15Horse.FullName;
-                                        Father15Horse = Horse.GetSelectedHorse(Mare15Horse.FatherID);
-                                        worksheet.Cells[74, 3].Value = Father15Horse.FullName;
+                                        if (Mare15Horse.MotherID != 0)
+                                        {
+                                            Mother15Horse = Horse.GetSelectedHorse(Mare15Horse.MotherID);
+                                            worksheet.Cells[74, 2].Value = Mother15Horse.FullName;
+                                        }
+                                        if (Mare15Horse.FatherID != 0)
+                                        {
+                                            Father15Horse = Horse.GetSelectedHorse(Mare15Horse.FatherID);
+                                            worksheet.Cells[74, 3].Value = Father15Horse.FullName;
+                                        }
                                     }
                                     if (Mare16Horse != null)
                                     {
                                         worksheet.Cells[78, 2].Value = Mare16Horse.FullName;
-                                        Mother16Horse = Horse.GetSelectedHorse(Mare16Horse.MotherID);
-                                        worksheet.Cells[79, 2].Value = Mother16Horse.FullName;
-                                        Father16Horse = Horse.GetSelectedHorse(Mare16Horse.FatherID);
-                                        worksheet.Cells[79, 3].Value = Father16Horse.FullName;
+                                        if (Mare16Horse.MotherID != 0)
+                                        {
+                                            Mother16Horse = Horse.GetSelectedHorse(Mare16Horse.MotherID);
+                                            worksheet.Cells[79, 2].Value = Mother16Horse.FullName;
+                                        }
+                                        if (Mare16Horse.FatherID != 0)
+                                        {
+                                            Father16Horse = Horse.GetSelectedHorse(Mare16Horse.FatherID);
+                                            worksheet.Cells[79, 3].Value = Father16Horse.FullName;
+                                        }
                                     }
                                     if (Mare17Horse != null)
                                     {
                                         worksheet.Cells[83, 2].Value = Mare17Horse.FullName;
-                                        Mother17Horse = Horse.GetSelectedHorse(Mare17Horse.MotherID);
-                                        worksheet.Cells[84, 2].Value = Mother17Horse.FullName;
-                                        Father17Horse = Horse.GetSelectedHorse(Mare17Horse.FatherID);
-                                        worksheet.Cells[84, 3].Value = Father17Horse.FullName;
+                                        if (Mare17Horse.MotherID != 0)
+                                        {
+                                            Mother17Horse = Horse.GetSelectedHorse(Mare17Horse.MotherID);
+                                            worksheet.Cells[84, 2].Value = Mother17Horse.FullName;
+                                        }
+                                        if (Mare17Horse.FatherID != 0)
+                                        {
+                                            Father17Horse = Horse.GetSelectedHorse(Mare17Horse.FatherID);
+                                            worksheet.Cells[84, 3].Value = Father17Horse.FullName;
+                                        }
                                     }
                                     if (Mare18Horse != null)
                                     {
                                         worksheet.Cells[88, 2].Value = Mare18Horse.FullName;
-                                        Mother18Horse = Horse.GetSelectedHorse(Mare18Horse.MotherID);
-                                        worksheet.Cells[89, 2].Value = Mother18Horse.FullName;
-                                        Father18Horse = Horse.GetSelectedHorse(Mare18Horse.FatherID);
-                                        worksheet.Cells[89, 3].Value = Father18Horse.FullName;
+                                        if (Mare18Horse.MotherID != 0)
+                                        {
+                                            Mother18Horse = Horse.GetSelectedHorse(Mare18Horse.MotherID);
+                                            worksheet.Cells[89, 2].Value = Mother18Horse.FullName;
+                                        }
+                                        if (Mare18Horse.FatherID != 0)
+                                        {
+                                            Father18Horse = Horse.GetSelectedHorse(Mare18Horse.FatherID);
+                                            worksheet.Cells[89, 3].Value = Father18Horse.FullName;
+                                        }
                                     }
                                     if (Mare19Horse != null)
                                     {
                                         worksheet.Cells[93, 2].Value = Mare19Horse.FullName;
-                                        Mother19Horse = Horse.GetSelectedHorse(Mare19Horse.MotherID);
-                                        worksheet.Cells[94, 2].Value = Mother19Horse.FullName;
-                                        Father19Horse = Horse.GetSelectedHorse(Mare19Horse.FatherID);
-                                        worksheet.Cells[94, 3].Value = Father19Horse.FullName;
+                                        if (Mare19Horse.MotherID != 0)
+                                        {
+                                            Mother19Horse = Horse.GetSelectedHorse(Mare19Horse.MotherID);
+                                            worksheet.Cells[94, 2].Value = Mother19Horse.FullName;
+                                        }
+                                        if (Mare19Horse.FatherID != 0)
+                                        {
+                                            Father19Horse = Horse.GetSelectedHorse(Mare19Horse.FatherID);
+                                            worksheet.Cells[94, 3].Value = Father19Horse.FullName;
+                                        }
                                     }
                                     if (Mare20Horse != null)
                                     {
                                         worksheet.Cells[98, 2].Value = Mare20Horse.FullName;
-                                        Mother20Horse = Horse.GetSelectedHorse(Mare20Horse.MotherID);
-                                        worksheet.Cells[99, 2].Value = Mother20Horse.FullName;
-                                        Father20Horse = Horse.GetSelectedHorse(Mare20Horse.FatherID);
-                                        worksheet.Cells[99, 3].Value = Father20Horse.FullName;
+                                        if (Mare20Horse.MotherID != 0)
+                                        {
+                                            Mother20Horse = Horse.GetSelectedHorse(Mare20Horse.MotherID);
+                                            worksheet.Cells[99, 2].Value = Mother20Horse.FullName;
+                                        }
+                                        if (Mare20Horse.FatherID != 0)
+                                        {
+                                            Father20Horse = Horse.GetSelectedHorse(Mare20Horse.FatherID);
+                                            worksheet.Cells[99, 3].Value = Father20Horse.FullName;
+                                        }
                                     }
                                 }
                                 catch (Exception ex)
