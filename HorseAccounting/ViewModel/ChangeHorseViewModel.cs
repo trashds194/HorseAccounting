@@ -58,7 +58,7 @@ namespace HorseAccounting.ViewModel
         {
             SelectedHorse = (Horse)_navigationService.Parameter;
 
-            MainHorse = Horse.GetSelectedHorse(SelectedHorse.ID);
+            MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
 
             try
             {
@@ -66,14 +66,14 @@ namespace HorseAccounting.ViewModel
                 {
                     if (MainHorse.MotherID != 0)
                     {
-                        MotherHorse = Horse.GetSelectedHorse(MainHorse.MotherID);
+                        MotherHorse = Horse.GetSelectedHorseAsync(MainHorse.MotherID).Result;
                         MotherHorseFullName = MotherHorse.FullName;
                     }
 
 
                     if (MainHorse.FatherID != 0)
                     {
-                        FatherHorse = Horse.GetSelectedHorse(MainHorse.FatherID);
+                        FatherHorse = Horse.GetSelectedHorseAsync(MainHorse.FatherID).Result;
                         FatherHorseFullName = FatherHorse.FullName;
                     }
 
@@ -128,15 +128,15 @@ namespace HorseAccounting.ViewModel
 
         private void ComboBoxesUpdate()
         {
-            _motherHorseList = Horse.GetMotherHorse();
-            _fatherHorseList = Horse.GetFatherHorse();
+            _motherHorseList = Horse.GetMotherHorseAsync().Result;
+            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
             RaisePropertyChanged(() => MotherHorseList);
             RaisePropertyChanged(() => FatherHorseList);
         }
 
         private void CheckFields()
         {
-            MainHorse = Horse.GetSelectedHorse(SelectedHorse.ID);
+            MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
             if (MainHorse != null)
             {
                 if (!MainHorse.BirthPlace.Equals(StudFarmName))

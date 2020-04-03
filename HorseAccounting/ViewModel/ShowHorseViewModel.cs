@@ -38,7 +38,7 @@ namespace HorseAccounting.ViewModel
 
         public ShowHorseViewModel(IPageNavigationService navigationService)
         {
-            _navigationService = navigationService;          
+            _navigationService = navigationService;
         }
 
         public async void OnPageLoad()
@@ -52,7 +52,7 @@ namespace HorseAccounting.ViewModel
             {
                 MainHorse = (Horse)_navigationService.Parameter;
 
-                SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
+                SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
 
                 try
                 {
@@ -61,8 +61,8 @@ namespace HorseAccounting.ViewModel
                     if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
                     {
                         ParentsVis = true;
-                        MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
-                        FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+                        MotherHorse = Horse.GetSelectedHorseAsync(SelectedHorse.MotherID).Result;
+                        FatherHorse = Horse.GetSelectedHorseAsync(SelectedHorse.FatherID).Result;
                     }
                     else
                     {
@@ -113,7 +113,8 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public string AddProgressionButtonText {
+        public string AddProgressionButtonText
+        {
             get
             {
                 return _addProgressionButtonText;
@@ -165,7 +166,7 @@ namespace HorseAccounting.ViewModel
 
         public ObservableCollection<Progression> MainHorseProgression
         {
-            get 
+            get
             {
                 return _mainHorseProgression;
             }
@@ -303,7 +304,7 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                if(_addProgression == null)
+                if (_addProgression == null)
                 {
                     AddedProgression = new Progression();
                     _addProgression = new RelayCommand(() =>
@@ -351,7 +352,7 @@ namespace HorseAccounting.ViewModel
                                     AddProgressionButtonText = "Добавить";
                                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
                                     RaisePropertyChanged(nameof(MainHorseProgression));
-                                    SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
+                                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
                                     RaisePropertyChanged(nameof(SelectedHorse));
                                 }
                                 else

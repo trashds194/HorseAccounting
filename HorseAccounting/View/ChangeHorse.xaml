@@ -73,7 +73,7 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Label Grid.Row="0" Content="№ по ГПК:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
                     <Label Grid.Row="1" Content="Кличка:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
                     <Label Grid.Row="2" Content="Тавро:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
@@ -110,9 +110,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Content="Пол:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
-                    
+
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -123,13 +123,13 @@
                         <RadioButton x:Name="mareButton" IsChecked="{Binding IsMare}" Content="Кобыла" HorizontalAlignment="Left" Margin="40,4,0,4" VerticalAlignment="Center" Grid.Row="1"/>
                     </Grid>
                 </Grid>
-                
+
                 <Grid DataContext="{Binding MainHorse}" Grid.Row="2" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Content="Дата рождения:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
 
                     <DatePicker x:Name="birthDateDatePicker" Margin="40,8" Text="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Language="ru" materialDesign:HintAssist.Hint="Выберите дату рождения" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>

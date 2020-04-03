@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System.Collections.ObjectModel;
@@ -31,9 +32,15 @@ namespace HorseAccounting.ViewModel
             await Task.Run(() =>
             {
                 SearchQuery = null;
-
-                _horses = Horse.GetHorses().Result;
-                RaisePropertyChanged(() => HorsesList);
+                try
+                {
+                    _horses = Horse.GetHorses().Result;
+                    RaisePropertyChanged(() => HorsesList);
+                }
+                catch
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
+                }
             }).ConfigureAwait(true);
         }
 
@@ -41,15 +48,14 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                if (string.IsNullOrEmpty(SearchQuery))
+                try
                 {
-                    _horses = Horse.GetHorses().Result;
+                    _horses = Horse.SearchHorsesAsync(SearchQuery).Result;
                     RaisePropertyChanged(() => HorsesList);
                 }
-                else
+                catch
                 {
-                    _horses = Horse.SearchHorses(SearchQuery);
-                    RaisePropertyChanged(() => HorsesList);
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
                 }
             }).ConfigureAwait(true);
         }
@@ -234,7 +240,7 @@ namespace HorseAccounting.ViewModel
                     {
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetActingHorses();
+                            _horses = Horse.GetActingHorses().Result;
                             RaisePropertyChanged(() => HorsesList);
                         }).ConfigureAwait(true);
                     }));
@@ -258,7 +264,7 @@ namespace HorseAccounting.ViewModel
                     {
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetRetiredHorses();
+                            _horses = Horse.GetRetiredHorses().Result;
                             RaisePropertyChanged(() => HorsesList);
                         }).ConfigureAwait(true);
                     }));

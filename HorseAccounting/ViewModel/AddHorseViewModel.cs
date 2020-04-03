@@ -65,8 +65,8 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                _motherHorseList = Horse.GetMotherHorse();
-                _fatherHorseList = Horse.GetFatherHorse();
+                _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
                 RaisePropertyChanged(() => MotherHorseList);
                 RaisePropertyChanged(() => FatherHorseList);
             }).ConfigureAwait(true);
@@ -405,7 +405,7 @@ namespace HorseAccounting.ViewModel
 
                         if (MotherHorse != null && FatherHorse != null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState))
+                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 LastHorseID = Horse.GetLastHorseID();
@@ -453,7 +453,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse != null && FatherHorse == null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0, AddedState))
+                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 LastHorseID = Horse.GetLastHorseID();
@@ -501,7 +501,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse == null && FatherHorse != null)
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID, AddedState))
+                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 LastHorseID = Horse.GetLastHorseID();
@@ -549,7 +549,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else
                         {
-                            if (Horse.AddHorse(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0, AddedState))
+                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                                 LastHorseID = Horse.GetLastHorseID();
