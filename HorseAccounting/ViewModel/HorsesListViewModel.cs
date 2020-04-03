@@ -32,7 +32,7 @@ namespace HorseAccounting.ViewModel
             {
                 SearchQuery = null;
 
-                _horses = Horse.GetHorses();
+                _horses = Horse.GetHorses().Result;
                 RaisePropertyChanged(() => HorsesList);
             }).ConfigureAwait(true);
         }
@@ -43,7 +43,7 @@ namespace HorseAccounting.ViewModel
             {
                 if (string.IsNullOrEmpty(SearchQuery))
                 {
-                    _horses = Horse.GetHorses();
+                    _horses = Horse.GetHorses().Result;
                     RaisePropertyChanged(() => HorsesList);
                 }
                 else
@@ -210,7 +210,7 @@ namespace HorseAccounting.ViewModel
                     {
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetHorses();
+                            _horses = Horse.GetHorses().Result;
                             RaisePropertyChanged(() => HorsesList);
                         }).ConfigureAwait(true);
                     }));

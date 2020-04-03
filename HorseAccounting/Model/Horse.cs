@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using HorseAccounting.Infra;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
 {
@@ -117,64 +120,79 @@ namespace HorseAccounting.Model
 
         #region HorsesListPage
 
-        public static ObservableCollection<Horse> GetHorses()
+        public static async Task<ObservableCollection<Horse>> GetHorses()
         {
-            DbConnection.CreateConnection();
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php";
+
+            HttpClient client = new HttpClient();
+
+            string response = await client.GetStringAsync(url);
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
+            horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        horses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                horses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
-
-            Console.WriteLine("List Updated");
             return horses;
         }
+
+        //public static ObservableCollection<Horse> GetHorses()
+        //{
+        //    DbConnection.CreateConnection();
+
+        //    ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+
+        //    try
+        //    {
+        //        using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+        //        {
+        //            sql.Open();
+
+        //            MySqlCommand cmd = sql.CreateCommand();
+        //            cmd.CommandText = "SELECT * FROM `лошадь`";
+
+        //            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+        //            while (dataReader.Read())
+        //            {
+        //                horses.Add(
+        //                    new Horse
+        //                    {
+        //                        ID = dataReader.GetInt32(0),
+        //                        GpkNum = dataReader.GetString(1),
+        //                        NickName = dataReader.GetString(2),
+        //                        Brand = dataReader.GetString(3),
+        //                        Bloodiness = dataReader.GetString(4),
+        //                        Color = dataReader.GetString(5),
+        //                        Gender = dataReader.GetString(6),
+        //                        BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
+        //                        BirthPlace = dataReader.GetString(8),
+        //                        Owner = dataReader.GetString(9),
+        //                        MotherID = dataReader.GetInt32(10),
+        //                        FatherID = dataReader.GetInt32(11),
+        //                        State = dataReader.GetString(12),
+        //                        FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
+        //                    });
+        //            }
+
+        //            dataReader.Close();
+
+        //            sql.Close();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        horses.Add(
+        //            new Horse
+        //            {
+        //                NickName = "База данных не найдена!",
+        //                Bloodiness = "Обратитесь к разработчику приложения!",
+        //            });
+        //    }
+
+        //    Console.WriteLine("List Updated");
+        //    return horses;
+        //}
 
         public static ObservableCollection<Horse> GetActingHorses()
         {

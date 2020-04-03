@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -53,25 +54,32 @@ namespace HorseAccounting.ViewModel
 
                 SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
 
-                HorseNick = SelectedHorse.FullName;
-
-                if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                try
                 {
-                    ParentsVis = true;
-                    MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
-                    FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+                    HorseNick = SelectedHorse.FullName;
+
+                    if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                    {
+                        ParentsVis = true;
+                        MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
+                        FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+                    }
+                    else
+                    {
+                        ParentsVis = false;
+                    }
+
+                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+
+                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID);
+
+                    RaisePropertyChanged(() => MainHorseProgression);
+                    RaisePropertyChanged(() => MainHorseScoring);
                 }
-                else
+                catch (Exception ex)
                 {
-                    ParentsVis = false;
+                    Console.WriteLine(ex.Message);
                 }
-
-                _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
-
-                _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID);
-
-                RaisePropertyChanged(() => MainHorseProgression);
-                RaisePropertyChanged(() => MainHorseScoring);
             }).ConfigureAwait(true);
         }
 
