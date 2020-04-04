@@ -60,68 +60,60 @@ namespace HorseAccounting.ViewModel
 
             MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
 
-            try
+            if (MainHorse != null)
             {
-                if (MainHorse != null)
+                if (MainHorse.MotherID != 0)
                 {
-                    if (MainHorse.MotherID != 0)
-                    {
-                        MotherHorse = Horse.GetSelectedHorseAsync(MainHorse.MotherID).Result;
-                        MotherHorseFullName = MotherHorse.FullName;
-                    }
+                    MotherHorse = Horse.GetSelectedHorseAsync(MainHorse.MotherID).Result;
+                    MotherHorseFullName = MotherHorse.FullName;
+                }
 
 
-                    if (MainHorse.FatherID != 0)
-                    {
-                        FatherHorse = Horse.GetSelectedHorseAsync(MainHorse.FatherID).Result;
-                        FatherHorseFullName = FatherHorse.FullName;
-                    }
+                if (MainHorse.FatherID != 0)
+                {
+                    FatherHorse = Horse.GetSelectedHorseAsync(MainHorse.FatherID).Result;
+                    FatherHorseFullName = FatherHorse.FullName;
+                }
 
 
-                    TakenBirthPlace = MainHorse.BirthPlace;
-                    TakenOwner = MainHorse.Owner;
+                TakenBirthPlace = MainHorse.BirthPlace;
+                TakenOwner = MainHorse.Owner;
 
-                    if (MainHorse.Gender.Equals("Кобыла"))
-                    {
-                        Gender = Gender.Mare;
-                    }
-                    else if (MainHorse.Gender.Equals("Жеребец"))
-                    {
-                        Gender = Gender.Stallion;
-                    }
+                if (MainHorse.Gender.Equals("Кобыла"))
+                {
+                    Gender = Gender.Mare;
+                }
+                else if (MainHorse.Gender.Equals("Жеребец"))
+                {
+                    Gender = Gender.Stallion;
+                }
 
-                    if (MainHorse.BirthPlace.Equals(StudFarmName))
-                    {
-                        StudFarm = StudFarmName;
-                        MainHorse.BirthPlace = null;
-                    }
-                    else
-                    {
-                        StudFarm = null;
-                        MainHorse.BirthPlace = TakenBirthPlace;
-                    }
-
-                    if (MainHorse.Owner.Equals(StudFarmName))
-                    {
-                        Owner = StudFarmName;
-                        MainHorse.Owner = null;
-                    }
-                    else
-                    {
-                        Owner = null;
-                        MainHorse.Owner = TakenOwner;
-                    }
+                if (MainHorse.BirthPlace.Equals(StudFarmName))
+                {
+                    StudFarm = StudFarmName;
+                    MainHorse.BirthPlace = null;
                 }
                 else
                 {
-                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
-                        "Проверьте соединение с интернетом или обратитесь к разработчику!"));
+                    StudFarm = null;
+                    MainHorse.BirthPlace = TakenBirthPlace;
+                }
+
+                if (MainHorse.Owner.Equals(StudFarmName))
+                {
+                    Owner = StudFarmName;
+                    MainHorse.Owner = null;
+                }
+                else
+                {
+                    Owner = null;
+                    MainHorse.Owner = TakenOwner;
                 }
             }
-            catch
+            else
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
-                        "Проверьте соединение с интернетом или обратитесь к разработчику!"));
+                    "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
 
         }
@@ -515,7 +507,7 @@ namespace HorseAccounting.ViewModel
 
                         if (MotherHorse != null && FatherHorse != null)
                         {
-                            if (Horse.ChangeHorse(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID))
+                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
                                 CheckFields();
@@ -527,7 +519,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse != null && FatherHorse == null)
                         {
-                            if (Horse.ChangeHorse(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0))
+                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
                                 CheckFields();
@@ -539,7 +531,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else if (MotherHorse == null && FatherHorse != null)
                         {
-                            if (Horse.ChangeHorse(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID))
+                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
                                 CheckFields();
@@ -551,7 +543,7 @@ namespace HorseAccounting.ViewModel
                         }
                         else
                         {
-                            if (Horse.ChangeHorse(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, 0))
+                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, 0).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
                                 CheckFields();

@@ -125,9 +125,9 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetHorses()
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=all";
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=all";
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -136,9 +136,9 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetActingHorses()
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=acting";
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=acting";
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -147,9 +147,9 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetRetiredHorses()
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=retired";
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=retired";
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -160,7 +160,7 @@ namespace HorseAccounting.Model
         {
             string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?search=" + searchQuery;
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -173,9 +173,9 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetMotherHorseAsync()
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=mother";
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=mother";
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> motherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -184,9 +184,9 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetFatherHorseAsync()
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=father";
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=father";
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             ObservableCollection<Horse> fatherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
@@ -194,10 +194,8 @@ namespace HorseAccounting.Model
         }
 
         public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
-        {        
-            try
-            {
-                var horseData = new Dictionary<string, string>
+        {
+            var horseData = new Dictionary<string, string>
                 {
                     { "GpkNum", gpk },
                     { "NickName", nick },
@@ -213,53 +211,15 @@ namespace HorseAccounting.Model
                     { "State", state },
                 };
 
-                var data = new FormUrlEncodedContent(horseData);
+            var data = new FormUrlEncodedContent(horseData);
 
-                var response = await client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php", data);
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=add", data).GetAwaiter().GetResult();
 
-                var responseString = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-                return true;
+            Console.WriteLine(responseString);
 
-
-                //TODO: Доделать добавление на стороне сервера
-
-
-                //DbConnection.CreateConnection();
-
-                //using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                //{
-                //    sql.Open();
-
-                //    MySqlCommand cmd = sql.CreateCommand();
-                //    cmd.CommandText = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Состояние`) " +
-                //    "VALUES (@gpk, @nick, @brand, @blodeness, @color, @gend, @date, @place, @owner, @mother, @father, @state)";
-
-                //    cmd.Parameters.AddWithValue("@gpk", gpk);
-                //    cmd.Parameters.AddWithValue("@nick", nick);
-                //    cmd.Parameters.AddWithValue("@brand", brand);
-                //    cmd.Parameters.AddWithValue("@blodeness", blodeness);
-                //    cmd.Parameters.AddWithValue("@color", color);
-                //    cmd.Parameters.AddWithValue("@gend", gend);
-                //    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd"));
-                //    cmd.Parameters.AddWithValue("@place", placeBirth);
-                //    cmd.Parameters.AddWithValue("@owner", owner);
-                //    cmd.Parameters.AddWithValue("@mother", motherID);
-                //    cmd.Parameters.AddWithValue("@father", fatherID);
-                //    cmd.Parameters.AddWithValue("@state", state);
-
-                //    cmd.ExecuteNonQuery();
-
-                //    sql.Close();
-
-                //    return true;
-                //}
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            return true;
         }
 
         public void CleanHorseData()
@@ -278,66 +238,32 @@ namespace HorseAccounting.Model
             FullName = null;
         }
 
-        public static int GetLastHorseID()
+        public static async Task<int> GetLastHorseIDAsync()
         {
-            DbConnection.CreateConnection();
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=last-id";
 
-            int lastHorseID = 0;
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
+            Horse lastHorse = JsonConvert.DeserializeObject<Horse>(response);
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT MAX(ID) FROM `лошадь`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        lastHorseID = dataReader.GetInt32(0);
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return lastHorseID;
+            return Convert.ToInt32(lastHorse.ID);
         }
 
-        public static void ChangeHorseState(int id, string state)
+        public static async Task ChangeHorseStateAsync(int id, string state)
         {
-            try
-            {
-                DbConnection.CreateConnection();
-
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+            var horseData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "ID", id.ToString() },
+                    { "State", state },
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "Update `лошадь` set `Состояние` = @state WHERE ID = @id";
+            var data = new FormUrlEncodedContent(horseData);
 
-                    cmd.Parameters.AddWithValue("@state", state);
-                    cmd.Parameters.AddWithValue("@id", id);
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=change-state", data).GetAwaiter().GetResult();
 
-                    cmd.ExecuteNonQuery();
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine(responseString);
         }
 
         #endregion
@@ -352,9 +278,9 @@ namespace HorseAccounting.Model
 
         public static async Task<Horse> GetSelectedHorseAsync(int ID)
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?gethorse=" + ID;
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=" + ID;
 
-            string response = await client.GetStringAsync(url);
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
             Horse selectedHorse = JsonConvert.DeserializeObject<Horse>(response);
 
@@ -362,45 +288,33 @@ namespace HorseAccounting.Model
         }
 
 
-        public static bool ChangeHorse(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
-            try
-            {
-                DbConnection.CreateConnection();
-
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+            var horseData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "ID", id.ToString() },
+                    { "GpkNum", gpk },
+                    { "NickName", nick },
+                    { "Brand", brand },
+                    { "Bloodiness", blodeness },
+                    { "Color", color },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", placeBirth },
+                    { "Owner", owner },
+                    { "MotherID", motherID.ToString() },
+                    { "FatherID", fatherID.ToString() },
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "Update `лошадь` set `№ по ГПК` = @gpk, `Кличка` = @nick, `Тавро` = @brand, `Кровность` = @blodeness, `Масть` = @color, `Пол` = @gend, `Дата рождения` = @date," +
-                        " `Место рождения` = @place, `Владелец` = @owner, `Мать` = @mother, `Отец` = @father WHERE ID = @id";
+            var data = new FormUrlEncodedContent(horseData);
 
-                    cmd.Parameters.AddWithValue("@gpk", gpk);
-                    cmd.Parameters.AddWithValue("@nick", nick);
-                    cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@blodeness", blodeness);
-                    cmd.Parameters.AddWithValue("@color", color);
-                    cmd.Parameters.AddWithValue("@gend", gend);
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@place", placeBirth);
-                    cmd.Parameters.AddWithValue("@owner", owner);
-                    cmd.Parameters.AddWithValue("@mother", motherID);
-                    cmd.Parameters.AddWithValue("@father", fatherID);
-                    cmd.Parameters.AddWithValue("@id", id);
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/horse/horse.php?horse=change", data).GetAwaiter().GetResult();
 
-                    cmd.ExecuteNonQuery();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-                    sql.Close();
+            Console.WriteLine(responseString);
 
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            return true;
         }
 
         #endregion

@@ -408,7 +408,7 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseID();
+                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
                                 if (LastHorseID != 0)
                                 {
                                     if (AddedProgression.Comment == null)
@@ -424,11 +424,11 @@ namespace HorseAccounting.ViewModel
                                             {
                                                 if (GetGenderResult.Equals(StallionGender))
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыл");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
                                                 }
                                                 else
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыла");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
                                                 }
                                             }
                                             AddedProgression.CleanProgressionData();
@@ -456,7 +456,7 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseID();
+                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
                                 if (LastHorseID != 0)
                                 {
                                     if (AddedProgression.Comment == null)
@@ -472,11 +472,11 @@ namespace HorseAccounting.ViewModel
                                             {
                                                 if (GetGenderResult.Equals(StallionGender))
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыл");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
                                                 }
                                                 else
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыла");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
                                                 }
                                             }
                                             AddedProgression.CleanProgressionData();
@@ -504,7 +504,7 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseID();
+                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
                                 if (LastHorseID != 0)
                                 {
                                     if (AddedProgression.Comment == null)
@@ -520,11 +520,11 @@ namespace HorseAccounting.ViewModel
                                             {
                                                 if (GetGenderResult.Equals(StallionGender))
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыл");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
                                                 }
                                                 else
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыла");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
                                                 }
                                             }
                                             AddedProgression.CleanProgressionData();
@@ -552,7 +552,7 @@ namespace HorseAccounting.ViewModel
                             if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0, AddedState).Result)
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseID();
+                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
                                 if (LastHorseID != 0)
                                 {
                                     if (AddedProgression.Comment == null)
@@ -568,11 +568,11 @@ namespace HorseAccounting.ViewModel
                                             {
                                                 if (GetGenderResult.Equals(StallionGender))
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыл");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
                                                 }
                                                 else
                                                 {
-                                                    Horse.ChangeHorseState(LastHorseID, "Выбыла");
+                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
                                                 }
                                             }
                                             AddedProgression.CleanProgressionData();

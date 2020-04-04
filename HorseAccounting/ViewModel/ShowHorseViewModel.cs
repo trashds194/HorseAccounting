@@ -329,22 +329,22 @@ namespace HorseAccounting.ViewModel
                                     {
                                         if (SelectedHorse.Gender.Equals("Жеребец"))
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыл");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Выбыл");
                                         }
                                         else
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыла");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Выбыла");
                                         }
                                     }
                                     else
                                     {
                                         if (SelectedHorse.Gender.Equals("Жеребец"))
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующий");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Действующий");
                                         }
                                         else
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующая");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Действующая");
                                         }
                                     }
                                     AddedProgression.CleanProgressionData();
