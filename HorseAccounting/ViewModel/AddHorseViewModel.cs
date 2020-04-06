@@ -417,7 +417,7 @@ namespace HorseAccounting.ViewModel
                                     }
                                     if (!string.IsNullOrEmpty(AddedProgression.Date))
                                     {
-                                        if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                         {
                                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                             if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
@@ -465,7 +465,7 @@ namespace HorseAccounting.ViewModel
                                     }
                                     if (!string.IsNullOrEmpty(AddedProgression.Date))
                                     {
-                                        if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                         {
                                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                             if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
@@ -513,7 +513,7 @@ namespace HorseAccounting.ViewModel
                                     }
                                     if (!string.IsNullOrEmpty(AddedProgression.Date))
                                     {
-                                        if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                         {
                                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                             if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
@@ -561,7 +561,7 @@ namespace HorseAccounting.ViewModel
                                     }
                                     if (!string.IsNullOrEmpty(AddedProgression.Date))
                                     {
-                                        if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID))
+                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                         {
                                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                             if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))

@@ -1,12 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
-using HorseAccounting.Infra;
-using MySql.Data.MySqlClient;
-using Renci.SshNet;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
@@ -20,6 +17,8 @@ namespace HorseAccounting.Model
         private string _destination;
         private string _comment;
         private int _horseID;
+
+        private static readonly HttpClient client = new HttpClient();
 
         #endregion
 
@@ -59,51 +58,13 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
-        public static ObservableCollection<Progression> GetSelectedProgression(int iD)
+        public static async Task<ObservableCollection<Progression>> GetSelectedProgression(int iD)
         {
-            DbConnection.CreateConnection();
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/progression.php?progression=" + iD;
 
-            string query = "SELECT * FROM `движение` Where `ID Лошади` = " + iD;
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Progression> selectedProgression = new ObservableCollection<Progression>();
-
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = new MySqlCommand(query, sql);
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        selectedProgression.Add(
-                            new Progression
-                            {
-                                ID = dataReader.GetInt32(0),
-                                Date = dataReader.GetDateTime(1).ToShortDateString(),
-                                Destination = dataReader.GetString(2),
-                                Comment = dataReader.GetString(3),
-                                HorseID = dataReader.GetInt32(4),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                selectedProgression.Add(
-                    new Progression
-                    {
-                        Date = "Данные не найдены",
-                    });
-            }
+            ObservableCollection<Progression> selectedProgression = JsonConvert.DeserializeObject<ObservableCollection<Progression>>(response);
 
             return selectedProgression;
         }
@@ -112,36 +73,25 @@ namespace HorseAccounting.Model
 
         #region AddHorsePage
 
-        public static bool AddProgression(string date, string destination, string comment, int horseID)
+        public static async Task<bool> AddProgressionAsync(string date, string destination, string comment, int horseID)
         {
-            try
-            {
-                DbConnection.CreateConnection();
-
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+            var progressionData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "Date", date },
+                    { "Destination", destination },
+                    { "Comment", comment },
+                    { "HorseID", horseID.ToString() }
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "INSERT INTO `движение`(`Дата`, `Назначение`, `Комментарий`, `ID Лошади`) VALUES (@date, @destination, @comment, @horseID)";
+            var data = new FormUrlEncodedContent(progressionData);
 
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(date).ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@destination", destination);
-                    cmd.Parameters.AddWithValue("@comment", comment);
-                    cmd.Parameters.AddWithValue("@horseID", horseID);
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/progression.php?progression=add", data).GetAwaiter().GetResult();
 
-                    cmd.ExecuteNonQuery();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-                    sql.Close();
+            Console.WriteLine(responseString);
 
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            return true;
         }
 
         public void CleanProgressionData()

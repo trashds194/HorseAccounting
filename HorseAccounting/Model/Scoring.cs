@@ -1,9 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
-using HorseAccounting.Infra;
-using MySql.Data.MySqlClient;
-using Renci.SshNet;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
 {
@@ -24,6 +25,8 @@ namespace HorseAccounting.Model
         private string _theClass;
         private string _comment;
         private int _horseID;
+
+        private static readonly HttpClient client = new HttpClient();
 
         #endregion
 
@@ -135,59 +138,13 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
-        public static ObservableCollection<Scoring> GetSelectedScoring(int iD)
+        public static async Task<ObservableCollection<Scoring>> GetSelectedScoring(int iD)
         {
-            DbConnection.CreateConnection();
+            string url = "http://1k-horse-base.loc/HorseAccountingApi/scoring.php?scoring=" + iD;
 
-            string query = "SELECT * FROM `бонитировка` Where `ID Лошади` = " + iD;
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Scoring> selectedScoring = new ObservableCollection<Scoring>();
-
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = new MySqlCommand(query, sql);
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        selectedScoring.Add(
-                            new Scoring
-                            {
-                                ID = dataReader.GetInt32(0),
-                                Date = dataReader.GetDateTime(1).ToShortDateString(),
-                                Age = dataReader.GetString(2),
-                                Boniter = dataReader.GetString(3),
-                                Origin = dataReader.GetInt32(4),
-                                Typicality = dataReader.GetInt32(5),
-                                Measurements = dataReader.GetInt32(6),
-                                Exterior = dataReader.GetInt32(7),
-                                WorkingCapacity = dataReader.GetInt32(8),
-                                OffspringQuality = dataReader.GetInt32(9),
-                                TheClass = dataReader.GetString(10),
-                                Comment = dataReader.GetString(11),
-                                HorseID = dataReader.GetInt32(12),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                selectedScoring.Add(
-                    new Scoring
-                    {
-                        Date = "Данные не найдены",
-                    });
-            }
+            ObservableCollection<Scoring> selectedScoring = JsonConvert.DeserializeObject<ObservableCollection<Scoring>>(response);
 
             return selectedScoring;
         }
@@ -196,45 +153,33 @@ namespace HorseAccounting.Model
 
         #region AddScoringPage
 
-        public static bool AddScoring(string date, string age, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
+        public static async Task<bool> AddScoringAsync(string date, string age, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
         {
-            try
-            {
-                DbConnection.CreateConnection();
-
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+            var scoringData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "Date", date },
+                    { "Age", age },
+                    { "Boniter", boniter },
+                    { "Origin", origin.ToString() },
+                    { "Typicality",typicality.ToString() },
+                    { "Measurements", measure.ToString() },
+                    { "Exterior", exterior.ToString() },
+                    { "WorkingCapacity", workingCapacity.ToString() },
+                    { "OffspringQuality", offspringQuality.ToString() },
+                    { "TheClass", theClass.ToString() }, 
+                    { "Comment", comment },
+                    { "HorseID", horseID.ToString() }
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "INSERT INTO `бонитировка`(`Дата бонитировки`, `Возраст`, `Бонитер`, `Происхождение`, `Типичность`, `Промеры`, `Экстерьер`, `Работоспособность`, `Качество потомства`, `Класс`, `Комментарий`, `ID Лошади`) " +
-                    "VALUES (@date, @age, @boniter, @origin, @typicality, @measure, @exterior, @workingCapacity, @offspringQuality, @theClass, @comment, @horseID)";
+            var data = new FormUrlEncodedContent(scoringData);
 
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(date).ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@age", age);
-                    cmd.Parameters.AddWithValue("@boniter", boniter);
-                    cmd.Parameters.AddWithValue("@origin", origin);
-                    cmd.Parameters.AddWithValue("@typicality", typicality);
-                    cmd.Parameters.AddWithValue("@measure", measure);
-                    cmd.Parameters.AddWithValue("@exterior", exterior);
-                    cmd.Parameters.AddWithValue("@workingCapacity", workingCapacity);
-                    cmd.Parameters.AddWithValue("@offspringQuality", offspringQuality);
-                    cmd.Parameters.AddWithValue("@theClass", theClass);
-                    cmd.Parameters.AddWithValue("@comment", comment);
-                    cmd.Parameters.AddWithValue("@horseID", horseID);
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/scoring.php?scoring=add", data).GetAwaiter().GetResult();
 
-                    cmd.ExecuteNonQuery();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-                    sql.Close();
+            Console.WriteLine(responseString);
 
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            return true;
         }
 
         public void CleanScoringData()

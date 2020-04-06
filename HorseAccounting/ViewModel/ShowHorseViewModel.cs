@@ -69,9 +69,9 @@ namespace HorseAccounting.ViewModel
                         ParentsVis = false;
                     }
 
-                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
 
-                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID);
+                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
 
                     RaisePropertyChanged(() => MainHorseProgression);
                     RaisePropertyChanged(() => MainHorseScoring);
@@ -322,7 +322,7 @@ namespace HorseAccounting.ViewModel
                             }
                             if (!string.IsNullOrEmpty(AddedProgression.Date))
                             {
-                                if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID))
+                                if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID).Result)
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                     if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
@@ -350,7 +350,7 @@ namespace HorseAccounting.ViewModel
                                     AddedProgression.CleanProgressionData();
                                     AddProgressionVisible = false;
                                     AddProgressionButtonText = "Добавить";
-                                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+                                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
                                     RaisePropertyChanged(nameof(MainHorseProgression));
                                     SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
                                     RaisePropertyChanged(nameof(SelectedHorse));
