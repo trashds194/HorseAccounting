@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -221,8 +222,9 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(ex.Message));
                 return false;
             }
         }
@@ -323,8 +325,9 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(ex.Message));
                 return false;
             }
         }

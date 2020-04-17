@@ -74,33 +74,26 @@ namespace HorseAccounting.ViewModel
 
         private void CheckHorseDataForNull()
         {
-            if (AddedHorse.GpkNum == null)
+            if (MotherHorse == null)
             {
-                AddedHorse.GpkNum = string.Empty;
+                MotherHorse = new Horse();
+                MotherHorse.ID = 0;
             }
-            if (AddedHorse.NickName == null)
+
+            if (FatherHorse == null)
             {
-                AddedHorse.NickName = string.Empty;
+                FatherHorse = new Horse();
+                FatherHorse.ID = 0;
             }
-            if (AddedHorse.Brand == null)
+
+            if (StudFarm == null)
             {
-                AddedHorse.Brand = string.Empty;
+                StudFarm = AddedHorse.BirthPlace;
             }
-            if (AddedHorse.Bloodiness == null)
+
+            if (Owner == null)
             {
-                AddedHorse.Bloodiness = string.Empty;
-            }
-            if (AddedHorse.Color == null)
-            {
-                AddedHorse.Color = string.Empty;
-            }
-            if (AddedHorse.BirthPlace == null)
-            {
-                AddedHorse.BirthPlace = string.Empty;
-            }
-            if (AddedHorse.Owner == null)
-            {
-                AddedHorse.Owner = string.Empty;
+                Owner = AddedHorse.Owner;
             }
         }
 
@@ -393,207 +386,46 @@ namespace HorseAccounting.ViewModel
                     {
                         CheckHorseDataForNull();
 
-                        if (StudFarm == null)
+                        if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
                         {
-                            StudFarm = AddedHorse.BirthPlace;
-                        }
-
-                        if (Owner == null)
-                        {
-                            Owner = AddedHorse.Owner;
-                        }
-
-                        if (MotherHorse != null && FatherHorse != null)
-                        {
-                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
+                            LastHorseID = Horse.GetLastHorseIDAsync().Result;
+                            if (LastHorseID != 0)
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
-                                if (LastHorseID != 0)
+                                if (!string.IsNullOrEmpty(AddedProgression.Date))
                                 {
-                                    if (AddedProgression.Comment == null)
+                                    if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                     {
-                                        AddedProgression.Comment = string.Empty;
-                                    }
-                                    if (!string.IsNullOrEmpty(AddedProgression.Date))
-                                    {
-                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
+                                        if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
                                         {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                            if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
+                                            if (GetGenderResult.Equals(StallionGender))
                                             {
-                                                if (GetGenderResult.Equals(StallionGender))
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
-                                                }
-                                                else
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
-                                                }
+                                                Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
                                             }
-                                            AddedProgression.CleanProgressionData();
+                                            else
+                                            {
+                                                Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
+                                            }
                                         }
-                                        else
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
-                                        }
+                                        AddedProgression.CleanProgressionData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
                                     }
                                 }
-                                else
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
-                                }
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
                             }
                             else
                             {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
                             }
-                        }
-                        else if (MotherHorse != null && FatherHorse == null)
-                        {
-                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0, AddedState).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
-                                if (LastHorseID != 0)
-                                {
-                                    if (AddedProgression.Comment == null)
-                                    {
-                                        AddedProgression.Comment = string.Empty;
-                                    }
-                                    if (!string.IsNullOrEmpty(AddedProgression.Date))
-                                    {
-                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                            if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
-                                            {
-                                                if (GetGenderResult.Equals(StallionGender))
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
-                                                }
-                                                else
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
-                                                }
-                                            }
-                                            AddedProgression.CleanProgressionData();
-                                        }
-                                        else
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
-                                }
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
-                            }
-                        }
-                        else if (MotherHorse == null && FatherHorse != null)
-                        {
-                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID, AddedState).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
-                                if (LastHorseID != 0)
-                                {
-                                    if (AddedProgression.Comment == null)
-                                    {
-                                        AddedProgression.Comment = string.Empty;
-                                    }
-                                    if (!string.IsNullOrEmpty(AddedProgression.Date))
-                                    {
-                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                            if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
-                                            {
-                                                if (GetGenderResult.Equals(StallionGender))
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
-                                                }
-                                                else
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
-                                                }
-                                            }
-                                            AddedProgression.CleanProgressionData();
-                                        }
-                                        else
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
-                                }
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
-                            }
+                            AddedHorse.CleanHorseData();
+                            ComboBoxesUpdate();
                         }
                         else
                         {
-                            if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, 0, 0, AddedState).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
-                                LastHorseID = Horse.GetLastHorseIDAsync().Result;
-                                if (LastHorseID != 0)
-                                {
-                                    if (AddedProgression.Comment == null)
-                                    {
-                                        AddedProgression.Comment = string.Empty;
-                                    }
-                                    if (!string.IsNullOrEmpty(AddedProgression.Date))
-                                    {
-                                        if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                            if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
-                                            {
-                                                if (GetGenderResult.Equals(StallionGender))
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыл");
-                                                }
-                                                else
-                                                {
-                                                    Horse.ChangeHorseStateAsync(LastHorseID, "Выбыла");
-                                                }
-                                            }
-                                            AddedProgression.CleanProgressionData();
-                                        }
-                                        else
-                                        {
-                                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при добавлении движения, проверьте корректность введенных данных!"));
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить движение, обратитесь к разработчику!"));
-                                }
-                                AddedHorse.CleanHorseData();
-                                ComboBoxesUpdate();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
-                            }
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить запись лошади, проверьте корректность введенных данных!"));
                         }
                     });
                 }

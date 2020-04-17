@@ -115,7 +115,6 @@ namespace HorseAccounting.ViewModel
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
                     "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
-
         }
 
         private void ComboBoxesUpdate()
@@ -153,38 +152,30 @@ namespace HorseAccounting.ViewModel
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
     "Проверьте соединение с интернетом или обратитесь к разработчику!"));
             }
-
         }
 
         private void CheckHorseDataForNull()
         {
-            if (MainHorse.GpkNum == null)
+            if (MotherHorse == null)
             {
-                MainHorse.GpkNum = string.Empty;
+                MotherHorse = new Horse();
+                MotherHorse.ID = 0;
             }
-            if (MainHorse.NickName == null)
+
+            if (FatherHorse == null)
             {
-                MainHorse.NickName = string.Empty;
+                FatherHorse = new Horse();
+                FatherHorse.ID = 0;
             }
-            if (MainHorse.Brand == null)
+
+            if (StudFarm == null)
             {
-                MainHorse.Brand = string.Empty;
+                StudFarm = MainHorse.BirthPlace;
             }
-            if (MainHorse.Bloodiness == null)
+
+            if (Owner == null)
             {
-                MainHorse.Bloodiness = string.Empty;
-            }
-            if (MainHorse.Color == null)
-            {
-                MainHorse.Color = string.Empty;
-            }
-            if (MainHorse.BirthPlace == null)
-            {
-                MainHorse.BirthPlace = string.Empty;
-            }
-            if (MainHorse.Owner == null)
-            {
-                MainHorse.Owner = string.Empty;
+                Owner = MainHorse.Owner;
             }
         }
 
@@ -495,67 +486,17 @@ namespace HorseAccounting.ViewModel
                     {
                         CheckHorseDataForNull();
 
-                        if (StudFarm == null)
+                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
                         {
-                            StudFarm = MainHorse.BirthPlace;
-                        }
-
-                        if (Owner == null)
-                        {
-                            Owner = MainHorse.Owner;
-                        }
-
-                        if (MotherHorse != null && FatherHorse != null)
-                        {
-                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
-                                CheckFields();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось обновить запись лошади"));
-                            }
-                        }
-                        else if (MotherHorse != null && FatherHorse == null)
-                        {
-                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, 0).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
-                                CheckFields();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось обновить запись лошади"));
-                            }
-                        }
-                        else if (MotherHorse == null && FatherHorse != null)
-                        {
-                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, FatherHorse.ID).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
-                                CheckFields();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось обновить запись лошади"));
-                            }
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
+                            CheckFields();
                         }
                         else
                         {
-                            if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, 0, 0).Result)
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
-                                CheckFields();
-                            }
-                            else
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось обновили запись лошади"));
-                            }
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось обновить запись лошади"));
                         }
                     });
                 }
-
                 return _changeHorse;
             }
 

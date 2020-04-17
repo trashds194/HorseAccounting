@@ -17,7 +17,8 @@ namespace HorseAccounting.ViewModel
         private Horse _horse;
         private ObservableCollection<Horse> _horses;
         private ShowHorseViewModel _showHorse;
-
+        private bool _stallionBtnCheck;
+        private bool _mareBtnCheck;
         private string _searchQuery;
 
         #endregion
@@ -32,6 +33,8 @@ namespace HorseAccounting.ViewModel
             await Task.Run(() =>
             {
                 SearchQuery = null;
+                StallionBtnCheck = false;
+                MareBtnCheck = false;
                 try
                 {
                     _horses = Horse.GetHorses().Result;
@@ -61,6 +64,34 @@ namespace HorseAccounting.ViewModel
         }
 
         #region Definitions
+
+        public bool StallionBtnCheck
+        {
+            get
+            {
+                return _stallionBtnCheck;
+            }
+
+            set
+            {
+                _stallionBtnCheck = value;
+                RaisePropertyChanged(nameof(StallionBtnCheck));
+            }
+        }
+
+        public bool MareBtnCheck
+        {
+            get
+            {
+                return _mareBtnCheck;
+            }
+
+            set
+            {
+                _mareBtnCheck = value;
+                RaisePropertyChanged(nameof(MareBtnCheck));
+            }
+        }
 
         public ObservableCollection<Horse> HorsesList
         {
@@ -202,6 +233,60 @@ namespace HorseAccounting.ViewModel
 
         #endregion
 
+        #region RadioButtons
+
+        private RelayCommand _showStallionHorses;
+
+        public RelayCommand ShowStallionHorses
+        {
+            get
+            {
+                return _showStallionHorses
+                    ?? (_showStallionHorses = new RelayCommand(
+                    async () =>
+                    {
+                        StallionBtnCheck = true;
+                        await Task.Run(() =>
+                        {
+                            _horses = Horse.GetFatherHorseAsync().Result;
+                            RaisePropertyChanged(() => HorsesList);
+                        }).ConfigureAwait(true);
+                    }));
+            }
+
+            private set
+            {
+                _showStallionHorses = value;
+            }
+        }
+
+        private RelayCommand _showMareHorses;
+
+        public RelayCommand ShowMareHorses
+        {
+            get
+            {
+                return _showMareHorses
+                    ?? (_showMareHorses = new RelayCommand(
+                    async () =>
+                    {
+                        MareBtnCheck = true;
+                        await Task.Run(() =>
+                        {
+                            _horses = Horse.GetMotherHorseAsync().Result;
+                            RaisePropertyChanged(() => HorsesList);
+                        }).ConfigureAwait(true);
+                    }));
+            }
+
+            private set
+            {
+                _showMareHorses = value;
+            }
+        }
+
+        #endregion
+
         #region WindowCommands
 
         private RelayCommand _showAllHorses;
@@ -214,6 +299,8 @@ namespace HorseAccounting.ViewModel
                     ?? (_showAllHorses = new RelayCommand(
                     async () =>
                     {
+                        StallionBtnCheck = false;
+                        MareBtnCheck = false;
                         await Task.Run(() =>
                         {
                             _horses = Horse.GetHorses().Result;

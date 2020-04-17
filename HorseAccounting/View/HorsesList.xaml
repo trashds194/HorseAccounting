@@ -30,13 +30,15 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40px" MinHeight="35"/>
             <RowDefinition Height="50px"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="2" VerticalAlignment="Top">
@@ -82,14 +84,14 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <Menu Grid.Column="3" HorizontalAlignment="Right">
+        <Menu Grid.Column="1" HorizontalAlignment="Right" Grid.ColumnSpan="2">
             <MenuItem Header="Настройки" Height="Auto" MinHeight="40" MinWidth="180" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="Settings" />
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2">
+        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" Margin="2">
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Весь племсостав" Command="{Binding ShowAllHorses}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Действующие" Command="{Binding ShowActingHorses}" />
@@ -175,8 +177,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button" Command="{Binding AddHorse}" Style="{StaticResource MaterialDesignFlatButton}" Background="{DynamicResource MaterialDesignPaper}" Content="Добавить лошадь"  Grid.Column="1" Margin="16,0" FontSize="15" Grid.Row="1" Height="Auto" MinHeight="34" VerticalAlignment="Center"/>
-        <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Top">
+        <Button x:Name="button" Command="{Binding AddHorse}" Style="{StaticResource MaterialDesignFlatButton}" Background="{DynamicResource MaterialDesignPaper}" Content="Добавить лошадь"  Grid.Column="1" Margin="16,0" FontSize="15" Grid.Row="1" Height="Auto" MinHeight="34" VerticalAlignment="Center" Grid.ColumnSpan="6"/>
+        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25px" />
                 <ColumnDefinition Width="4*" />
@@ -190,5 +192,21 @@
                 </i:Interaction.Triggers>
             </TextBox>
         </Grid>
+
+        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбрать..." Margin="16,0" Grid.Row="4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <RadioButton x:Name="stallionButton" IsChecked="{Binding StallionBtnCheck}" Content="Жеребцы" Grid.Column="0" Margin="0,0,0,0" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowStallionHorses}"/>
+                <RadioButton x:Name="mareButton" IsChecked="{Binding MareBtnCheck}" Content="Кобылы" Grid.Column="1" Margin="0,0,0,0" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowMareHorses}"/>
+                <Button Content="Сбросить" Grid.Column="1" Grid.Row="1" Margin="0" Command="{Binding ShowAllHorses}"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Page>
