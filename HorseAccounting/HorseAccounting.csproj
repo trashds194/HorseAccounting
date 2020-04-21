@@ -136,6 +136,7 @@
     <Compile Include="Infra\IPageNavigationService.cs" />
     <Compile Include="Infra\PageNavigationService.cs" />
     <Compile Include="Model\Progression.cs" />
+    <Compile Include="Model\TribalUse.cs" />
     <Compile Include="ViewModel\AddScoringViewModel.cs" />
     <Compile Include="ViewModel\ChangeHorseViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />

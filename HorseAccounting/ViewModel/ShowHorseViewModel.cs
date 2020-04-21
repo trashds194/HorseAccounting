@@ -24,11 +24,13 @@ namespace HorseAccounting.ViewModel
         private Horse _fatherHorse;
 
         private ObservableCollection<Scoring> _mainHorseScoring;
-
+        private ObservableCollection<TribalUse> _mainTribalUses;
         private ObservableCollection<Progression> _mainHorseProgression;
 
         private bool _addProgressionVisible;
         private bool _parentsVis;
+        private bool _maleVis;
+        private bool _stallionVis;
 
         private string _addProgressionButtonText;
 
@@ -54,6 +56,17 @@ namespace HorseAccounting.ViewModel
 
                 SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
 
+                if (SelectedHorse.Gender.Equals("Кобыла"))
+                {
+                    MaleVis = true;
+                    StallionVis = false;
+                }
+                else
+                {
+                    MaleVis = false;
+                    StallionVis = true;
+                }
+
                 try
                 {
                     HorseNick = SelectedHorse.FullName;
@@ -70,7 +83,7 @@ namespace HorseAccounting.ViewModel
                     }
 
                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
-
+                    _mainTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
                     _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
 
                     RaisePropertyChanged(() => MainHorseProgression);
@@ -84,6 +97,34 @@ namespace HorseAccounting.ViewModel
         }
 
         #region Definitions
+
+        public bool MaleVis
+        {
+            get
+            {
+                return _maleVis;
+            }
+
+            set
+            {
+                _maleVis = value;
+                RaisePropertyChanged(nameof(MaleVis));
+            }
+        }
+
+        public bool StallionVis
+        {
+            get
+            {
+                return _stallionVis;
+            }
+
+            set
+            {
+                _stallionVis = value;
+                RaisePropertyChanged(nameof(StallionVis));
+            }
+        }
 
         public bool ParentsVis
         {
@@ -169,6 +210,14 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return _mainHorseProgression;
+            }
+        }
+
+        public ObservableCollection<TribalUse> MainTribalUses
+        {
+            get
+            {
+                return _mainTribalUses;
             }
         }
 
@@ -388,6 +437,29 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _addScoring = value;
+            }
+        }
+
+        private ICommand _addTribalUse;
+
+        public ICommand AddTribalUse
+        {
+            get
+            {
+                if (_addTribalUse == null)
+                {
+                    _addTribalUse = new RelayCommand(() =>
+                    {
+                        //_navigationService.NavigateTo("", MainHorse);
+                    });
+                }
+
+                return _addTribalUse;
+            }
+
+            set
+            {
+                _addTribalUse = value;
             }
         }
 

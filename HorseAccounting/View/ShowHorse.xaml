@@ -310,6 +310,79 @@
                     </StackPanel>
                 </Expander>
             </materialDesign:Card>
+
+            <!--Visibility="{Binding MaleVis, Converter={StaticResource BoolToVisConverter}}"-->
+            
+            <materialDesign:Card Margin="16">
+                <Expander Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Stretch" Header="Племенное использование кобылы" Margin="0" FontWeight="Bold">
+                    <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
+                        <Grid Margin="16,16,16,8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainTribalUses}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Year}" Header="Год&#10;случки" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                    <materialDesign:DataGridTextColumn Binding="{Binding LastDate}" Header="Дата&#10;последней&#10;садки" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FatherFullName}" Header="№ по ГПК&#10;кличка отца" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FatherBreed}" Header="Порода&#10;отца" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <!-- set a max length to get an indicator in the editor -->
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalClass}" Header="Класс&#10;жеребенка" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalDate}" Header="Дата&#10;выжребки" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalGender}" Header="Пол&#10;жеребенка" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalColor}" Header="Масть&#10;жеребенка" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalNickName}" Header="Кличка и инв. №&#10;жеребенка" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding FoalDestination}" Header="Назначение&#10;жеребенка" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Command="{Binding AddTribalUse}" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Добавить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+            </materialDesign:Card>
+
+            <!--<materialDesign:Card Margin="16" Visibility="{Binding StallionVis, Converter={StaticResource BoolToVisConverter}}">
+                <Expander Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Stretch" Header="Бонитировка" Margin="0" FontWeight="Bold">
+                    <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
+                        <Grid Margin="16,16,16,8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainHorseScoring}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    --><!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn --><!--
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Age}" Header="Возраст" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Boniter}" Header="Бонитер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Origin}" Header="Происхождение" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    --><!-- set a max length to get an indicator in the editor --><!--
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Typicality}" Header="Типичность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Exterior}" Header="Экстерьер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding WorkingCapacity}" Header="Работоспособность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding OffspringQuality}" Header="Качество потомства" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding TheClass}" Header="Класс" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                    <materialDesign:DataGridTextColumn Binding="{Binding Comment}" Header="Комментарий" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Command="{Binding AddScoring}" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Добавить" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" />
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+            </materialDesign:Card>-->
         </StackPanel>
     </ScrollViewer>
 </Page>

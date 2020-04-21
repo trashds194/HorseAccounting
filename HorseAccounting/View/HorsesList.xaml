@@ -193,7 +193,7 @@
             </TextBox>
         </Grid>
 
-        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбрать..." Margin="16,0" Grid.Row="4">
+        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбрать..." Margin="16,0" Grid.Row="4" VerticalAlignment="Top">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -203,8 +203,8 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <RadioButton x:Name="stallionButton" IsChecked="{Binding StallionBtnCheck}" Content="Жеребцы" Grid.Column="0" Margin="0,0,0,0" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowStallionHorses}"/>
-                <RadioButton x:Name="mareButton" IsChecked="{Binding MareBtnCheck}" Content="Кобылы" Grid.Column="1" Margin="0,0,0,0" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowMareHorses}"/>
+                <RadioButton x:Name="stallionButton" IsChecked="{Binding StallionBtnCheck}" Content="Жеребцы" Grid.Column="0" Margin="0,0,0,8" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowStallionHorses}"/>
+                <RadioButton x:Name="mareButton" IsChecked="{Binding MareBtnCheck}" Content="Кобылы" Grid.Column="1" Margin="0,0,0,8" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowMareHorses}"/>
                 <Button Content="Сбросить" Grid.Column="1" Grid.Row="1" Margin="0" Command="{Binding ShowAllHorses}"/>
             </Grid>
         </GroupBox>
