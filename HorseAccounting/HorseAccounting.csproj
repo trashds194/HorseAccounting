@@ -138,6 +138,7 @@
     <Compile Include="Model\Progression.cs" />
     <Compile Include="Model\TribalUse.cs" />
     <Compile Include="ViewModel\AddScoringViewModel.cs" />
+    <Compile Include="ViewModel\AddTribalUseViewModel.cs" />
     <Compile Include="ViewModel\ChangeHorseViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -152,6 +153,9 @@
     </Compile>
     <Compile Include="View\AddScoring.xaml.cs">
       <DependentUpon>AddScoring.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddTribalUse.xaml.cs">
+      <DependentUpon>AddTribalUse.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ChangeHorse.xaml.cs">
       <DependentUpon>ChangeHorse.xaml</DependentUpon>
@@ -182,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddScoring.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddTribalUse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

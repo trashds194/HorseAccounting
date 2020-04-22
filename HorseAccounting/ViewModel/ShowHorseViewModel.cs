@@ -450,7 +450,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _addTribalUse = new RelayCommand(() =>
                     {
-                        //_navigationService.NavigateTo("", MainHorse);
+                        _navigationService.NavigateTo("AddTribalUsePage", MainHorse);
                     });
                 }
 

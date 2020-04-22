@@ -73,15 +73,13 @@
             <materialDesign:Card Margin="16">
                 <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">
                     <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
-                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,8" MinHeight="200" MinWidth="500">
+                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,0" MinHeight="100" MinWidth="500">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -151,7 +149,9 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Border Visibility="{Binding ParentsVis, Converter={StaticResource BoolToVisConverter}}" BorderBrush="Black" BorderThickness="1,0,1,1" Grid.ColumnSpan="3" Grid.Row="2">
+                        </Grid>
+                        <Grid Visibility="{Binding ParentsVis, Converter={StaticResource BoolToVisConverter}}" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseParentsList" Margin="16,0,16,8" MinHeight="50" MinWidth="500">
+                            <Border BorderBrush="Black" BorderThickness="1,0,1,1" Grid.ColumnSpan="3" Grid.Row="2">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -205,7 +205,9 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                        </Grid>
+                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,8" MinHeight="50" MinWidth="500">
+                        <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
                                 <Label.Content>
                                     <TextBlock>
                                         <TextBlock.Text>
