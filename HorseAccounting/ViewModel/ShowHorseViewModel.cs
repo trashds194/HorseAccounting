@@ -24,7 +24,7 @@ namespace HorseAccounting.ViewModel
         private Horse _fatherHorse;
 
         private ObservableCollection<Scoring> _mainHorseScoring;
-        private ObservableCollection<TribalUse> _mainTribalUses;
+        private ObservableCollection<TribalUse> _mainHorseTribalUses;
         private ObservableCollection<Progression> _mainHorseProgression;
 
         private bool _addProgressionVisible;
@@ -83,11 +83,12 @@ namespace HorseAccounting.ViewModel
                     }
 
                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
-                    _mainTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
+                    _mainHorseTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
                     _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
 
                     RaisePropertyChanged(() => MainHorseProgression);
                     RaisePropertyChanged(() => MainHorseScoring);
+                    RaisePropertyChanged(() => MainHorseTribalUses);
                 }
                 catch (Exception ex)
                 {
@@ -203,6 +204,12 @@ namespace HorseAccounting.ViewModel
             {
                 return _mainHorseScoring;
             }
+
+            set
+            {
+                _mainHorseScoring = value;
+                RaisePropertyChanged(nameof(MainHorseScoring));
+            }
         }
 
         public ObservableCollection<Progression> MainHorseProgression
@@ -211,13 +218,25 @@ namespace HorseAccounting.ViewModel
             {
                 return _mainHorseProgression;
             }
+
+            set
+            {
+                _mainHorseProgression = value;
+                RaisePropertyChanged(nameof(MainHorseProgression));
+            }
         }
 
-        public ObservableCollection<TribalUse> MainTribalUses
+        public ObservableCollection<TribalUse> MainHorseTribalUses
         {
             get
             {
-                return _mainTribalUses;
+                return _mainHorseTribalUses;
+            }
+
+            set
+            {
+                _mainHorseTribalUses = value;
+                RaisePropertyChanged(nameof(MainHorseTribalUses));
             }
         }
 
@@ -311,6 +330,9 @@ namespace HorseAccounting.ViewModel
                         SelectedHorse = null;
                         MotherHorse = null;
                         FatherHorse = null;
+                        MainHorseScoring = null;
+                        MainHorseProgression = null;
+                        MainHorseTribalUses = null;
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }
@@ -365,10 +387,6 @@ namespace HorseAccounting.ViewModel
                         }
                         else
                         {
-                            if (AddedProgression.Comment == null)
-                            {
-                                AddedProgression.Comment = string.Empty;
-                            }
                             if (!string.IsNullOrEmpty(AddedProgression.Date))
                             {
                                 if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID).Result)

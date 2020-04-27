@@ -55,6 +55,7 @@
 
             <Button x:Name="button" Command="{Binding BackToList}" Content="Назад" Margin="20,10" FontSize="18"/>
             <Button x:Name="button1" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="40,10" Grid.Row="13" FontSize="18"/>
+            <!--<Button x:Name="button2" Command="" Content="Упрощенное добавление" Grid.Column="0" Margin="16,10" Grid.Row="13" FontSize="18"/>-->
 
             <Label Grid.Row="0" Grid.Column="1" Content="Добавление лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
             <Label Grid.Row="1" Content="№ по ГПК:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
