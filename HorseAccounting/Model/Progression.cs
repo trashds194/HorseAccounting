@@ -65,6 +65,9 @@ namespace HorseAccounting.Model
             DbConnection.CreateConnection();
 
             string query = "SELECT * FROM `движение` Where `ID Лошади` = " + iD;
+=======
+            string url = "http://1k-horse-base.ru/api/progression.php?progression=" + iD;
+>>>>>>> Stashed changes
 
             ObservableCollection<Progression> selectedProgression = new ObservableCollection<Progression>();
 
