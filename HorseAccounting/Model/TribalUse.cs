@@ -135,5 +135,39 @@ namespace HorseAccounting.Model
         }
 
         #endregion
+
+        #region AddTribalUsePage
+
+        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string fatherFullName, string fatherBreed, string foalClass, string foalDate, string foalGender, string foalColor, string foalNickName, string foalDestination, int fatherID, int foalID, int motherID)
+        {
+            var tribalUseData = new Dictionary<string, string>
+                {
+                    { "Year", year },
+                    { "LastDate", lastDate },
+                    { "FatherFullName", fatherFullName },
+                    { "FatherBreed", fatherBreed },
+                    { "FoalClass", foalClass },
+                    { "FoalDate", foalDate },
+                    { "FoalGender", foalGender },
+                    { "FoalColor", foalColor },
+                    { "FoalNickName", foalNickName },
+                    { "FoalDestination", foalDestination },
+                    { "FatherID", fatherID.ToString() },
+                    { "FoalID", foalID.ToString() },
+                    { "MotherID", motherID.ToString() }
+                };
+
+            var data = new FormUrlEncodedContent(tribalUseData);
+
+            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(responseString);
+
+            return true;
+        }
+
+        #endregion
     }
 }

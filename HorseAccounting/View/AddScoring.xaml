@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:HorseAccounting.View"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       
       xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="HorseAccounting.View.AddScoring"
@@ -60,17 +61,17 @@
             <Border BorderBrush="Black" BorderThickness="1, 1, 1, 0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="16,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.3*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.1*"/>
+                        <ColumnDefinition Width="1.1*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition Width="1.3*"/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="1.1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -78,41 +79,41 @@
                     </Grid.RowDefinitions>
 
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1">
-                        <TextBlock Text="Дата бонитировки" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Дата&#10;бонитировки" Grid.Row="1" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="1">
-                        <TextBlock Text="Возраст" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Возраст" Grid.Row="1" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="2">
-                        <TextBlock Text="Бонитер" Grid.Row="1" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Бонитер" Grid.Row="1" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="3">
-                        <TextBlock Text="Происхождение" Grid.Row="1" Grid.Column="1" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Происхождение" Grid.Row="1" Grid.Column="1" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="4">
-                        <TextBlock Text="Типичность" Grid.Row="1" Grid.Column="2" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Типичность" Grid.Row="1" Grid.Column="2" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="5">
-                        <TextBlock Text="Промеры" Grid.Row="1" Grid.Column="3" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Промеры" Grid.Row="1" Grid.Column="3" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="6">
-                        <TextBlock Text="Экстерьер" Grid.Row="1" Grid.Column="4" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Экстерьер" Grid.Row="1" Grid.Column="4" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="7">
-                        <TextBlock Text="Работоспособность" Grid.Row="1" Grid.Column="5" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Работоспособность" Grid.Row="1" Grid.Column="5" Margin="4,8,2,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="8">
-                        <TextBlock Text="Качество потомства" Grid.Row="1" Grid.Column="6" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Качество&#10;потомства" Grid.Row="1" Grid.Column="6" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Column="9">
-                        <TextBlock Text="Класс" Grid.Row="1" Grid.Column="7" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Класс" Grid.Row="1" Grid.Column="7" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Grid.Column="10">
-                        <TextBlock Text="Комментарий" Grid.Row="1" Grid.Column="7" Margin="8,8,0,0" FontWeight="Normal"/>
+                        <TextBlock Text="Комментарий" Grid.Row="1" Grid.Column="7" Margin="4,8,4,0" FontWeight="Normal"/>
                     </Border>
 
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1">
-                        <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,0" Language="ru">
+                        <DatePicker Text="{Binding AddedScoring.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату бонитировки" Margin="8,0,8,0" Language="ru">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="LostFocus">
                                     <cmd:EventToCommand Command="{Binding SetAge, Mode=OneWay}" MustToggleIsEnabledValue="True"/>
@@ -145,7 +146,7 @@
                         <TextBox Text="{Binding AddedScoring.OffspringQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Margin="8,0,8,0" VerticalAlignment="Center"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="9">
-                        <ComboBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center">
+                        <ComboBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите класс" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center">
                             <System:String>эл.</System:String>
                             <System:String>I</System:String>
                             <System:String>II</System:String>
