@@ -313,9 +313,7 @@
                 </Expander>
             </materialDesign:Card>
 
-            <!--Visibility="{Binding MaleVis, Converter={StaticResource BoolToVisConverter}}"-->
-            
-            <materialDesign:Card Margin="16">
+            <materialDesign:Card Margin="16" Visibility="{Binding MaleVis, Converter={StaticResource BoolToVisConverter}}">
                 <Expander Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Stretch" Header="Племенное использование кобылы" Margin="0" FontWeight="Bold">
                     <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
                         <Grid Margin="16,16,16,8">
@@ -366,11 +364,15 @@
                             <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainHorseScoring}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    --><!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn --><!--
+                                    -->
+            <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+            <!--
                                     <materialDesign:DataGridTextColumn Binding="{Binding Age}" Header="Возраст" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Boniter}" Header="Бонитер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Origin}" Header="Происхождение" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    --><!-- set a max length to get an indicator in the editor --><!--
+                                    -->
+            <!-- set a max length to get an indicator in the editor -->
+            <!--
                                     <materialDesign:DataGridTextColumn Binding="{Binding Typicality}" Header="Типичность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                     <materialDesign:DataGridTextColumn Binding="{Binding Exterior}" Header="Экстерьер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>

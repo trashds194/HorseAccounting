@@ -72,7 +72,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                
+
                 <Label Content="Год случки:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
                 <Label Content="Дата последней садки:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
                 <Label Content="Отец жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1"/>
@@ -85,7 +85,7 @@
                 <Label Content="Кличка и инв. № жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="5"/>
                 <Label Content="Назначение жеребенка:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="5" />
 
-                <TextBox Text="{Binding AddedTribalUse.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите год случки" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" />
+                <TextBox Text="{Binding AddedTribalUse.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите год случки" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" MaxLength="4" PreviewTextInput="TextBox_PreviewTextInput" />
                 <DatePicker Text="{Binding AddedTribalUse.LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату последней садки" Margin="16,0" Grid.Column="4" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
                 <ComboBox x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0" StaysOpenOnEdit="True" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBox.ItemsPanel>
@@ -116,7 +116,7 @@
                     <System:String>III</System:String>
                 </ComboBox>
                 <DatePicker Text="{Binding AddedTribalUse.FoalDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату выжребки" Margin="16,0" Grid.Column="4" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="3"/>
-                <ComboBox Text="{Binding AddedTribalUse.FoalGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите пол жеребенка" Margin="16,0"  VerticalAlignment="Center" Grid.Row="4" Grid.Column="1">
+                <ComboBox Text="{Binding AddedTribalUse.FoalGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите пол жеребенка" Margin="16,0"  VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" SelectedItem="Кобыла">
                     <System:String>Кобыла</System:String>
                     <System:String>Жеребец</System:String>
                 </ComboBox>

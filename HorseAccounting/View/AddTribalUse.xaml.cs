@@ -24,5 +24,10 @@ namespace HorseAccounting.View
         {
             InitializeComponent();
         }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0));
+        }
     }
 }

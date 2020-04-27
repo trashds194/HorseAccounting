@@ -121,11 +121,25 @@ namespace HorseAccounting.Model
 
         #endregion
 
+        public void CleanTribalUseData()
+        {
+            Year = string.Empty;
+            LastDate = string.Empty;
+            FatherFullName = string.Empty;
+            FatherBreed = string.Empty;
+            FoalClass = string.Empty;
+            FoalDate = string.Empty;
+            FoalColor = string.Empty;
+            FoalNickName = string.Empty;
+            FoalDestination = string.Empty;
+            FatherID = 0;
+        }
+
         #region ShowHorsePage
 
         public static async Task<ObservableCollection<TribalUse>> GetSelectedTribalUse(int iD)
         {
-            string url = "http://1k-horse-base.loc/HorseAccountingApi/tribaluse.php?tribaluse=" + iD;
+            string url = "http://1k-horse-base.ru/api/tribaluse.php?tribaluse=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -159,7 +173,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(tribalUseData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/HorseAccountingApi/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base.ru/api/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync();
 

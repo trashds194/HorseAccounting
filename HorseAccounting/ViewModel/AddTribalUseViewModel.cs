@@ -6,6 +6,7 @@ using HorseAccounting.Model;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 
 namespace HorseAccounting.ViewModel
 {
@@ -17,6 +18,8 @@ namespace HorseAccounting.ViewModel
 
         private Horse _mainHorse;
         private Horse _fatherHorse;
+
+        private int _foalID;
 
         private TribalUse _addedTribalUse;
 
@@ -80,6 +83,20 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public int FoalID
+        {
+            get
+            {
+                return _foalID;
+            }
+
+            set
+            {
+                _foalID = value;
+                RaisePropertyChanged(nameof(FoalID));
+            }
+        }
+
         public TribalUse AddedTribalUse
         {
             get
@@ -135,19 +152,83 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                if(_addTribalUseToList == null)
+                if (_addTribalUseToList == null)
                 {
                     AddedTribalUse = new TribalUse();
+
                     _addTribalUseToList = new RelayCommand(() =>
                     {
-                        if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FoalClass,
-                            AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, 0, MainHorse.ID).Result)
+                        if (FatherHorse == null)
                         {
-                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                            FatherHorse = new Horse();
+                            FatherHorse.ID = 0;
+                        }
+
+                        if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, MainHorse.ID, FatherHorse.ID).Result)
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
+                            FoalID = Horse.GetLastHorseIDAsync().Result;
+
+                            if (AddedTribalUse.FoalDestination != null)
+                            {
+                                if (Progression.AddProgressionAsync(AddedTribalUse.FoalDate, AddedTribalUse.FoalDestination, string.Empty, FoalID).Result)
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Назначение жеребенка успешно добавлено"));
+                                    if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание"))
+                                    {
+                                        if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                        {
+                                            Horse.ChangeHorseStateAsync(FoalID, "Выбыл");
+                                        }
+                                        else
+                                        {
+                                            Horse.ChangeHorseStateAsync(FoalID, "Выбыла");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                        {
+                                            Horse.ChangeHorseStateAsync(FoalID, "Действующий");
+                                        }
+                                        else
+                                        {
+                                            Horse.ChangeHorseStateAsync(FoalID, "Действующая");
+                                        }
+                                    }
+                                    if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FoalClass,
+                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                                        AddedTribalUse.CleanTribalUseData();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                                    }
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
+                                }
+                            }
+                            else
+                            {
+                                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FoalClass,
+                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                                    AddedTribalUse.CleanTribalUseData();
+                                }
+                                else
+                                {
+                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                                }
+                            }
                         }
                         else
                         {
-                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить жеребенка"));
                         }
                     });
                 }

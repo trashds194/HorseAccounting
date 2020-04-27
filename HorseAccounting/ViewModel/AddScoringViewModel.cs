@@ -15,6 +15,7 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private Horse _mainHorse;
+        private Horse _selectedHorse;
         private Scoring _addedScoring;
 
         private int _birthHorseYear;
@@ -30,8 +31,9 @@ namespace HorseAccounting.ViewModel
         public void OnPageLoad()
         {
             MainHorse = (Horse)_navigationService.Parameter;
+            SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
 
-            BirthHorseYear = Convert.ToDateTime(MainHorse.BirthDate).Year;
+            BirthHorseYear = Convert.ToDateTime(SelectedHorse.BirthDate).Year;
         }
 
         public void CheckForNull()
@@ -97,6 +99,20 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public Horse SelectedHorse
+        {
+            get
+            {
+                return _selectedHorse;
+            }
+
+            set
+            {
+                _selectedHorse = value;
+                RaisePropertyChanged(nameof(SelectedHorse));
+            }
+        }
+
         public Scoring AddedScoring
         {
             get
@@ -125,7 +141,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _backToHorse = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("ShowHorsePage", MainHorse);
+                        _navigationService.NavigateTo("ShowHorsePage", SelectedHorse);
                         AddedScoring.CleanScoringData();
                     });
                 }
@@ -196,7 +212,7 @@ namespace HorseAccounting.ViewModel
                     _addScoringToList = new RelayCommand(() =>
                     {
                         CheckForNull();
-                        if (Scoring.AddScoringAsync(AddedScoring.Date, AddedScoring.Age, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID).Result)
+                        if (Scoring.AddScoringAsync(AddedScoring.Date, AddedScoring.Age, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, SelectedHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили бонитировки"));
                             AddedScoring.CleanScoringData();
