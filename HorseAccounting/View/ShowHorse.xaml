@@ -26,7 +26,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </Page.Resources>
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
@@ -73,7 +73,7 @@
             <materialDesign:Card Margin="16">
                 <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">
                     <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
-                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,8" MinHeight="200" MinWidth="500">
+                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,0" MinHeight="100" MinWidth="500">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -82,13 +82,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Border BorderBrush="Black" BorderThickness="1, 1, 1, 0" Grid.ColumnSpan="3" Grid.RowSpan="2">
                                 <Grid x:Name="List" DataContext="{Binding SelectedHorse}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1.2*"/>
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="2*"/>
@@ -120,7 +118,7 @@
                                         <TextBlock Text="{Binding Color}" Grid.Column="5" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 0" Grid.Column="6">
-                                        <TextBlock Text="{Binding BirthPlace}" Grid.Column="6" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding BirthPlace}" Grid.Column="6" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
                                     </Border>
                                     <Border BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Column="7">
                                         <TextBlock Text="{Binding Owner}" Grid.Column="7" FontWeight="Bold" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -151,13 +149,15 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Border Visibility="{Binding ParentsVis, Converter={StaticResource BoolToVisConverter}}" BorderBrush="Black" BorderThickness="1,0,1,1" Grid.ColumnSpan="3" Grid.Row="2">
+                        </Grid>
+                        <Grid Visibility="{Binding ParentsVis, Converter={StaticResource BoolToVisConverter}}" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseParentsList" Margin="16,0,16,8" MinHeight="50" MinWidth="500">
+                            <Border BorderBrush="Black" BorderThickness="1,0,1,1" Grid.ColumnSpan="3" Grid.Row="2">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="4.1*"/>
+                                        <ColumnDefinition Width="4.1*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
                                     </Grid.ColumnDefinitions>
                                     <Border DataContext="{Binding MotherHorse}" BorderBrush="Black" BorderThickness="0, 0, 0, 0" Grid.Row="2">
                                         <TextBlock Grid.Row="1" Grid.Column="7" Margin="10,0,0,0" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">
@@ -205,7 +205,9 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                        </Grid>
+                        <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,8" MinHeight="50" MinWidth="500">
+                        <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
                                 <Label.Content>
                                     <TextBlock>
                                         <TextBlock.Text>
@@ -310,8 +312,6 @@
                     </StackPanel>
                 </Expander>
             </materialDesign:Card>
-<<<<<<< Updated upstream
-=======
 
             <materialDesign:Card Margin="16" Visibility="{Binding MaleVis, Converter={StaticResource BoolToVisConverter}}">
                 <Expander Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Stretch" Header="Племенное использование кобылы" Margin="0" FontWeight="Bold">
@@ -364,11 +364,15 @@
                             <DataGrid Background="{DynamicResource MaterialDesignBackground}" Margin="0" Grid.ColumnSpan="3" ItemsSource="{Binding MainHorseScoring}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" materialDesign:DataGridAssist.CellPadding="16 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" HorizontalContentAlignment="Stretch" IsReadOnly="True" CanUserDeleteRows="False" FontWeight="Normal">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Date}" Header="Дата" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    --><!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn --><!--
+                                    -->
+            <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+            <!--
                                     <materialDesign:DataGridTextColumn Binding="{Binding Age}" Header="Возраст" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Boniter}" Header="Бонитер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Origin}" Header="Происхождение" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    --><!-- set a max length to get an indicator in the editor --><!--
+                                    -->
+            <!-- set a max length to get an indicator in the editor -->
+            <!--
                                     <materialDesign:DataGridTextColumn Binding="{Binding Typicality}" Header="Типичность" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn Binding="{Binding Measurements}" Header="Промеры" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                     <materialDesign:DataGridTextColumn Binding="{Binding Exterior}" Header="Экстерьер" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
@@ -383,7 +387,6 @@
                     </StackPanel>
                 </Expander>
             </materialDesign:Card>-->
->>>>>>> Stashed changes
         </StackPanel>
     </ScrollViewer>
 </Page>

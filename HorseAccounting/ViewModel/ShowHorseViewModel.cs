@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -23,11 +24,13 @@ namespace HorseAccounting.ViewModel
         private Horse _fatherHorse;
 
         private ObservableCollection<Scoring> _mainHorseScoring;
-
+        private ObservableCollection<TribalUse> _mainHorseTribalUses;
         private ObservableCollection<Progression> _mainHorseProgression;
 
         private bool _addProgressionVisible;
         private bool _parentsVis;
+        private bool _maleVis;
+        private bool _stallionVis;
 
         private string _addProgressionButtonText;
 
@@ -37,7 +40,7 @@ namespace HorseAccounting.ViewModel
 
         public ShowHorseViewModel(IPageNavigationService navigationService)
         {
-            _navigationService = navigationService;          
+            _navigationService = navigationService;
         }
 
         public async void OnPageLoad()
@@ -51,31 +54,78 @@ namespace HorseAccounting.ViewModel
             {
                 MainHorse = (Horse)_navigationService.Parameter;
 
-                SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
+                SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
 
-                HorseNick = SelectedHorse.FullName;
-
-                if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                if (SelectedHorse.Gender.Equals("Кобыла"))
                 {
-                    ParentsVis = true;
-                    MotherHorse = Horse.GetSelectedHorse(SelectedHorse.MotherID);
-                    FatherHorse = Horse.GetSelectedHorse(SelectedHorse.FatherID);
+                    MaleVis = true;
+                    StallionVis = false;
                 }
                 else
                 {
-                    ParentsVis = false;
+                    MaleVis = false;
+                    StallionVis = true;
                 }
 
-                _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+                try
+                {
+                    HorseNick = SelectedHorse.FullName;
 
-                _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID);
+                    if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                    {
+                        ParentsVis = true;
+                        MotherHorse = Horse.GetSelectedHorseAsync(SelectedHorse.MotherID).Result;
+                        FatherHorse = Horse.GetSelectedHorseAsync(SelectedHorse.FatherID).Result;
+                    }
+                    else
+                    {
+                        ParentsVis = false;
+                    }
 
-                RaisePropertyChanged(() => MainHorseProgression);
-                RaisePropertyChanged(() => MainHorseScoring);
+                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
+                    _mainHorseTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
+                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
+
+                    RaisePropertyChanged(() => MainHorseProgression);
+                    RaisePropertyChanged(() => MainHorseScoring);
+                    RaisePropertyChanged(() => MainHorseTribalUses);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }).ConfigureAwait(true);
         }
 
         #region Definitions
+
+        public bool MaleVis
+        {
+            get
+            {
+                return _maleVis;
+            }
+
+            set
+            {
+                _maleVis = value;
+                RaisePropertyChanged(nameof(MaleVis));
+            }
+        }
+
+        public bool StallionVis
+        {
+            get
+            {
+                return _stallionVis;
+            }
+
+            set
+            {
+                _stallionVis = value;
+                RaisePropertyChanged(nameof(StallionVis));
+            }
+        }
 
         public bool ParentsVis
         {
@@ -105,7 +155,8 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        public string AddProgressionButtonText {
+        public string AddProgressionButtonText
+        {
             get
             {
                 return _addProgressionButtonText;
@@ -153,13 +204,39 @@ namespace HorseAccounting.ViewModel
             {
                 return _mainHorseScoring;
             }
+
+            set
+            {
+                _mainHorseScoring = value;
+                RaisePropertyChanged(nameof(MainHorseScoring));
+            }
         }
 
         public ObservableCollection<Progression> MainHorseProgression
         {
-            get 
+            get
             {
                 return _mainHorseProgression;
+            }
+
+            set
+            {
+                _mainHorseProgression = value;
+                RaisePropertyChanged(nameof(MainHorseProgression));
+            }
+        }
+
+        public ObservableCollection<TribalUse> MainHorseTribalUses
+        {
+            get
+            {
+                return _mainHorseTribalUses;
+            }
+
+            set
+            {
+                _mainHorseTribalUses = value;
+                RaisePropertyChanged(nameof(MainHorseTribalUses));
             }
         }
 
@@ -253,6 +330,9 @@ namespace HorseAccounting.ViewModel
                         SelectedHorse = null;
                         MotherHorse = null;
                         FatherHorse = null;
+                        MainHorseScoring = null;
+                        MainHorseProgression = null;
+                        MainHorseTribalUses = null;
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }
@@ -295,7 +375,7 @@ namespace HorseAccounting.ViewModel
         {
             get
             {
-                if(_addProgression == null)
+                if (_addProgression == null)
                 {
                     AddedProgression = new Progression();
                     _addProgression = new RelayCommand(() =>
@@ -307,43 +387,39 @@ namespace HorseAccounting.ViewModel
                         }
                         else
                         {
-                            if (AddedProgression.Comment == null)
-                            {
-                                AddedProgression.Comment = string.Empty;
-                            }
                             if (!string.IsNullOrEmpty(AddedProgression.Date))
                             {
-                                if (Progression.AddProgression(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID))
+                                if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID).Result)
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                     if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
                                     {
                                         if (SelectedHorse.Gender.Equals("Жеребец"))
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыл");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Выбыл");
                                         }
                                         else
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Выбыла");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Выбыла");
                                         }
                                     }
                                     else
                                     {
                                         if (SelectedHorse.Gender.Equals("Жеребец"))
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующий");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Действующий");
                                         }
                                         else
                                         {
-                                            Horse.ChangeHorseState(SelectedHorse.ID, "Действующая");
+                                            Horse.ChangeHorseStateAsync(SelectedHorse.ID, "Действующая");
                                         }
                                     }
                                     AddedProgression.CleanProgressionData();
                                     AddProgressionVisible = false;
                                     AddProgressionButtonText = "Добавить";
-                                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID);
+                                    _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
                                     RaisePropertyChanged(nameof(MainHorseProgression));
-                                    SelectedHorse = Horse.GetSelectedHorse(MainHorse.ID);
+                                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
                                     RaisePropertyChanged(nameof(SelectedHorse));
                                 }
                                 else
@@ -379,6 +455,29 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _addScoring = value;
+            }
+        }
+
+        private ICommand _addTribalUse;
+
+        public ICommand AddTribalUse
+        {
+            get
+            {
+                if (_addTribalUse == null)
+                {
+                    _addTribalUse = new RelayCommand(() =>
+                    {
+                        _navigationService.NavigateTo("AddTribalUsePage", MainHorse);
+                    });
+                }
+
+                return _addTribalUse;
+            }
+
+            set
+            {
+                _addTribalUse = value;
             }
         }
 

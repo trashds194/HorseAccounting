@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
-using HorseAccounting.Infra;
-using MySql.Data.MySqlClient;
+using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
 {
@@ -24,6 +27,8 @@ namespace HorseAccounting.Model
         private int _fatherID;
         private string _fullName;
         private string _state;
+
+        private static readonly HttpClient client = new HttpClient();
 
         #endregion
 
@@ -117,252 +122,46 @@ namespace HorseAccounting.Model
 
         #region HorsesListPage
 
-        public static ObservableCollection<Horse> GetHorses()
+        public static async Task<ObservableCollection<Horse>> GetHorses()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=all";
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
+            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        horses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                horses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
-
-            Console.WriteLine("List Updated");
             return horses;
         }
 
-        public static ObservableCollection<Horse> GetActingHorses()
+        public static async Task<ObservableCollection<Horse>> GetActingHorses()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=acting";
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where `Состояние` = 'Действующая' or `Состояние` = 'Действующий'";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        horses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                horses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
+            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
             return horses;
         }
 
-        public static ObservableCollection<Horse> GetRetiredHorses()
+        public static async Task<ObservableCollection<Horse>> GetRetiredHorses()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=retired";
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where `Состояние` = 'Выбыла' or `Состояние` = 'Выбыл'";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        horses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                horses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
+            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
             return horses;
         }
 
-        public static ObservableCollection<Horse> SearchHorses(string searchQuery)
+        public static async Task<ObservableCollection<Horse>> SearchHorsesAsync(string searchQuery)
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?search=" + searchQuery;
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> searchedHorses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where `Кличка` Like @search";
-                    cmd.Parameters.AddWithValue("@search", "%" + searchQuery + "%");
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        searchedHorses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                searchedHorses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
+            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
             return searchedHorses;
         }
@@ -371,137 +170,32 @@ namespace HorseAccounting.Model
 
         #region AddHorsePage
 
-        public static ObservableCollection<Horse> GetMotherHorse()
+        public static async Task<ObservableCollection<Horse>> GetMotherHorseAsync()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=mother";
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> motherHorses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Кобыла' Order by `Кличка`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        motherHorses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                motherHorses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
+            ObservableCollection<Horse> motherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
             return motherHorses;
         }
 
-        public static ObservableCollection<Horse> GetFatherHorse()
+        public static async Task<ObservableCollection<Horse>> GetFatherHorseAsync()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=father";
->>>>>>> Stashed changes
 
-            ObservableCollection<Horse> fatherHorses = new ObservableCollection<Horse>();
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` where Пол = 'Жеребец' Order by `Кличка`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        fatherHorses.Add(
-                            new Horse
-                            {
-                                ID = dataReader.GetInt32(0),
-                                GpkNum = dataReader.GetString(1),
-                                NickName = dataReader.GetString(2),
-                                Brand = dataReader.GetString(3),
-                                Bloodiness = dataReader.GetString(4),
-                                Color = dataReader.GetString(5),
-                                Gender = dataReader.GetString(6),
-                                BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                                BirthPlace = dataReader.GetString(8),
-                                Owner = dataReader.GetString(9),
-                                MotherID = dataReader.GetInt32(10),
-                                FatherID = dataReader.GetInt32(11),
-                                State = dataReader.GetString(12),
-                                FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                            });
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                fatherHorses.Add(
-                    new Horse
-                    {
-                        NickName = "База данных не найдена!",
-                        Bloodiness = "Обратитесь к разработчику приложения!",
-                    });
-            }
+            ObservableCollection<Horse> fatherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
 
             return fatherHorses;
         }
 
-        public static bool AddHorse(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
+        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
             {
-<<<<<<< Updated upstream
-                DbConnection.CreateConnection();
-=======
                 var horseData = new Dictionary<string, string>
                 {
                     { "GpkNum", gpk },
@@ -521,41 +215,15 @@ namespace HorseAccounting.Model
                 var data = new FormUrlEncodedContent(horseData);
 
                 var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
->>>>>>> Stashed changes
 
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
+                var responseString = await response.Content.ReadAsStringAsync();
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "INSERT INTO `лошадь`(`№ по ГПК`, `Кличка`, `Тавро`, `Кровность`, `Масть`, `Пол`, `Дата рождения`, `Место рождения`, `Владелец`, `Мать`, `Отец`, `Состояние`) " +
-                    "VALUES (@gpk, @nick, @brand, @blodeness, @color, @gend, @date, @place, @owner, @mother, @father, @state)";
+                Console.WriteLine(responseString);
 
-                    cmd.Parameters.AddWithValue("@gpk", gpk);
-                    cmd.Parameters.AddWithValue("@nick", nick);
-                    cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@blodeness", blodeness);
-                    cmd.Parameters.AddWithValue("@color", color);
-                    cmd.Parameters.AddWithValue("@gend", gend);
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@place", placeBirth);
-                    cmd.Parameters.AddWithValue("@owner", owner);
-                    cmd.Parameters.AddWithValue("@mother", motherID);
-                    cmd.Parameters.AddWithValue("@father", fatherID);
-                    cmd.Parameters.AddWithValue("@state", state);
-
-                    cmd.ExecuteNonQuery();
-
-                    sql.Close();
-
-                    return true;
-                }
+                return true;
             }
             catch (FormatException ex)
             {
-<<<<<<< Updated upstream
-                Console.WriteLine(ex.Message);
-=======
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
                 return false;
             }
@@ -594,7 +262,6 @@ namespace HorseAccounting.Model
             catch (FormatException ex)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату выжребки!"));
->>>>>>> Stashed changes
                 return false;
             }
         }
@@ -615,74 +282,32 @@ namespace HorseAccounting.Model
             FullName = null;
         }
 
-        public static int GetLastHorseID()
+        public static async Task<int> GetLastHorseIDAsync()
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-
-            int lastHorseID = 0;
-
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT MAX(ID) FROM `лошадь`";
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=last-id";
->>>>>>> Stashed changes
 
-                    while (dataReader.Read())
-                    {
-                        lastHorseID = dataReader.GetInt32(0);
-                    }
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-                    dataReader.Close();
+            Horse lastHorse = JsonConvert.DeserializeObject<Horse>(response);
 
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return lastHorseID;
+            return Convert.ToInt32(lastHorse.ID);
         }
 
-        public static void ChangeHorseState(int id, string state)
+        public static async Task ChangeHorseStateAsync(int id, string state)
         {
-            try
-            {
-                DbConnection.CreateConnection();
-
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+            var horseData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "ID", id.ToString() },
+                    { "State", state },
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "Update `лошадь` set `Состояние` = @state WHERE ID = @id";
+            var data = new FormUrlEncodedContent(horseData);
 
-<<<<<<< Updated upstream
-                    cmd.Parameters.AddWithValue("@state", state);
-                    cmd.Parameters.AddWithValue("@id", id);
-=======
             var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
->>>>>>> Stashed changes
 
-                    cmd.ExecuteNonQuery();
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine(responseString);
         }
 
         #endregion
@@ -695,98 +320,38 @@ namespace HorseAccounting.Model
 
         #region ChangeHorsePage
 
-        public static Horse GetSelectedHorse(int ID)
+        public static async Task<Horse> GetSelectedHorseAsync(int ID)
         {
-<<<<<<< Updated upstream
-            DbConnection.CreateConnection();
-=======
             string url = "http://1k-horse-base.ru/api/horse.php?horse=" + ID;
->>>>>>> Stashed changes
 
-            Horse selectedHorse = null;
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            try
-            {
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
-                {
-                    sql.Open();
-
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM `лошадь` Where ID = @id";
-                    cmd.Parameters.AddWithValue("@id", ID);
-
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        selectedHorse = new Horse
-                        {
-                            ID = dataReader.GetInt32(0),
-                            GpkNum = dataReader.GetString(1),
-                            NickName = dataReader.GetString(2),
-                            Brand = dataReader.GetString(3),
-                            Bloodiness = dataReader.GetString(4),
-                            Color = dataReader.GetString(5),
-                            Gender = dataReader.GetString(6),
-                            BirthDate = dataReader.GetDateTime(7).ToShortDateString(),
-                            BirthPlace = dataReader.GetString(8),
-                            Owner = dataReader.GetString(9),
-                            MotherID = dataReader.GetInt32(10),
-                            FatherID = dataReader.GetInt32(11),
-                            State = dataReader.GetString(12),
-                            FullName = dataReader.GetString(2) + " " + dataReader.GetString(3) + "-" + dataReader.GetDateTime(7).ToString("yy"),
-                        };
-                    }
-
-                    dataReader.Close();
-
-                    sql.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Horse selectedHorse = JsonConvert.DeserializeObject<Horse>(response);
 
             return selectedHorse;
         }
 
 
-        public static bool ChangeHorse(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
-                DbConnection.CreateConnection();
-
-<<<<<<< Updated upstream
-                using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
+                var horseData = new Dictionary<string, string>
                 {
-                    sql.Open();
+                    { "ID", id.ToString() },
+                    { "GpkNum", gpk },
+                    { "NickName", nick },
+                    { "Brand", brand },
+                    { "Bloodiness", blodeness },
+                    { "Color", color },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", placeBirth },
+                    { "Owner", owner },
+                    { "MotherID", motherID.ToString() },
+                    { "FatherID", fatherID.ToString() },
+                };
 
-                    MySqlCommand cmd = sql.CreateCommand();
-                    cmd.CommandText = "Update `лошадь` set `№ по ГПК` = @gpk, `Кличка` = @nick, `Тавро` = @brand, `Кровность` = @blodeness, `Масть` = @color, `Пол` = @gend, `Дата рождения` = @date," +
-                        " `Место рождения` = @place, `Владелец` = @owner, `Мать` = @mother, `Отец` = @father WHERE ID = @id";
-
-                    cmd.Parameters.AddWithValue("@gpk", gpk);
-                    cmd.Parameters.AddWithValue("@nick", nick);
-                    cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@blodeness", blodeness);
-                    cmd.Parameters.AddWithValue("@color", color);
-                    cmd.Parameters.AddWithValue("@gend", gend);
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@place", placeBirth);
-                    cmd.Parameters.AddWithValue("@owner", owner);
-                    cmd.Parameters.AddWithValue("@mother", motherID);
-                    cmd.Parameters.AddWithValue("@father", fatherID);
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    cmd.ExecuteNonQuery();
-
-                    sql.Close();
-
-                    return true;
-                }
-=======
                 var data = new FormUrlEncodedContent(horseData);
 
                 var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change", data).GetAwaiter().GetResult();
@@ -796,11 +361,10 @@ namespace HorseAccounting.Model
                 Console.WriteLine(responseString);
 
                 return true;
->>>>>>> Stashed changes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(ex.Message));
                 return false;
             }
         }

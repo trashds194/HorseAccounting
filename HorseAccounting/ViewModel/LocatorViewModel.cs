@@ -20,6 +20,7 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<ShowHorseViewModel>();
             SimpleIoc.Default.Register<AddScoringViewModel>();
             SimpleIoc.Default.Register<TaleMagazineViewModel>();
+            SimpleIoc.Default.Register<AddTribalUseViewModel>();
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
 
             SetupNavigation();
@@ -34,6 +35,7 @@ namespace HorseAccounting.ViewModel
             navigationService.Configure("ShowHorsePage", new Uri("../View/ShowHorse.xaml", UriKind.Relative));
             navigationService.Configure("AddScoringPage", new Uri("../View/AddScoring.xaml", UriKind.Relative));
             navigationService.Configure("TaleMagazinePage", new Uri("../View/TaleMagazine.xaml", UriKind.Relative));
+            navigationService.Configure("AddTribalUsePage", new Uri("../View/AddTribalUse.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IPageNavigationService>(() => navigationService);
         }
@@ -91,6 +93,14 @@ namespace HorseAccounting.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<TaleMagazineViewModel>();
+            }
+        }
+
+        public AddTribalUseViewModel AddTribalUseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddTribalUseViewModel>();
             }
         }
 

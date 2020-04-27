@@ -212,11 +212,7 @@ namespace HorseAccounting.ViewModel
                     _addScoringToList = new RelayCommand(() =>
                     {
                         CheckForNull();
-<<<<<<< Updated upstream
-                        if (Scoring.AddScoring(AddedScoring.Date, AddedScoring.Age, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, MainHorse.ID))
-=======
                         if (Scoring.AddScoringAsync(AddedScoring.Date, AddedScoring.Age, AddedScoring.Boniter, AddedScoring.Origin, AddedScoring.Typicality, AddedScoring.Measurements, AddedScoring.Exterior, AddedScoring.WorkingCapacity, AddedScoring.OffspringQuality, AddedScoring.TheClass, AddedScoring.Comment, SelectedHorse.ID).Result)
->>>>>>> Stashed changes
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили бонитировки"));
                             AddedScoring.CleanScoringData();
