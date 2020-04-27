@@ -61,6 +61,7 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Progression> GetSelectedProgression(int iD)
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
 
             string query = "SELECT * FROM `движение` Where `ID Лошади` = " + iD;
@@ -125,10 +126,14 @@ namespace HorseAccounting.Model
                     MySqlCommand cmd = sql.CreateCommand();
                     cmd.CommandText = "INSERT INTO `движение`(`Дата`, `Назначение`, `Комментарий`, `ID Лошади`) VALUES (@date, @destination, @comment, @horseID)";
 
+<<<<<<< Updated upstream
                     cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(date).ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@destination", destination);
                     cmd.Parameters.AddWithValue("@comment", comment);
                     cmd.Parameters.AddWithValue("@horseID", horseID);
+=======
+            var response = client.PostAsync("http://1k-horse-base.ru/api/progression.php?progression=add", data).GetAwaiter().GetResult();
+>>>>>>> Stashed changes
 
                     cmd.ExecuteNonQuery();
 

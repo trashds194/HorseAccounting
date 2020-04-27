@@ -119,7 +119,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetHorses()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=all";
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
@@ -178,7 +182,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetActingHorses()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=acting";
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
@@ -236,7 +244,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetRetiredHorses()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=retired";
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> horses = new ObservableCollection<Horse>();
 
@@ -294,7 +306,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> SearchHorses(string searchQuery)
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?search=" + searchQuery;
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> searchedHorses = new ObservableCollection<Horse>();
 
@@ -357,7 +373,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetMotherHorse()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=mother";
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> motherHorses = new ObservableCollection<Horse>();
 
@@ -415,7 +435,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Horse> GetFatherHorse()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=father";
+>>>>>>> Stashed changes
 
             ObservableCollection<Horse> fatherHorses = new ObservableCollection<Horse>();
 
@@ -475,7 +499,29 @@ namespace HorseAccounting.Model
         {
             try
             {
+<<<<<<< Updated upstream
                 DbConnection.CreateConnection();
+=======
+                var horseData = new Dictionary<string, string>
+                {
+                    { "GpkNum", gpk },
+                    { "NickName", nick },
+                    { "Brand", brand },
+                    { "Bloodiness", blodeness },
+                    { "Color", color },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", placeBirth },
+                    { "Owner", owner },
+                    { "MotherID", motherID.ToString() },
+                    { "FatherID", fatherID.ToString() },
+                    { "State", state },
+                };
+
+                var data = new FormUrlEncodedContent(horseData);
+
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+>>>>>>> Stashed changes
 
                 using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
@@ -505,9 +551,50 @@ namespace HorseAccounting.Model
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (FormatException ex)
             {
+<<<<<<< Updated upstream
                 Console.WriteLine(ex.Message);
+=======
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                return false;
+            }
+        }
+
+        public static async Task<bool> AddHorseAsync(string nick, string color, string gend, string dateBirth, int motherID, int fatherID)
+        {
+            try
+            {
+                var horseData = new Dictionary<string, string>
+                {
+                    { "GpkNum", string.Empty },
+                    { "NickName", nick },
+                    { "Brand", string.Empty },
+                    { "Bloodiness", string.Empty },
+                    { "Color", color },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", string.Empty },
+                    { "Owner", string.Empty },
+                    { "MotherID", motherID.ToString() },
+                    { "FatherID", fatherID.ToString() },
+                    { "State", string.Empty },
+                };
+
+                var data = new FormUrlEncodedContent(horseData);
+
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseString);
+
+                return true;
+            }
+            catch (FormatException ex)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату выжребки!"));
+>>>>>>> Stashed changes
                 return false;
             }
         }
@@ -530,6 +617,7 @@ namespace HorseAccounting.Model
 
         public static int GetLastHorseID()
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
 
             int lastHorseID = 0;
@@ -544,6 +632,9 @@ namespace HorseAccounting.Model
                     cmd.CommandText = "SELECT MAX(ID) FROM `лошадь`";
 
                     MySqlDataReader dataReader = cmd.ExecuteReader();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=last-id";
+>>>>>>> Stashed changes
 
                     while (dataReader.Read())
                     {
@@ -576,8 +667,12 @@ namespace HorseAccounting.Model
                     MySqlCommand cmd = sql.CreateCommand();
                     cmd.CommandText = "Update `лошадь` set `Состояние` = @state WHERE ID = @id";
 
+<<<<<<< Updated upstream
                     cmd.Parameters.AddWithValue("@state", state);
                     cmd.Parameters.AddWithValue("@id", id);
+=======
+            var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
+>>>>>>> Stashed changes
 
                     cmd.ExecuteNonQuery();
 
@@ -602,7 +697,11 @@ namespace HorseAccounting.Model
 
         public static Horse GetSelectedHorse(int ID)
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=" + ID;
+>>>>>>> Stashed changes
 
             Horse selectedHorse = null;
 
@@ -659,6 +758,7 @@ namespace HorseAccounting.Model
             {
                 DbConnection.CreateConnection();
 
+<<<<<<< Updated upstream
                 using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
                     sql.Open();
@@ -686,6 +786,17 @@ namespace HorseAccounting.Model
 
                     return true;
                 }
+=======
+                var data = new FormUrlEncodedContent(horseData);
+
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change", data).GetAwaiter().GetResult();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseString);
+
+                return true;
+>>>>>>> Stashed changes
             }
             catch (Exception ex)
             {

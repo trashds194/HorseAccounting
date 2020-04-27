@@ -137,7 +137,11 @@ namespace HorseAccounting.Model
 
         public static ObservableCollection<Scoring> GetSelectedScoring(int iD)
         {
+<<<<<<< Updated upstream
             DbConnection.CreateConnection();
+=======
+            string url = "http://1k-horse-base.ru/api/scoring.php?scoring=" + iD;
+>>>>>>> Stashed changes
 
             string query = "SELECT * FROM `бонитировка` Where `ID Лошади` = " + iD;
 
@@ -198,9 +202,35 @@ namespace HorseAccounting.Model
 
         public static bool AddScoring(string date, string age, string boniter, int origin, int typicality, int measure, int exterior, int workingCapacity, int offspringQuality, string theClass, string comment, int horseID)
         {
+<<<<<<< Updated upstream
             try
             {
                 DbConnection.CreateConnection();
+=======
+            var scoringData = new Dictionary<string, string>
+                {
+                    { "Date", date },
+                    { "Age", age },
+                    { "Boniter", boniter },
+                    { "Origin", origin.ToString() },
+                    { "Typicality",typicality.ToString() },
+                    { "Measurements", measure.ToString() },
+                    { "Exterior", exterior.ToString() },
+                    { "WorkingCapacity", workingCapacity.ToString() },
+                    { "OffspringQuality", offspringQuality.ToString() },
+                    { "TheClass", theClass.ToString() }, 
+                    { "Comment", comment },
+                    { "HorseID", horseID.ToString() }
+                };
+
+            var data = new FormUrlEncodedContent(scoringData);
+
+            var response = client.PostAsync("http://1k-horse-base.ru/api/scoring.php?scoring=add", data).GetAwaiter().GetResult();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(responseString);
+>>>>>>> Stashed changes
 
                 using (var sql = new MySqlConnection(DbConnection.Connection.ConnectionString))
                 {
