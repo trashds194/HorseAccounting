@@ -19,7 +19,7 @@ namespace HorseAccounting.Model
         private string _lastDate;
         private string _fatherFullName;
         private string _fatherBreed;
-        private string _foalClass;
+        private string _fatherClass;
         private string _foalDate;
         private string _foalGender;
         private string _foalColor;
@@ -65,10 +65,10 @@ namespace HorseAccounting.Model
             set { Set<string>(() => FatherBreed, ref _fatherBreed, value); }
         }
 
-        public string FoalClass
+        public string FatherClass
         {
-            get { return _foalClass; }
-            set { Set<string>(() => FoalClass, ref _foalClass, value); }
+            get { return _fatherClass; }
+            set { Set<string>(() => FatherClass, ref _fatherClass, value); }
         }
 
         public string FoalDate
@@ -127,7 +127,7 @@ namespace HorseAccounting.Model
             LastDate = string.Empty;
             FatherFullName = string.Empty;
             FatherBreed = string.Empty;
-            FoalClass = string.Empty;
+            FatherClass = string.Empty;
             FoalDate = string.Empty;
             FoalColor = string.Empty;
             FoalNickName = string.Empty;
@@ -139,7 +139,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<TribalUse>> GetSelectedTribalUse(int iD)
         {
-            string url = "http://1k-horse-base.loc/api/tribaluse.php?tribaluse=" + iD;
+            string url = "http://1k-horse-base.ru/api/tribaluse.php?tribaluse=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -152,15 +152,15 @@ namespace HorseAccounting.Model
 
         #region AddTribalUsePage
 
-        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string fatherFullName, string fatherBreed, string foalClass, string foalDate, string foalGender, string foalColor, string foalNickName, string foalDestination, int fatherID, int foalID, int motherID)
+        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string fatherFullName, string fatherBreed, string fatherClass, string foalDate, string foalGender, string foalColor, string foalNickName, string foalDestination, int fatherID, int foalID, int motherID)
         {
             var tribalUseData = new Dictionary<string, string>
                 {
                     { "Year", year },
-                    { "LastDate", lastDate },
+                    { "LastDate", Convert.ToDateTime(lastDate).ToString("yyyy-MM-dd") },
                     { "FatherFullName", fatherFullName },
                     { "FatherBreed", fatherBreed },
-                    { "FoalClass", foalClass },
+                    { "FatherClass", fatherClass },
                     { "FoalDate", foalDate },
                     { "FoalGender", foalGender },
                     { "FoalColor", foalColor },
@@ -173,7 +173,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(tribalUseData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/api/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base.ru/api/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync();
 

@@ -60,7 +60,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Progression>> GetSelectedProgression(int iD)
         {
-            string url = "http://1k-horse-base.loc/api/progression.php?progression=" + iD;
+            string url = "http://1k-horse-base.ru/api/progression.php?progression=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -77,7 +77,7 @@ namespace HorseAccounting.Model
         {
             var progressionData = new Dictionary<string, string>
                 {
-                    { "Date", date },
+                    { "Date", Convert.ToDateTime(date).ToString("yyyy-MM-dd") },
                     { "Destination", destination },
                     { "Comment", comment },
                     { "HorseID", horseID.ToString() }
@@ -85,7 +85,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(progressionData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/api/progression.php?progression=add", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base.ru/api/progression.php?progression=add", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync();
 

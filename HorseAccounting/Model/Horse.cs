@@ -124,7 +124,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetHorses()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=all";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=all";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -135,7 +135,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetActingHorses()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=acting";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=acting";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -146,7 +146,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetRetiredHorses()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=retired";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=retired";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -157,7 +157,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> SearchHorsesAsync(string searchQuery)
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?search=" + searchQuery;
+            string url = "http://1k-horse-base.ru/api/horse.php?search=" + searchQuery;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -172,7 +172,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetMotherHorseAsync()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=mother";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=mother";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -183,7 +183,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetFatherHorseAsync()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=father";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=father";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -214,7 +214,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.loc/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
@@ -251,7 +251,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.loc/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
@@ -284,7 +284,7 @@ namespace HorseAccounting.Model
 
         public static async Task<int> GetLastHorseIDAsync()
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=last-id";
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=last-id";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -303,7 +303,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(horseData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
@@ -322,7 +322,7 @@ namespace HorseAccounting.Model
 
         public static async Task<Horse> GetSelectedHorseAsync(int ID)
         {
-            string url = "http://1k-horse-base.loc/api/horse.php?horse=" + ID;
+            string url = "http://1k-horse-base.ru/api/horse.php?horse=" + ID;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -354,7 +354,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.loc/api/horse.php?horse=change", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
