@@ -140,7 +140,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Scoring>> GetSelectedScoring(int iD)
         {
-            string url = "http://1k-horse-base.ru/api/scoring.php?scoring=" + iD;
+            string url = "http://1k-horse-base.loc/api/scoring.php?scoring=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -173,7 +173,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(scoringData);
 
-            var response = client.PostAsync("http://1k-horse-base.ru/api/scoring.php?scoring=add", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base.loc/api/scoring.php?scoring=add", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync();
 
