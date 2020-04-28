@@ -157,7 +157,7 @@ namespace HorseAccounting.Model
         {
             var scoringData = new Dictionary<string, string>
                 {
-                    { "Date", date },
+                    { "Date", Convert.ToDateTime(date).ToString("yyyy-MM-dd") },
                     { "Age", age },
                     { "Boniter", boniter },
                     { "Origin", origin.ToString() },

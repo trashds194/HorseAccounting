@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using Microsoft.Office.Interop.Excel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,6 +19,12 @@ namespace HorseAccounting.ViewModel
 
         private Horse _mainHorse;
         private Horse _fatherHorse;
+
+        private bool _singleIsChecked;
+        private bool _singleIsEnabled;
+
+        private bool _notCoveredIsChecked;
+        private bool _notCoveredIsEnabled;
 
         private int _foalID;
 
@@ -38,6 +45,11 @@ namespace HorseAccounting.ViewModel
             {
                 MainHorse = (Horse)_navigationService.Parameter;
                 ComboBoxesUpdate();
+                SingleIsChecked = false;
+                SingleIsEnabled = true;
+
+                NotCoveredIsChecked = false;
+                NotCoveredIsEnabled = true;
             }).ConfigureAwait(true);
         }
 
@@ -48,6 +60,20 @@ namespace HorseAccounting.ViewModel
                 _fatherHorseList = Horse.GetFatherHorseAsync().Result;
                 RaisePropertyChanged(() => FatherHorseList);
             }).ConfigureAwait(true);
+        }
+
+        private void AddTribalUse()
+        {
+            if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
+                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                AddedTribalUse.CleanTribalUseData();
+            }
+            else
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+            }
         }
 
         #region Definitions
@@ -80,6 +106,90 @@ namespace HorseAccounting.ViewModel
             {
                 _fatherHorse = value;
                 RaisePropertyChanged(nameof(FatherHorse));
+            }
+        }
+
+        public bool SingleIsChecked
+        {
+            get
+            {
+                return _singleIsChecked;
+            }
+
+            set
+            {
+                _singleIsChecked = value;
+                RaisePropertyChanged(nameof(SingleIsChecked));
+                if (SingleIsChecked == true)
+                {
+                    NotCoveredIsChecked = false;
+                    SingleIsEnabled = false;
+                    RaisePropertyChanged(nameof(NotCoveredIsChecked));
+                    RaisePropertyChanged(nameof(SingleIsEnabled));
+                }
+                else
+                {
+                    SingleIsEnabled = true;
+                    RaisePropertyChanged(nameof(SingleIsEnabled));
+                }
+            }
+        }
+
+        public bool SingleIsEnabled
+        {
+            get
+            {
+                return _singleIsEnabled;
+            }
+
+            set
+            {
+                _singleIsEnabled = value;
+                RaisePropertyChanged(nameof(SingleIsEnabled));
+            }
+        }
+
+        public bool NotCoveredIsChecked
+        {
+            get
+            {
+                return _notCoveredIsChecked;
+            }
+
+            set
+            {
+                _notCoveredIsChecked = value;
+                RaisePropertyChanged(nameof(NotCoveredIsChecked));
+                if (NotCoveredIsChecked == true)
+                {
+                    NotCoveredIsEnabled = false;
+                    SingleIsChecked = false;
+                    SingleIsEnabled = false;
+                    RaisePropertyChanged(nameof(NotCoveredIsEnabled));
+                    RaisePropertyChanged(nameof(SingleIsChecked));
+                    RaisePropertyChanged(nameof(SingleIsEnabled));
+                }
+                else
+                {
+                    NotCoveredIsEnabled = true;
+                    SingleIsEnabled = true;
+                    RaisePropertyChanged(nameof(NotCoveredIsEnabled));
+                    RaisePropertyChanged(nameof(SingleIsEnabled));
+                }
+            }
+        }
+
+        public bool NotCoveredIsEnabled
+        {
+            get
+            {
+                return _notCoveredIsEnabled;
+            }
+
+            set
+            {
+                _notCoveredIsEnabled = value;
+                RaisePropertyChanged(nameof(NotCoveredIsEnabled));
             }
         }
 
@@ -158,23 +268,45 @@ namespace HorseAccounting.ViewModel
 
                     _addTribalUseToList = new RelayCommand(() =>
                     {
+                        if (SingleIsChecked == true)
+                        {
+                            AddedTribalUse.FoalDate = "Холоста";
+                        }
+                        if (NotCoveredIsChecked == true)
+                        {
+                            AddedTribalUse.FatherFullName = "Не крыта";
+                        }
                         if (FatherHorse == null)
                         {
                             FatherHorse = new Horse();
+                            FatherHorse.FullName = "Не крыта";
                             FatherHorse.ID = 0;
                         }
+                        if (AddedTribalUse.FoalNickName == null)
+                        {
+                            AddedTribalUse.FoalNickName = string.Empty;
+                        }
 
-                        if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, MainHorse.ID, FatherHorse.ID).Result)
+                        if (AddedTribalUse.FoalNickName.Equals("мертворожденный"))
+                        {
+                            AddTribalUse();
+                        }
+                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, MainHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
                             FoalID = Horse.GetLastHorseIDAsync().Result;
 
                             if (AddedTribalUse.FoalDestination != null)
                             {
+                                if(AddedTribalUse.FoalGender == null)
+                                {
+                                    AddedTribalUse.FoalGender = "Кобыла";
+                                }
                                 if (Progression.AddProgressionAsync(AddedTribalUse.FoalDate, AddedTribalUse.FoalDestination, string.Empty, FoalID).Result)
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Назначение жеребенка успешно добавлено"));
-                                    if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание"))
+                                    if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание")
+                                    || AddedTribalUse.FoalDestination.Equals("прирезан") || AddedTribalUse.FoalDestination.Equals("обмен"))
                                     {
                                         if (AddedTribalUse.FoalGender.Equals("Жеребец"))
                                         {
@@ -196,16 +328,7 @@ namespace HorseAccounting.ViewModel
                                             Horse.ChangeHorseStateAsync(FoalID, "Действующая");
                                         }
                                     }
-                                    if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FoalClass,
-                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
-                                    {
-                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
-                                        AddedTribalUse.CleanTribalUseData();
-                                    }
-                                    else
-                                    {
-                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
-                                    }
+                                    AddTribalUse();
                                 }
                                 else
                                 {
@@ -214,21 +337,13 @@ namespace HorseAccounting.ViewModel
                             }
                             else
                             {
-                                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FoalClass,
-                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
-                                    AddedTribalUse.CleanTribalUseData();
-                                }
-                                else
-                                {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
-                                }
+                                AddTribalUse();
                             }
                         }
                         else
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить жеребенка"));
+                            AddTribalUse();
                         }
                     });
                 }

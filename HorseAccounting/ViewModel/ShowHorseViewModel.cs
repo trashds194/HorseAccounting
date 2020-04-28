@@ -5,8 +5,11 @@ using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace HorseAccounting.ViewModel
 {
@@ -312,6 +315,142 @@ namespace HorseAccounting.ViewModel
 
         #region MenuCommands
 
+        private ICommand _createHorseCard;
+
+        public ICommand CreateHorseCard
+        {
+            get
+            {
+                if (_createHorseCard == null)
+                {
+                    _createHorseCard = new RelayCommand(() =>
+                    {
+                        Directory.CreateDirectory(Path.Combine(@"C:\Users\Public\Documents\", "Помощник коневода"));
+                        string docPath = @"C:\Users\Public\Documents\Помощник коневода\";
+                        Directory.CreateDirectory(Path.Combine(docPath, "Карточки лошадей"));
+                        string magazinesPath = @"C:\Users\Public\Documents\Помощник коневода\Карточки лошадей\";
+
+                        if (!File.Exists(magazinesPath + SelectedHorse.FullName + ".doc"))
+                        {
+                            try
+                            {
+                                Word.Application application = new Word.Application();
+                                application.Visible = true;
+                                var path = System.IO.Path.GetFullPath(@"Files\Word\Карточка племенной кобылы.dotx");
+
+                                Word.Document document = application.Documents.Open(path);
+                                Word.WdSaveFormat format = Word.WdSaveFormat.wdFormatDocument;
+
+                                document.Bookmarks["GpkNum"].Range.Text = SelectedHorse.GpkNum;
+                                document.Bookmarks["NickName"].Range.Text = SelectedHorse.NickName;
+                                document.Bookmarks["Brand"].Range.Text = SelectedHorse.Brand;
+
+                                document.SaveAs2(FileName: magazinesPath + SelectedHorse.FullName, format);
+                                document.Close();
+                                application.Quit();
+
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Карточка лошади успешно создана!"));
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при создании карточки лошади!"));
+                            }
+                        }
+                        else
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Файл уже создан. Выполняется открытие файла"));
+                            try
+                            {
+                                Word.Application application = new Word.Application();
+                                application.Visible = true;
+                                var path = System.IO.Path.GetFullPath(magazinesPath + @SelectedHorse.FullName + @".doc");
+                                Word.Document document = application.Documents.Open(path);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при открытии карточки лошади!"));
+                            }
+                        }
+                    });
+                }
+
+                return _createHorseCard;
+            }
+
+            set
+            {
+                _createHorseCard = value;
+            }
+        }
+
+        private ICommand _openHorseCard;
+
+        public ICommand OpenHorseCard
+        {
+            get
+            {
+                if (_openHorseCard == null)
+                {
+                    _openHorseCard = new RelayCommand(() =>
+                    {
+                        string magazinesPath = @"C:\Users\Public\Documents\Помощник коневода\Карточки лошадей\";
+                        if (File.Exists(magazinesPath + SelectedHorse.FullName + ".doc"))
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Выполняется открытие файла"));
+                            try
+                            {
+                                Word.Application application = new Word.Application();
+                                application.Visible = true;
+                                var path = System.IO.Path.GetFullPath(magazinesPath + @SelectedHorse.FullName + @".doc");
+                                Word.Document document = application.Documents.Open(path);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при открытии карточки лошади!"));
+                            }
+                        }
+                        else
+                        {
+                            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Файл отсутствует!"));
+                        }
+                    });
+                }
+
+                return _openHorseCard;
+            }
+
+            set
+            {
+                _openHorseCard = value;
+            }
+        }
+
+        private ICommand _openCardsFolder;
+
+        public ICommand OpenCardsFolder
+        {
+            get
+            {
+                if (_openCardsFolder == null)
+                {
+                    _openCardsFolder = new RelayCommand(() =>
+                    {
+                        Process.Start("explorer.exe", @"C:\Users\Public\Documents\Помощник коневода\Карточки лошадей\");
+                    });
+                }
+
+                return _openCardsFolder;
+            }
+
+            set
+            {
+                _openCardsFolder = value;
+            }
+        }
+
         #endregion
 
         #region WindowCommands
@@ -392,7 +531,8 @@ namespace HorseAccounting.ViewModel
                                 if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID).Result)
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                    if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
+                                    if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание")
+                                    || AddedProgression.Destination.Equals("прирезан") || AddedProgression.Destination.Equals("обмен"))
                                     {
                                         if (SelectedHorse.Gender.Equals("Жеребец"))
                                         {

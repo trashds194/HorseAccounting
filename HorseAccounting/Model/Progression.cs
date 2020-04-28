@@ -77,7 +77,7 @@ namespace HorseAccounting.Model
         {
             var progressionData = new Dictionary<string, string>
                 {
-                    { "Date", date },
+                    { "Date", Convert.ToDateTime(date).ToString("yyyy-MM-dd") },
                     { "Destination", destination },
                     { "Comment", comment },
                     { "HorseID", horseID.ToString() }
