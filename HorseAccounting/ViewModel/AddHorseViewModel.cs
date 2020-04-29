@@ -3,7 +3,11 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -65,10 +69,20 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                _motherHorseList = Horse.GetMotherHorseAsync().Result;
-                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                RaisePropertyChanged(() => MotherHorseList);
-                RaisePropertyChanged(() => FatherHorseList);
+                try
+                {
+                    _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                    _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                    RaisePropertyChanged(() => MotherHorseList);
+                    RaisePropertyChanged(() => FatherHorseList);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
             }).ConfigureAwait(true);
         }
 

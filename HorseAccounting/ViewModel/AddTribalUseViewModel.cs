@@ -4,7 +4,11 @@ using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -18,6 +22,7 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private Horse _mainHorse;
+        private Horse _selectedHorse;
         private Horse _fatherHorse;
 
         private bool _singleIsChecked;
@@ -43,8 +48,19 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                MainHorse = (Horse)_navigationService.Parameter;
-                ComboBoxesUpdate();
+                try
+                {
+                    MainHorse = (Horse)_navigationService.Parameter;
+                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
+                    ComboBoxesUpdate();
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
                 SingleIsChecked = false;
                 SingleIsEnabled = true;
 
@@ -57,22 +73,42 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                RaisePropertyChanged(() => FatherHorseList);
+                try
+                {
+                    _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                    RaisePropertyChanged(() => FatherHorseList);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
             }).ConfigureAwait(true);
         }
 
         private void AddTribalUse()
         {
-            if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
-                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
+            try
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
-                AddedTribalUse.CleanTribalUseData();
+                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
+                    AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, SelectedHorse.ID).Result)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                    AddedTribalUse.CleanTribalUseData();
+                }
+                else
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка отправки данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
             }
         }
 
@@ -92,6 +128,20 @@ namespace HorseAccounting.ViewModel
                     _mainHorse = value;
                     RaisePropertyChanged(nameof(MainHorse));
                 }
+            }
+        }
+
+        public Horse SelectedHorse
+        {
+            get
+            {
+                return _selectedHorse;
+            }
+
+            set
+            {
+                _selectedHorse = value;
+                RaisePropertyChanged(nameof(SelectedHorse));
             }
         }
 
@@ -276,12 +326,19 @@ namespace HorseAccounting.ViewModel
                         {
                             AddedTribalUse.FatherFullName = "Не крыта";
                         }
+
+                        if (SelectedHorse == null)
+                        {
+                            SelectedHorse = new Horse();
+                            SelectedHorse.ID = 0;
+                        }
                         if (FatherHorse == null)
                         {
                             FatherHorse = new Horse();
                             FatherHorse.FullName = "Не крыта";
                             FatherHorse.ID = 0;
                         }
+
                         if (AddedTribalUse.FoalNickName == null)
                         {
                             AddedTribalUse.FoalNickName = string.Empty;
@@ -291,14 +348,14 @@ namespace HorseAccounting.ViewModel
                         {
                             AddTribalUse();
                         }
-                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, MainHorse.ID, FatherHorse.ID).Result)
+                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, SelectedHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
                             FoalID = Horse.GetLastHorseIDAsync().Result;
 
                             if (AddedTribalUse.FoalDestination != null)
                             {
-                                if(AddedTribalUse.FoalGender == null)
+                                if (AddedTribalUse.FoalGender == null)
                                 {
                                     AddedTribalUse.FoalGender = "Кобыла";
                                 }

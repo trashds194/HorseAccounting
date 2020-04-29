@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace HorseAccounting.ViewModel
                 }
                 catch
                 {
-                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
                 }
             }).ConfigureAwait(true);
         }
@@ -248,8 +249,15 @@ namespace HorseAccounting.ViewModel
                         StallionBtnCheck = true;
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetFatherHorseAsync().Result;
-                            RaisePropertyChanged(() => HorsesList);
+                            try
+                            {
+                                _horses = Horse.GetFatherHorseAsync().Result;
+                                RaisePropertyChanged(() => HorsesList);
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
                         }).ConfigureAwait(true);
                     }));
             }
@@ -273,8 +281,15 @@ namespace HorseAccounting.ViewModel
                         MareBtnCheck = true;
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetMotherHorseAsync().Result;
-                            RaisePropertyChanged(() => HorsesList);
+                            try
+                            {
+                                _horses = Horse.GetMotherHorseAsync().Result;
+                                RaisePropertyChanged(() => HorsesList);
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
                         }).ConfigureAwait(true);
                     }));
             }
@@ -303,8 +318,15 @@ namespace HorseAccounting.ViewModel
                         MareBtnCheck = false;
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetHorses().Result;
-                            RaisePropertyChanged(() => HorsesList);
+                            try
+                            {
+                                _horses = Horse.GetHorses().Result;
+                                RaisePropertyChanged(() => HorsesList);
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
                         }).ConfigureAwait(true);
                     }));
             }
@@ -327,8 +349,15 @@ namespace HorseAccounting.ViewModel
                     {
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetActingHorses().Result;
-                            RaisePropertyChanged(() => HorsesList);
+                            try
+                            {
+                                _horses = Horse.GetActingHorses().Result;
+                                RaisePropertyChanged(() => HorsesList);
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
                         }).ConfigureAwait(true);
                     }));
             }
@@ -351,8 +380,15 @@ namespace HorseAccounting.ViewModel
                     {
                         await Task.Run(() =>
                         {
-                            _horses = Horse.GetRetiredHorses().Result;
-                            RaisePropertyChanged(() => HorsesList);
+                            try
+                            {
+                                _horses = Horse.GetRetiredHorses().Result;
+                                RaisePropertyChanged(() => HorsesList);
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
                         }).ConfigureAwait(true);
                     }));
             }

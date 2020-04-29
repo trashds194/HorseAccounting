@@ -3,7 +3,11 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -58,10 +62,10 @@ namespace HorseAccounting.ViewModel
         {
             SelectedHorse = (Horse)_navigationService.Parameter;
 
-            MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
-
-            if (MainHorse != null)
+            try
             {
+                MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
+
                 if (MainHorse.MotherID != 0)
                 {
                     MotherHorse = Horse.GetSelectedHorseAsync(MainHorse.MotherID).Result;
@@ -110,6 +114,18 @@ namespace HorseAccounting.ViewModel
                     MainHorse.Owner = TakenOwner;
                 }
             }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
+            }
+
+            if (MainHorse != null)
+            {
+                
+            }
             else
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
@@ -119,10 +135,20 @@ namespace HorseAccounting.ViewModel
 
         private void ComboBoxesUpdate()
         {
-            _motherHorseList = Horse.GetMotherHorseAsync().Result;
-            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-            RaisePropertyChanged(() => MotherHorseList);
-            RaisePropertyChanged(() => FatherHorseList);
+            try
+            {
+                _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                RaisePropertyChanged(() => MotherHorseList);
+                RaisePropertyChanged(() => FatherHorseList);
+            }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
+            }
         }
 
         private void CheckFields()

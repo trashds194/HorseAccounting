@@ -4,6 +4,10 @@ using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -28,12 +32,25 @@ namespace HorseAccounting.ViewModel
             _navigationService = navigationService;
         }
 
-        public void OnPageLoad()
+        public async void OnPageLoad()
         {
-            MainHorse = (Horse)_navigationService.Parameter;
-            SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
+            await Task.Run(() =>
+            {
+                try
+                {
+                    MainHorse = (Horse)_navigationService.Parameter;
+                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
 
-            BirthHorseYear = Convert.ToDateTime(SelectedHorse.BirthDate).Year;
+                    BirthHorseYear = Convert.ToDateTime(SelectedHorse.BirthDate).Year;
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
         }
 
         public void CheckForNull()
@@ -173,17 +190,17 @@ namespace HorseAccounting.ViewModel
                             if (n > 19 || n < 10)
                             {
                                 last = n % 10;
-                                if (last == 1) 
-                                { 
-                                    AddedScoring.Age = n + " год"; 
+                                if (last == 1)
+                                {
+                                    AddedScoring.Age = n + " год";
                                 }
-                                else if (last == 0 || last >= 5) 
-                                { 
-                                    AddedScoring.Age = n + " лет"; 
+                                else if (last == 0 || last >= 5)
+                                {
+                                    AddedScoring.Age = n + " лет";
                                 }
-                                else 
-                                { 
-                                    AddedScoring.Age = n + " года"; 
+                                else
+                                {
+                                    AddedScoring.Age = n + " года";
                                 }
                             }
                             else AddedScoring.Age = n + " лет";

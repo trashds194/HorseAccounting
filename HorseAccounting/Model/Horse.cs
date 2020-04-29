@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
@@ -222,10 +224,20 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch (FormatException ex)
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
-                return false;
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
             }
         }
 
@@ -259,10 +271,20 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch (FormatException ex)
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату выжребки!"));
-                return false;
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
             }
         }
 

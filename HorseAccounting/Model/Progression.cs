@@ -1,9 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
@@ -75,7 +78,9 @@ namespace HorseAccounting.Model
 
         public static async Task<bool> AddProgressionAsync(string date, string destination, string comment, int horseID)
         {
-            var progressionData = new Dictionary<string, string>
+            try
+            {
+                var progressionData = new Dictionary<string, string>
                 {
                     { "Date", Convert.ToDateTime(date).ToString("yyyy-MM-dd") },
                     { "Destination", destination },
@@ -83,15 +88,30 @@ namespace HorseAccounting.Model
                     { "HorseID", horseID.ToString() }
                 };
 
-            var data = new FormUrlEncodedContent(progressionData);
+                var data = new FormUrlEncodedContent(progressionData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/api/progression.php?progression=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base.loc/api/progression.php?progression=add", data).GetAwaiter().GetResult();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+                var responseString = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine(responseString);
+                Console.WriteLine(responseString);
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+                throw;
+            }
         }
 
         public void CleanProgressionData()
