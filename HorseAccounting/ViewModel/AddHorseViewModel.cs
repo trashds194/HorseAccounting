@@ -36,6 +36,8 @@ namespace HorseAccounting.ViewModel
         private string _studFarm;
         private string _owner;
         private string _addedState = "Действующая";
+        private string _chipCountry;
+        private string _fullChip;
 
         private int _lastHorseID;
 
@@ -227,6 +229,34 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public string ChipCountry
+        {
+            get
+            {
+                return _chipCountry;
+            }
+
+            set
+            {
+                _chipCountry = value;
+                RaisePropertyChanged(nameof(ChipCountry));
+            }
+        }
+
+        public string FullChip
+        {
+            get
+            {
+                return _fullChip;
+            }
+
+            set
+            {
+                _fullChip = value;
+                RaisePropertyChanged(nameof(FullChip));
+            }
+        }
+
         public string StudFarm
         {
             get
@@ -400,7 +430,16 @@ namespace HorseAccounting.ViewModel
                     {
                         CheckHorseDataForNull();
 
-                        if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
+                        if (!string.IsNullOrEmpty(AddedHorse.ChipNumber))
+                        {
+                            FullChip = AddedHorse.ChipNumber + " " + ChipCountry;
+                        }
+                        else
+                        {
+                            FullChip = string.Empty;
+                        }
+
+                        if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, AddedHorse.Breed, FullChip, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));
                             LastHorseID = Horse.GetLastHorseIDAsync().Result;
@@ -411,7 +450,8 @@ namespace HorseAccounting.ViewModel
                                     if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, LastHorseID).Result)
                                     {
                                         Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
-                                        if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание"))
+                                        if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание")
+                                        || AddedProgression.Destination.Equals("прирезан") || AddedProgression.Destination.Equals("обмен"))
                                         {
                                             if (GetGenderResult.Equals(StallionGender))
                                             {

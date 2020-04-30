@@ -15,11 +15,16 @@ namespace HorseAccounting.ViewModel
         #region Vars
 
         private IPageNavigationService _navigationService;
+
         private Horse _horse;
+
         private ObservableCollection<Horse> _horses;
+
         private ShowHorseViewModel _showHorse;
+
         private bool _stallionBtnCheck;
         private bool _mareBtnCheck;
+
         private string _searchQuery;
 
         #endregion

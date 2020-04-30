@@ -215,7 +215,13 @@
                             </Border>
                         </Grid>
                         <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,8" MinHeight="50" MinWidth="500">
-                        <Label Grid.Row="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
                                 <Label.Content>
                                     <TextBlock>
                                         <TextBlock.Text>
@@ -227,7 +233,31 @@
                                     </TextBlock>
                                 </Label.Content>
                             </Label>
-                            <Button Grid.Row="3" Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
+                            <Label Grid.Column="1" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                                <Label.Content>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Source="Номер чипа:" />
+                                                <Binding Path="ChipNumber" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Label.Content>
+                            </Label>
+                            <Label Grid.Column="2" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
+                                <Label.Content>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Source="Порода:" />
+                                                <Binding Path="Breed" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Label.Content>
+                            </Label>
+                            <Button Grid.Column="3" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
                         </Grid>
                     </StackPanel>
                 </Expander>
