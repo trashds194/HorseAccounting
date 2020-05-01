@@ -40,6 +40,10 @@ namespace HorseAccounting.ViewModel
         private string _takenBirthPlace;
         private string _takenOwner;
 
+        private string _chipCountry;
+        private string[] _getChip;
+        private string _fullChip;
+
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
 
@@ -65,6 +69,9 @@ namespace HorseAccounting.ViewModel
             try
             {
                 MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
+
+                GetChip = MainHorse.ChipNumber.Split(' ');
+                MainHorse.ChipNumber = GetChip[0];
 
                 if (MainHorse.MotherID != 0)
                 {
@@ -270,6 +277,48 @@ namespace HorseAccounting.ViewModel
             {
                 _takenOwner = value;
                 RaisePropertyChanged(nameof(TakenOwner));
+            }
+        }
+
+        public string ChipCountry
+        {
+            get
+            {
+                return _chipCountry;
+            }
+
+            set
+            {
+                _chipCountry = value;
+                RaisePropertyChanged(nameof(ChipCountry));
+            }
+        }
+
+        public string FullChip
+        {
+            get
+            {
+                return _fullChip;
+            }
+
+            set
+            {
+                _fullChip = value;
+                RaisePropertyChanged(nameof(FullChip));
+            }
+        }
+
+        public string[] GetChip
+        {
+            get
+            {
+                return _getChip;
+            }
+
+            set
+            {
+                _getChip = value;
+                RaisePropertyChanged(nameof(GetChip));
             }
         }
 
@@ -512,7 +561,17 @@ namespace HorseAccounting.ViewModel
                     {
                         CheckHorseDataForNull();
 
-                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, MainHorse.Breed, MainHorse.ChipNumber, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
+                        if (!string.IsNullOrEmpty(MainHorse.ChipNumber))
+                        {
+                            FullChip = MainHorse.ChipNumber + " " + ChipCountry;
+                        }
+                        else
+                        {
+                            FullChip = string.Empty;
+                        }
+
+                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, MainHorse.Breed, 
+                            MainHorse.TheClass, FullChip, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
                             CheckFields();

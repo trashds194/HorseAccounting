@@ -17,6 +17,7 @@ namespace HorseAccounting.Model
         private int _id;
         private string _year;
         private string _lastDate;
+        private string _matingType;
         private string _fatherFullName;
         private string _fatherBreed;
         private string _fatherClass;
@@ -24,6 +25,7 @@ namespace HorseAccounting.Model
         private string _foalGender;
         private string _foalColor;
         private string _foalNickName;
+        private string _foalBrand;
         private string _foalDestination;
         private int _fatherID;
         private int _foalID;
@@ -51,6 +53,12 @@ namespace HorseAccounting.Model
         {
             get { return _lastDate; }
             set { Set<string>(() => LastDate, ref _lastDate, value); }
+        }
+
+        public string MatingType
+        {
+            get { return _matingType; }
+            set { Set<string>(() => MatingType, ref _matingType, value); }
         }
 
         public string FatherFullName
@@ -95,6 +103,12 @@ namespace HorseAccounting.Model
             set { Set<string>(() => FoalNickName, ref _foalNickName, value); }
         }
 
+        public string FoalBrand
+        {
+            get { return _foalBrand; }
+            set { Set<string>(() => FoalBrand, ref _foalBrand, value); }
+        }
+
         public string FoalDestination
         {
             get { return _foalDestination; }
@@ -125,12 +139,14 @@ namespace HorseAccounting.Model
         {
             Year = string.Empty;
             LastDate = string.Empty;
+            MatingType = string.Empty;
             FatherFullName = string.Empty;
             FatherBreed = string.Empty;
             FatherClass = string.Empty;
             FoalDate = string.Empty;
             FoalColor = string.Empty;
             FoalNickName = string.Empty;
+            FoalBrand = string.Empty;
             FoalDestination = string.Empty;
             FatherID = 0;
         }
@@ -152,12 +168,14 @@ namespace HorseAccounting.Model
 
         #region AddTribalUsePage
 
-        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string fatherFullName, string fatherBreed, string fatherClass, string foalDate, string foalGender, string foalColor, string foalNickName, string foalDestination, int fatherID, int foalID, int motherID)
+        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string matingType, string fatherFullName, string fatherBreed, string fatherClass, 
+            string foalDate, string foalGender, string foalColor, string foalNickName, string foalBrand, string foalDestination, int fatherID, int foalID, int motherID)
         {
             var tribalUseData = new Dictionary<string, string>
                 {
                     { "Year", year },
                     { "LastDate", Convert.ToDateTime(lastDate).ToString("yyyy-MM-dd") },
+                    { "MatingType", matingType },
                     { "FatherFullName", fatherFullName },
                     { "FatherBreed", fatherBreed },
                     { "FatherClass", fatherClass },
@@ -165,6 +183,7 @@ namespace HorseAccounting.Model
                     { "FoalGender", foalGender },
                     { "FoalColor", foalColor },
                     { "FoalNickName", foalNickName },
+                    { "FoalBrand", foalBrand },
                     { "FoalDestination", foalDestination },
                     { "FatherID", fatherID.ToString() },
                     { "FoalID", foalID.ToString() },

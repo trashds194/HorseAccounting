@@ -34,7 +34,7 @@
         <Grid AutomationProperties.IsOffscreenBehavior="Onscreen">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2.5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -52,12 +52,13 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="button" Command="{Binding Back}" Content="Назад" Margin="20,10" FontSize="18"/>
-            <Button x:Name="button1" Command="{Binding AddTribalUseToList}" Content="Добавить" Grid.Column="1" Margin="40,20" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto"/>
+            <Button x:Name="BackBtn" Command="{Binding Back}" Content="Назад" Margin="20,10" FontSize="18"/>
+            <Button x:Name="AddBtn" Command="{Binding AddTribalUseToList}" Content="Добавить" Grid.Column="1" Margin="128,8,16,8" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto" VerticalAlignment="Center"/>
+            <Button x:Name="SimpleAddBtn" Command="" Content="Упрощенное добавление отца" Margin="16,8,0,8" Grid.Row="12" FontSize="18"/>
 
             <Label Grid.Row="0" Grid.Column="1" Content="Добавление племенной деятельности кобылы" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
 
-            <Grid Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="2" Margin="16">
+            <Grid Grid.Row="1" Grid.RowSpan="11" Grid.ColumnSpan="2" Margin="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -73,101 +74,181 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Год случки:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                <Label Content="Дата последней садки:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
-                <Label Content="Отец жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1"/>
-                <Label Content="Порода отца:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" />
-                <Label Content="Жеребенок" VerticalAlignment="Center" FontSize="22" Grid.Row="3" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontWeight="Bold"/>
-                <Label Content="Класс жеребца:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2"/>
-                <Label Content="Дата выжребки:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="3" />
-                <Label Content="Пол жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="4"/>
-                <Label Content="Масть жеребенка:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="4" />
-                <Label Content="Кличка и инв. № жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="5"/>
-                <Label Content="Назначение жеребенка:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="5" />
-                <Label Content="Дополнительно" VerticalAlignment="Center" FontSize="22" Grid.Row="6" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontWeight="Bold"/>
-                <Label Content="(Если лошадь не была крыта или стала холоста, то выберите значения ниже)" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="6" Grid.ColumnSpan="3" />
+                <GroupBox Header="Информация о случке" Grid.ColumnSpan="4" Margin="0,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
 
-                <TextBox Text="{Binding AddedTribalUse.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите год случки" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" MaxLength="4" PreviewTextInput="TextBox_PreviewTextInput" />
-                <DatePicker Text="{Binding AddedTribalUse.LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату последней садки" Margin="16,0" Grid.Column="4" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" IsEnabled="{Binding NotCoveredIsEnabled}"/>
-                <ComboBox x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0" StaysOpenOnEdit="True" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding NotCoveredIsEnabled}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}">
-                                        <Binding Path="FullName" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <ComboBox Text="{Binding AddedTribalUse.FatherBreed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите породу жеребца" Margin="16,0"  VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" IsEnabled="{Binding NotCoveredIsEnabled}" IsEditable="True">
-                    <System:String>чкв.</System:String>
-                    <System:String>буд.</System:String>
-                    <System:String>анг-тр-буд.</System:String>
-                </ComboBox>
-                <ComboBox Text="{Binding AddedTribalUse.FatherClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите класс жеребца" Margin="16,0"  VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding NotCoveredIsEnabled}">
-                    <System:String>эл.</System:String>
-                    <System:String>I</System:String>
-                    <System:String>II</System:String>
-                    <System:String>III</System:String>
-                </ComboBox>
-                <DatePicker Text="{Binding AddedTribalUse.FoalDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату выжребки" Margin="16,0" Grid.Column="4" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="3" IsEnabled="{Binding SingleIsEnabled}"/>
-                <ComboBox Text="{Binding AddedTribalUse.FoalGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите пол жеребенка" Margin="16,0"  VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding SingleIsEnabled}">
-                    <System:String>Кобыла</System:String>
-                    <System:String>Жеребец</System:String>
-                </ComboBox>
-                <ComboBox Text="{Binding AddedTribalUse.FoalColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="colorComboBox" Grid.Row="4" Grid.Column="3" Margin="16,0" materialDesign:HintAssist.Hint="Введите Масть или выберите из списка" IsEditable="True" IsTextSearchEnabled="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <System:String>рыж</System:String>
-                    <System:String>св-рыж</System:String>
-                    <System:String>т-рыж</System:String>
-                    <System:String>зол-рыж</System:String>
-                    <System:String>св зол-рыж</System:String>
-                    <System:String>бур</System:String>
-                    <System:String>гн</System:String>
-                    <System:String>т-гн</System:String>
-                    <System:String>св-гн</System:String>
-                    <System:String>зол-гн</System:String>
-                    <System:String>вор</System:String>
-                    <System:String>сер</System:String>
-                </ComboBox>
-                <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку и инв. № жеребенка" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" Grid.Row="5" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}" >
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <System:String>мертворожденный</System:String>
-                </ComboBox>
-                <ComboBox Text="{Binding AddedTribalUse.FoalDestination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="3" Margin="16,0" materialDesign:HintAssist.Hint="Введите назначение или выберите из списка" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="5" IsEnabled="{Binding SingleIsEnabled}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <System:String>продажа</System:String>
-                    <System:String>списание</System:String>
-                    <System:String>прирезан</System:String>
-                    <System:String>обмен</System:String>
-                    <Separator/>
-                    <System:String>маточный состав</System:String>
-                    <System:String>жеребец производитель</System:String>
-                </ComboBox>
-                <CheckBox IsChecked="{Binding NotCoveredIsChecked}" Content="Не крыта" Margin="0" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
-                <CheckBox IsChecked="{Binding SingleIsChecked}" Content="Холоста" Margin="0" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="1"/>
+                        <Label Content="Год случки:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0"/>
+                        <Label Content="Дата последней садки:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0" />
+
+                        <TextBox Text="{Binding AddedTribalUse.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите год случки" Grid.Column="1" VerticalAlignment="Center" Margin="16,8,16,0" MaxLength="4" PreviewTextInput="TextBox_PreviewTextInput" />
+                        <DatePicker Text="{Binding AddedTribalUse.LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату последней садки" Margin="16,0,8,4" Grid.Column="3" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" IsEnabled="{Binding NotCoveredIsEnabled}"/>
+                        <CheckBox IsChecked="{Binding MatingIsChecked}" Content="ИО" Margin="0,8,16,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="4"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="1" Grid.ColumnSpan="4" Header="Информация об отце жеребенка" Margin="0,8" Grid.RowSpan="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Отец жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0"/>
+                        <Label Content="Порода отца:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0" />
+                        <Label Content="Класс жеребца:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Margin="0,8,0,0"/>
+
+                        <ComboBox x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,16,4" StaysOpenOnEdit="True" VerticalAlignment="Center" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding NotCoveredIsEnabled}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}">
+                                                <Binding Path="FullName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Text="{Binding AddedTribalUse.FatherBreed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите породу жеребца" Margin="16,8,16,0"  VerticalAlignment="Center" Grid.Column="3" IsEnabled="{Binding NotCoveredIsEnabled}" IsEditable="True">
+                            <System:String>Буд</System:String>
+                            <System:String>Чкв</System:String>
+                            <System:String>Трк</System:String>
+                            <System:String>Голшт</System:String>
+                            <System:String>Ганн</System:String>
+                            <System:String>Олд</System:String>
+                            <System:String>Фр Сель</System:String>
+                            <System:String>Анг-тр-буд</System:String>
+                        </ComboBox>
+                        <ComboBox Text="{Binding AddedTribalUse.FatherClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите класс жеребца" Margin="16,4,16,0"  VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding NotCoveredIsEnabled}">
+                            <System:String>эл</System:String>
+                            <System:String>I</System:String>
+                            <System:String>II</System:String>
+                            <System:String>III</System:String>
+                        </ComboBox>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Grid.RowSpan="5" Margin="0,8" Header="Информация о жеребенке">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1.4*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Кличка жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0"/>
+                        <Label Content="Тавро жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Column="2" Margin="0,8,0,0"/>
+                        <Label Content="Пол жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Margin="0,8,0,0"/>
+                        <Label Content="Дата выжребки:" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Margin="0,8,0,0" />
+                        <Label Content="Масть жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="3" Margin="0,8,0,0" />
+                        <Label Content="Номер чипа жеребенка:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Margin="0,8,0,0" />
+                        <Label Content="Назначение жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Margin="0,8,0,0" Grid.Column="2" />
+
+                        <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку жеребенка" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}" >
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <System:String>мертворожденный</System:String>
+                            <System:String>слаборожденный</System:String>
+                            <System:String>двойня</System:String>
+                            <System:String>аборт</System:String>
+                        </ComboBox>
+                        <TextBox Text="{Binding AddedTribalUse.FoalBrand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите Тавро жеребенка" Margin="16,0" TextWrapping="Wrap" Grid.Column="3" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2" IsEnabled="{Binding SingleIsEnabled}"/>
+                        <ComboBox Text="{Binding AddedTribalUse.FoalGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите пол жеребенка" Margin="16,8,16,0"  VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding SingleIsEnabled}">
+                            <System:String>Кобыла</System:String>
+                            <System:String>Жеребец</System:String>
+                        </ComboBox>
+                        <DatePicker Text="{Binding AddedTribalUse.FoalDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату выжребки" Margin="16,0" Grid.Column="1" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="1" IsEnabled="{Binding SingleIsEnabled}"/>
+                        <ComboBox Text="{Binding AddedTribalUse.FoalColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="colorComboBox" Grid.Row="3" Grid.Column="1" Margin="16,0" materialDesign:HintAssist.Hint="Введите Масть или выберите из списка" IsEditable="True" IsTextSearchEnabled="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <System:String>рыж</System:String>
+                            <System:String>св-рыж</System:String>
+                            <System:String>т-рыж</System:String>
+                            <System:String>зол-рыж</System:String>
+                            <System:String>св зол-рыж</System:String>
+                            <System:String>бур</System:String>
+                            <System:String>гн</System:String>
+                            <System:String>т-гн</System:String>
+                            <System:String>св-гн</System:String>
+                            <System:String>зол-гн</System:String>
+                            <System:String>вор</System:String>
+                            <System:String>сер</System:String>
+                        </ComboBox>
+                        <TextBox Text="{Binding ChipNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите Номер чипа" Margin="16,0,8,2" MaxLength="15" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="3" Grid.Row="1" IsEnabled="{Binding SingleIsEnabled}"/>
+                        <ComboBox Text="{Binding ChipCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Margin="8,0,16,0" SelectedItem="RUS" materialDesign:HintAssist.Hint="Страна чипа" IsEditable="True" IsTextSearchEnabled="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="1" IsEnabled="{Binding SingleIsEnabled}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <System:String>RUS</System:String>
+                        </ComboBox>
+                        <ComboBox Text="{Binding AddedTribalUse.FoalDestination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="3" Margin="16,0" materialDesign:HintAssist.Hint="Введите назначение или выберите из списка" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Row="2" IsEnabled="{Binding SingleIsEnabled}" Grid.ColumnSpan="2">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <System:String>продажа</System:String>
+                            <System:String>списание</System:String>
+                            <System:String>прирезан</System:String>
+                            <System:String>обмен</System:String>
+                            <Separator/>
+                            <System:String>маточный состав</System:String>
+                            <System:String>жеребец производитель</System:String>
+                        </ComboBox>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Дополнительно (Если лошадь не была крыта или стала холоста, то выберите значения ниже)" Grid.Row="9" Margin="0,8" Grid.ColumnSpan="4" Grid.RowSpan="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox IsChecked="{Binding NotCoveredIsChecked}" Content="Не крыта" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
+                        <CheckBox IsChecked="{Binding SingleIsChecked}" Content="Холоста" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="1"/>
+                    </Grid>
+                </GroupBox>
             </Grid>
         </Grid>
     </ScrollViewer>

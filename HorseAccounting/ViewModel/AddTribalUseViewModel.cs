@@ -28,8 +28,14 @@ namespace HorseAccounting.ViewModel
         private bool _singleIsChecked;
         private bool _singleIsEnabled;
 
+        private bool _matingIsChecked;
+
         private bool _notCoveredIsChecked;
         private bool _notCoveredIsEnabled;
+
+        private string _chipNumber;
+        private string _chipCountry;
+        private string _fullChip;
 
         private int _foalID;
 
@@ -61,6 +67,8 @@ namespace HorseAccounting.ViewModel
                         Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
                     }
                 }
+                MatingIsChecked = false;
+
                 SingleIsChecked = false;
                 SingleIsEnabled = true;
 
@@ -92,8 +100,8 @@ namespace HorseAccounting.ViewModel
         {
             try
             {
-                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
-                    AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, SelectedHorse.ID).Result)
+                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, AddedTribalUse.MatingType, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
+                    AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalBrand, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, SelectedHorse.ID).Result)
                 {
                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
                     AddedTribalUse.CleanTribalUseData();
@@ -199,6 +207,28 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public bool MatingIsChecked
+        {
+            get
+            {
+                return _matingIsChecked;
+            }
+
+            set
+            {
+                _matingIsChecked = value;
+                RaisePropertyChanged(nameof(MatingIsChecked));
+                if (MatingIsChecked == true)
+                {
+                    AddedTribalUse.MatingType = "ИО";
+                }
+                else
+                {
+                    AddedTribalUse.MatingType = "Живая случка";
+                }
+            }
+        }
+
         public bool NotCoveredIsChecked
         {
             get
@@ -240,6 +270,48 @@ namespace HorseAccounting.ViewModel
             {
                 _notCoveredIsEnabled = value;
                 RaisePropertyChanged(nameof(NotCoveredIsEnabled));
+            }
+        }
+
+        public string ChipNumber
+        {
+            get
+            {
+                return _chipNumber;
+            }
+
+            set
+            {
+                _chipNumber = value;
+                RaisePropertyChanged(nameof(ChipNumber));
+            }
+        }
+
+        public string ChipCountry
+        {
+            get
+            {
+                return _chipCountry;
+            }
+
+            set
+            {
+                _chipCountry = value;
+                RaisePropertyChanged(nameof(ChipCountry));
+            }
+        }
+
+        public string FullChip
+        {
+            get
+            {
+                return _fullChip;
+            }
+
+            set
+            {
+                _fullChip = value;
+                RaisePropertyChanged(nameof(FullChip));
             }
         }
 
@@ -344,11 +416,21 @@ namespace HorseAccounting.ViewModel
                             AddedTribalUse.FoalNickName = string.Empty;
                         }
 
-                        if (AddedTribalUse.FoalNickName.Equals("мертворожденный"))
+                        if (!string.IsNullOrEmpty(ChipNumber))
+                        {
+                            FullChip = ChipNumber + " " + ChipCountry;
+                        }
+                        else
+                        {
+                            FullChip = string.Empty;
+                        }
+
+                        if (AddedTribalUse.FoalNickName.Equals("мертворожденный") || AddedTribalUse.FoalNickName.Equals("слаборожденный")
+                        || AddedTribalUse.FoalNickName.Equals("двойня") || AddedTribalUse.FoalNickName.Equals("аборт"))
                         {
                             AddTribalUse();
                         }
-                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, SelectedHorse.ID, FatherHorse.ID).Result)
+                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalBrand, AddedTribalUse.FoalColor, FullChip, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, SelectedHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
                             FoalID = Horse.GetLastHorseIDAsync().Result;
@@ -391,6 +473,7 @@ namespace HorseAccounting.ViewModel
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
                                 }
+                                ChipNumber = string.Empty;
                             }
                             else
                             {

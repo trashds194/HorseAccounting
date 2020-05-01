@@ -22,6 +22,7 @@ namespace HorseAccounting.Model
         private string _bloodiness;
         private string _color;
         private string _breed;
+        private string _theClass;
         private string _chipNumber;
         private string _gender;
         private string _birthDate;
@@ -31,6 +32,8 @@ namespace HorseAccounting.Model
         private int _fatherID;
         private string _fullName;
         private string _state;
+        private string _motherFullName;
+        private string _fatherFullName;
 
         private static readonly HttpClient client = new HttpClient();
 
@@ -78,6 +81,12 @@ namespace HorseAccounting.Model
         {
             get { return _breed; }
             set { Set<string>(() => Breed, ref _breed, value); }
+        }
+
+        public string TheClass
+        {
+            get { return _theClass; }
+            set { Set<string>(() => TheClass, ref _theClass, value); }
         }
 
         public string ChipNumber
@@ -132,6 +141,18 @@ namespace HorseAccounting.Model
         {
             get { return _fullName; }
             set { Set<string>(() => FullName, ref _fullName, value); }
+        }
+
+        public string MotherFullName
+        {
+            get { return _motherFullName; }
+            set { Set<string>(() => MotherFullName, ref _motherFullName, value); }
+        }
+
+        public string FatherFullName
+        {
+            get { return _fatherFullName; }
+            set { Set<string>(() => FatherFullName, ref _fatherFullName, value); }
         }
 
         #endregion
@@ -208,7 +229,7 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
+        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
             {
@@ -220,6 +241,7 @@ namespace HorseAccounting.Model
                     { "Bloodiness", blodeness },
                     { "Color", color },
                     { "Breed", breed },
+                    { "TheClass", theClass },
                     { "ChipNumber", chip },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
@@ -257,7 +279,7 @@ namespace HorseAccounting.Model
             }
         }
 
-        public static async Task<bool> AddHorseAsync(string nick, string color, string gend, string dateBirth, int motherID, int fatherID)
+        public static async Task<bool> AddHorseAsync(string nick, string brand, string color, string chipNumber, string gend, string dateBirth, int motherID, int fatherID)
         {
             try
             {
@@ -265,11 +287,12 @@ namespace HorseAccounting.Model
                 {
                     { "GpkNum", string.Empty },
                     { "NickName", nick },
-                    { "Brand", string.Empty },
+                    { "Brand", brand },
                     { "Bloodiness", string.Empty },
                     { "Color", color },
                     { "Breed", string.Empty },
-                    { "ChipNumber", string.Empty },
+                    { "TheClass", string.Empty },
+                    { "ChipNumber", chipNumber },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
                     { "BirthPlace", string.Empty },
@@ -314,6 +337,7 @@ namespace HorseAccounting.Model
             Bloodiness = string.Empty;
             Color = string.Empty;
             Breed = string.Empty;
+            TheClass = string.Empty;
             ChipNumber = string.Empty;
             BirthDate = string.Empty;
             BirthPlace = string.Empty;
@@ -374,7 +398,7 @@ namespace HorseAccounting.Model
         }
 
 
-        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string breed, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string breed, string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
@@ -387,6 +411,7 @@ namespace HorseAccounting.Model
                     { "Bloodiness", blodeness },
                     { "Color", color },
                     { "Breed", breed },
+                    { "TheClass", theClass },
                     { "ChipNumber", chip },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
