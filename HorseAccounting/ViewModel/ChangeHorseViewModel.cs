@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -60,6 +61,53 @@ namespace HorseAccounting.ViewModel
         {
             ComboBoxesUpdate();
             HorseUpdate();
+        }
+
+
+        public async void OnMareGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (MotherHorseList.Count != Horse.GetMotherHorseAsync().Result.Count)
+                    {
+                        _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                        RaisePropertyChanged(() => MotherHorseList);
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
+        public async void OnStallionGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                    {
+                        _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                        RaisePropertyChanged(() => FatherHorseList);
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
         }
 
         private void HorseUpdate()
@@ -131,7 +179,7 @@ namespace HorseAccounting.ViewModel
 
             if (MainHorse != null)
             {
-                
+
             }
             else
             {
@@ -570,10 +618,18 @@ namespace HorseAccounting.ViewModel
                             FullChip = string.Empty;
                         }
 
-                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, MainHorse.Breed, 
+                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, MainHorse.Breed,
                             MainHorse.TheClass, FullChip, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
+                            if (TribalUse.ChangeTribalUseAsync(MainHorse.BirthDate, MainHorse.Gender, MainHorse.Color, MainHorse.NickName, MainHorse.Brand, FatherHorse.ID, MainHorse.ID, MotherHorse.ID).Result)
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили племенную деятельность лошади"));
+                            }
+                            else
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Племенная деятельность лошади не найдена!"));
+                            }
                             CheckFields();
                         }
                         else

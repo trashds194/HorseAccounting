@@ -54,7 +54,7 @@
 
             <Button x:Name="BackBtn" Command="{Binding Back}" Content="Назад" Margin="20,10" FontSize="18"/>
             <Button x:Name="AddBtn" Command="{Binding AddTribalUseToList}" Content="Добавить" Grid.Column="1" Margin="128,8,16,8" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto" VerticalAlignment="Center"/>
-            <Button x:Name="SimpleAddBtn" Command="" Content="Упрощенное добавление отца" Margin="16,8,0,8" Grid.Row="12" FontSize="18"/>
+            <Button x:Name="SimpleAddBtn" Content="Упрощенное добавление отца" Margin="16,8,0,8" Grid.Row="12" FontSize="18" Click="SimpleAddBtn_Click"/>
 
             <Label Grid.Row="0" Grid.Column="1" Content="Добавление племенной деятельности кобылы" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
 
@@ -116,6 +116,11 @@
                         <Label Content="Класс жеребца:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Margin="0,8,0,0"/>
 
                         <ComboBox x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,0,16,4" StaysOpenOnEdit="True" VerticalAlignment="Center" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding NotCoveredIsEnabled}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <ei:CallMethodAction MethodName="OnStallionGotFocus" TargetObject="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />

@@ -202,5 +202,41 @@ namespace HorseAccounting.Model
         }
 
         #endregion
+
+        #region ChangeHorsePage
+
+        public static async Task<bool> ChangeTribalUseAsync(string foalDate, string foalGender, string foalColor, string foalNickName, string foalBrand, int fatherID, int foalID, int motherID)
+        {
+            try
+            {
+                var tribalUseData = new Dictionary<string, string>
+                {
+                    { "FoalDate", foalDate },
+                    { "FoalGender", foalGender },
+                    { "FoalColor", foalColor },
+                    { "FoalNickName", foalNickName },
+                    { "FoalBrand", foalBrand },
+                    { "FatherID", fatherID.ToString() },
+                    { "FoalID", foalID.ToString() },
+                    { "MotherID", motherID.ToString() }
+                };
+
+                var data = new FormUrlEncodedContent(tribalUseData);
+
+                var response = client.PostAsync("http://1k-horse-base.loc/api/tribaluse.php?tribaluse=change", data).GetAwaiter().GetResult();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseString);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 }

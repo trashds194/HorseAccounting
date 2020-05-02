@@ -5,6 +5,7 @@ using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -64,6 +65,52 @@ namespace HorseAccounting.ViewModel
             await Task.Run(() =>
             {
                 ComboBoxesUpdate();
+            }).ConfigureAwait(true);
+        }
+
+        public async void OnMareGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (MotherHorseList.Count != Horse.GetMotherHorseAsync().Result.Count)
+                    {
+                        _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                        RaisePropertyChanged(() => MotherHorseList);
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
+        public async void OnStallionGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                    {
+                        _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                        RaisePropertyChanged(() => FatherHorseList);
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
             }).ConfigureAwait(true);
         }
 
@@ -439,7 +486,7 @@ namespace HorseAccounting.ViewModel
                             FullChip = string.Empty;
                         }
 
-                        if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, AddedHorse.Breed, 
+                        if (Horse.AddHorseAsync(AddedHorse.GpkNum, AddedHorse.NickName, AddedHorse.Brand, AddedHorse.Bloodiness, AddedHorse.Color, AddedHorse.Breed,
                             AddedHorse.TheClass, FullChip, GetGenderResult, AddedHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID, AddedState).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили запись лошади"));

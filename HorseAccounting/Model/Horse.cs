@@ -203,6 +203,17 @@ namespace HorseAccounting.Model
             return searchedHorses;
         }
 
+        public static async Task<ObservableCollection<Horse>> SearchByFatherHorseAsync(int fatherID)
+        {
+            string url = "http://1k-horse-base.loc/api/horse.php?father=" + fatherID;
+
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
+
+            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+
+            return searchedHorses;
+        }
+
         #endregion
 
         #region AddHorsePage
@@ -328,6 +339,57 @@ namespace HorseAccounting.Model
                 throw;
             }
         }
+
+        public static async Task<bool> AddHorseAsync(string nick, string brand, string gend, string dateBirth)
+        {
+            try
+            {
+                var horseData = new Dictionary<string, string>
+                {
+                    { "GpkNum", string.Empty },
+                    { "NickName", nick },
+                    { "Brand", brand },
+                    { "Bloodiness", string.Empty },
+                    { "Color", string.Empty },
+                    { "Breed", string.Empty },
+                    { "TheClass", string.Empty },
+                    { "ChipNumber", string.Empty },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", string.Empty },
+                    { "Owner", string.Empty },
+                    { "MotherID", "0" },
+                    { "FatherID", "0" },
+                    { "State", string.Empty },
+                };
+
+                var data = new FormUrlEncodedContent(horseData);
+
+                var response = client.PostAsync("http://1k-horse-base.loc/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseString);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
+            }
+        }
+
 
         public void CleanHorseData()
         {

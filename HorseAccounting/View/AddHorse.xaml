@@ -43,18 +43,17 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="1.1*"/>
-                <RowDefinition Height="1.1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <Button x:Name="BackBtn" Command="{Binding BackToList}" Content="Назад" Margin="16,8" FontSize="18"/>
-            <Button x:Name="AddBtn" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="128,8,0,8" Grid.Row="9" FontSize="18"/>
-            <Button x:Name="SimpleAddBtn" Command="" Content="Упрощенное добавление" Margin="16,8,0,8" Grid.Row="9" FontSize="18"/>
+            <Button x:Name="AddBtn" Command="{Binding AddHorseToList}" Content="Добавить" Grid.Column="1" Margin="128,0,0,8" Grid.Row="9" FontSize="18"/>
+            <Button x:Name="SimpleAddBtn" Content="Упрощенное добавление" Margin="16,0,0,8" Grid.Row="9" FontSize="18" Click="SimpleAddBtn_Click"/>
 
                 <Label Grid.Row="0" Grid.Column="1" Content="Добавление лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
-            <GroupBox Grid.Row="1" Header="Полная кличка лошади" Grid.ColumnSpan="2" Margin="16,8,0,8">
+            <GroupBox Grid.Row="1" Header="Полная кличка лошади" Grid.ColumnSpan="2" Margin="16,0,0,4">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -76,7 +75,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Margin="16,8,0,8" Grid.RowSpan="5" Header="Основная информация о лошади">
+            <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Margin="16,4,0,4" Grid.RowSpan="4" Header="Основная информация о лошади">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -245,7 +244,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="7" Grid.ColumnSpan="2" Margin="16,8,0,8" Header="Родители лошади">
+            <GroupBox Grid.Row="6" Grid.ColumnSpan="2" Margin="16,4,0,4" Header="Родители лошади">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -258,6 +257,11 @@
                     <Label Content="Отец:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center" Grid.Column="2"/>
 
                     <ComboBox materialDesign:HintAssist.Hint="Выберите мать из списка кобыл" x:Name="motherComboBox" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding MotherHorse}" ItemsSource="{Binding MotherHorseList}" Margin="16,2" VerticalAlignment="Center" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="True" StaysOpenOnEdit="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <ei:CallMethodAction MethodName="OnMareGotFocus" TargetObject="{Binding}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -277,6 +281,11 @@
                     </ComboBox>
 
                     <ComboBox x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите отца из списка жеребцов" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="16,2" StaysOpenOnEdit="True" VerticalAlignment="Center" Grid.Column="3" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <ei:CallMethodAction MethodName="OnStallionGotFocus" TargetObject="{Binding}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -297,7 +306,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="8" Margin="16,8,0,8" Grid.ColumnSpan="2" Header="Движение лошади">
+            <GroupBox Grid.Row="7" Margin="16,4,0,4" Grid.ColumnSpan="2" Header="Движение лошади">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>

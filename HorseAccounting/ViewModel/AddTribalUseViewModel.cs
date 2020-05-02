@@ -77,6 +77,29 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        public async void OnStallionGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                    {
+                        _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                        RaisePropertyChanged(() => FatherHorseList);
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
         private async void ComboBoxesUpdate()
         {
             await Task.Run(() =>

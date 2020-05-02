@@ -79,7 +79,7 @@
                 <Label Grid.Column="1" Content="{Binding HorseNick}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="roboto" FontWeight="Bold" Grid.Row="1"/>
             </Grid>
             <materialDesign:Card Margin="16">
-                <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="False" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">
+                <Expander Background="{DynamicResource MaterialDesignBackground}" IsExpanded="True" HorizontalAlignment="Stretch" Header="Информация о лошади" Margin="0" FontWeight="Bold">
                     <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="16,0,16,4">
                         <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Name="HorseList" Margin="16,16,16,0" MinHeight="200" MinWidth="500" Height="200">
                             <Grid.ColumnDefinitions>

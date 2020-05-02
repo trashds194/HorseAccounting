@@ -17,8 +17,10 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService;
 
         private Horse _horse;
+        private Horse _fatherHorse;
 
         private ObservableCollection<Horse> _horses;
+        private ObservableCollection<Horse> _fatherHorseList;
 
         private ShowHorseViewModel _showHorse;
 
@@ -44,11 +46,37 @@ namespace HorseAccounting.ViewModel
                 try
                 {
                     _horses = Horse.GetHorses().Result;
+                    _fatherHorseList = Horse.GetFatherHorseAsync().Result;
                     RaisePropertyChanged(() => HorsesList);
+                    RaisePropertyChanged(() => FatherHorseList);
                 }
                 catch
                 {
                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
+                }
+            }).ConfigureAwait(true);
+        }
+
+        public async void OnSelectionChanged()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorse != null)
+                    {
+                        _horses = Horse.SearchByFatherHorseAsync(FatherHorse.ID).Result;
+                        RaisePropertyChanged(() => HorsesList);
+                    }
+                    else
+                    {
+                        _horses = Horse.GetHorses().Result;
+                        RaisePropertyChanged(() => HorsesList);
+                    }
+                }
+                catch
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
                 }
             }).ConfigureAwait(true);
         }
@@ -107,6 +135,14 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public ObservableCollection<Horse> FatherHorseList
+        {
+            get
+            {
+                return _fatherHorseList;
+            }
+        }
+
         public string SearchQuery
         {
             get
@@ -133,6 +169,20 @@ namespace HorseAccounting.ViewModel
             {
                 _horse = value;
                 RaisePropertyChanged(nameof(SelectedHorse));
+            }
+        }
+
+        public Horse FatherHorse
+        {
+            get
+            {
+                return _fatherHorse;
+            }
+
+            set
+            {
+                _fatherHorse = value;
+                RaisePropertyChanged(nameof(FatherHorse));
             }
         }
 
@@ -325,6 +375,7 @@ namespace HorseAccounting.ViewModel
                         {
                             try
                             {
+                                FatherHorse = null;
                                 _horses = Horse.GetHorses().Result;
                                 RaisePropertyChanged(() => HorsesList);
                             }
