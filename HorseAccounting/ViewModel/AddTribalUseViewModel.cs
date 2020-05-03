@@ -83,11 +83,14 @@ namespace HorseAccounting.ViewModel
             {
                 try
                 {
-                    if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                    if (FatherHorseList != null)
                     {
-                        _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                        RaisePropertyChanged(() => FatherHorseList);
-                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                        {
+                            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                            RaisePropertyChanged(() => FatherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
                     }
                 }
                 catch (Exception ex)

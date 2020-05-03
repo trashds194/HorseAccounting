@@ -33,6 +33,8 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
+        private static readonly string link = "ru";
+
         #endregion
 
         #region Definitions
@@ -155,7 +157,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<TribalUse>> GetSelectedTribalUse(int iD)
         {
-            string url = "http://1k-horse-base.loc/api/tribaluse.php?tribaluse=" + iD;
+            string url = "http://1k-horse-base." + link + "/api/tribaluse.php?tribaluse=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -168,7 +170,7 @@ namespace HorseAccounting.Model
 
         #region AddTribalUsePage
 
-        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string matingType, string fatherFullName, string fatherBreed, string fatherClass, 
+        public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string matingType, string fatherFullName, string fatherBreed, string fatherClass,
             string foalDate, string foalGender, string foalColor, string foalNickName, string foalBrand, string foalDestination, int fatherID, int foalID, int motherID)
         {
             var tribalUseData = new Dictionary<string, string>
@@ -192,7 +194,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(tribalUseData);
 
-            var response = client.PostAsync("http://1k-horse-base.loc/api/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base." + link + "/api/tribaluse.php?tribaluse=add", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -223,13 +225,20 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(tribalUseData);
 
-                var response = client.PostAsync("http://1k-horse-base.loc/api/tribaluse.php?tribaluse=change", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base." + link + "/api/tribaluse.php?tribaluse=change", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 Console.WriteLine(responseString);
 
-                return true;
+                if (Convert.ToInt32(responseString) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

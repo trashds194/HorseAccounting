@@ -74,11 +74,14 @@ namespace HorseAccounting.ViewModel
             {
                 try
                 {
-                    if (MotherHorseList.Count != Horse.GetMotherHorseAsync().Result.Count)
+                    if (MotherHorseList != null)
                     {
-                        _motherHorseList = Horse.GetMotherHorseAsync().Result;
-                        RaisePropertyChanged(() => MotherHorseList);
-                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        if (MotherHorseList.Count != Horse.GetMotherHorseAsync().Result.Count)
+                        {
+                            _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                            RaisePropertyChanged(() => MotherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -97,11 +100,14 @@ namespace HorseAccounting.ViewModel
             {
                 try
                 {
-                    if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                    if (FatherHorseList != null)
                     {
-                        _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                        RaisePropertyChanged(() => FatherHorseList);
-                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                        {
+                            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                            RaisePropertyChanged(() => FatherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
                     }
                 }
                 catch (Exception ex)
