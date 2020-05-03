@@ -29,5 +29,11 @@ namespace HorseAccounting.View
         {
             e.Handled = !(Char.IsDigit(e.Text, 0));
         }
+
+        private void SimpleAddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddHorseSimple addHorseSimple = new AddHorseSimple();
+            addHorseSimple.Show();
+        }
     }
 }

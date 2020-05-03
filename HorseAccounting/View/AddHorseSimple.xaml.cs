@@ -10,25 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HorseAccounting.View
 {
     /// <summary>
-    /// Логика взаимодействия для ChangeHorse.xaml
+    /// Логика взаимодействия для AddHorseSimple.xaml
     /// </summary>
-    public partial class ChangeHorse : Page
+    public partial class AddHorseSimple : Window
     {
-        public ChangeHorse()
+        public AddHorseSimple()
         {
             InitializeComponent();
-        }
-
-        private void SimpleAddBtn_Click(object sender, RoutedEventArgs e)
-        {
-            AddHorseSimple addHorseSimple = new AddHorseSimple();
-            addHorseSimple.Show();
         }
     }
 }

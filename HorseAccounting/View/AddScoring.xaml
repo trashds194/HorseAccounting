@@ -147,7 +147,7 @@
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0, 0, 1, 1" Grid.Row="1" Grid.Column="9">
                         <ComboBox Text="{Binding AddedScoring.TheClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите класс" Grid.Column="7" Margin="8,0,8,0"  VerticalAlignment="Center">
-                            <System:String>эл.</System:String>
+                            <System:String>эл</System:String>
                             <System:String>I</System:String>
                             <System:String>II</System:String>
                             <System:String>III</System:String>

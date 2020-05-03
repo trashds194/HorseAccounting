@@ -6,6 +6,9 @@ using HorseAccounting.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -100,14 +103,22 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
+                try
+                {
+                    _stallionHorseList = Horse.GetFatherHorseAsync().Result;
+                    _mareHorseList = Horse.GetMotherHorseAsync().Result;
 
-                _stallionHorseList = Horse.GetFatherHorseAsync().Result;
-                _mareHorseList = Horse.GetMotherHorseAsync().Result;
+                    RaisePropertyChanged(() => StallionHorseList);
+                    RaisePropertyChanged(() => MareHorseList);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
                 ChoosenDate = DateTime.Today;
-
-                RaisePropertyChanged(() => StallionHorseList);
-                RaisePropertyChanged(() => MareHorseList);
-
             }).ConfigureAwait(true);
         }
 

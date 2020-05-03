@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
@@ -19,6 +21,9 @@ namespace HorseAccounting.Model
         private string _brand;
         private string _bloodiness;
         private string _color;
+        private string _breed;
+        private string _theClass;
+        private string _chipNumber;
         private string _gender;
         private string _birthDate;
         private string _birthPlace;
@@ -27,8 +32,12 @@ namespace HorseAccounting.Model
         private int _fatherID;
         private string _fullName;
         private string _state;
+        private string _motherFullName;
+        private string _fatherFullName;
 
         private static readonly HttpClient client = new HttpClient();
+
+        private static readonly string link = "ru";
 
         #endregion
 
@@ -68,6 +77,24 @@ namespace HorseAccounting.Model
         {
             get { return _color; }
             set { Set<string>(() => Color, ref _color, value); }
+        }
+
+        public string Breed
+        {
+            get { return _breed; }
+            set { Set<string>(() => Breed, ref _breed, value); }
+        }
+
+        public string TheClass
+        {
+            get { return _theClass; }
+            set { Set<string>(() => TheClass, ref _theClass, value); }
+        }
+
+        public string ChipNumber
+        {
+            get { return _chipNumber; }
+            set { Set<string>(() => ChipNumber, ref _chipNumber, value); }
         }
 
         public string Gender
@@ -118,13 +145,25 @@ namespace HorseAccounting.Model
             set { Set<string>(() => FullName, ref _fullName, value); }
         }
 
+        public string MotherFullName
+        {
+            get { return _motherFullName; }
+            set { Set<string>(() => MotherFullName, ref _motherFullName, value); }
+        }
+
+        public string FatherFullName
+        {
+            get { return _fatherFullName; }
+            set { Set<string>(() => FatherFullName, ref _fatherFullName, value); }
+        }
+
         #endregion
 
         #region HorsesListPage
 
         public static async Task<ObservableCollection<Horse>> GetHorses()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=all";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=all";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -135,7 +174,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetActingHorses()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=acting";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=acting";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -146,7 +185,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetRetiredHorses()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=retired";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=retired";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -157,7 +196,18 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> SearchHorsesAsync(string searchQuery)
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?search=" + searchQuery;
+            string url = "http://1k-horse-base." + link + "/api/horse.php?search=" + searchQuery;
+
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
+
+            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+
+            return searchedHorses;
+        }
+
+        public static async Task<ObservableCollection<Horse>> SearchByFatherHorseAsync(int fatherID)
+        {
+            string url = "http://1k-horse-base." + link + "/api/horse.php?father=" + fatherID;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -172,7 +222,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetMotherHorseAsync()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=mother";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=mother";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -183,7 +233,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Horse>> GetFatherHorseAsync()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=father";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=father";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -192,7 +242,7 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
+        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
             {
@@ -203,6 +253,9 @@ namespace HorseAccounting.Model
                     { "Brand", brand },
                     { "Bloodiness", blodeness },
                     { "Color", color },
+                    { "Breed", breed },
+                    { "TheClass", theClass },
+                    { "ChipNumber", chip },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
                     { "BirthPlace", placeBirth },
@@ -214,7 +267,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=add", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
@@ -222,14 +275,24 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch (FormatException ex)
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
-                return false;
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
             }
         }
 
-        public static async Task<bool> AddHorseAsync(string nick, string color, string gend, string dateBirth, int motherID, int fatherID)
+        public static async Task<bool> AddHorseAsync(string nick, string brand, string color, string chipNumber, string gend, string dateBirth, int motherID, int fatherID)
         {
             try
             {
@@ -237,9 +300,12 @@ namespace HorseAccounting.Model
                 {
                     { "GpkNum", string.Empty },
                     { "NickName", nick },
-                    { "Brand", string.Empty },
+                    { "Brand", brand },
                     { "Bloodiness", string.Empty },
                     { "Color", color },
+                    { "Breed", string.Empty },
+                    { "TheClass", string.Empty },
+                    { "ChipNumber", chipNumber },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
                     { "BirthPlace", string.Empty },
@@ -251,7 +317,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=add", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 
@@ -259,12 +325,73 @@ namespace HorseAccounting.Model
 
                 return true;
             }
-            catch (FormatException ex)
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату выжребки!"));
-                return false;
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
             }
         }
+
+        public static async Task<bool> AddHorseAsync(string nick, string brand, string gend, string dateBirth)
+        {
+            try
+            {
+                var horseData = new Dictionary<string, string>
+                {
+                    { "GpkNum", string.Empty },
+                    { "NickName", nick },
+                    { "Brand", brand },
+                    { "Bloodiness", string.Empty },
+                    { "Color", string.Empty },
+                    { "Breed", string.Empty },
+                    { "TheClass", string.Empty },
+                    { "ChipNumber", string.Empty },
+                    { "Gender", gend },
+                    { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
+                    { "BirthPlace", string.Empty },
+                    { "Owner", string.Empty },
+                    { "MotherID", "0" },
+                    { "FatherID", "0" },
+                    { "State", string.Empty },
+                };
+
+                var data = new FormUrlEncodedContent(horseData);
+
+                var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=add", data).GetAwaiter().GetResult();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseString);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FormatException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы не выбрали дату рождения лошади!"));
+                    return false;
+                }
+                else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка добавления данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    return false;
+                }
+
+                throw;
+            }
+        }
+
 
         public void CleanHorseData()
         {
@@ -273,6 +400,9 @@ namespace HorseAccounting.Model
             Brand = string.Empty;
             Bloodiness = string.Empty;
             Color = string.Empty;
+            Breed = string.Empty;
+            TheClass = string.Empty;
+            ChipNumber = string.Empty;
             BirthDate = string.Empty;
             BirthPlace = string.Empty;
             Owner = string.Empty;
@@ -284,7 +414,7 @@ namespace HorseAccounting.Model
 
         public static async Task<int> GetLastHorseIDAsync()
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=last-id";
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=last-id";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -303,7 +433,7 @@ namespace HorseAccounting.Model
 
             var data = new FormUrlEncodedContent(horseData);
 
-            var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
+            var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=change-state", data).GetAwaiter().GetResult();
 
             var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
@@ -322,7 +452,7 @@ namespace HorseAccounting.Model
 
         public static async Task<Horse> GetSelectedHorseAsync(int ID)
         {
-            string url = "http://1k-horse-base.ru/api/horse.php?horse=" + ID;
+            string url = "http://1k-horse-base." + link + "/api/horse.php?horse=" + ID;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -332,7 +462,7 @@ namespace HorseAccounting.Model
         }
 
 
-        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
+        public static async Task<bool> ChangeHorseAsync(int id, string gpk, string nick, string brand, string blodeness, string color, string breed, string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID)
         {
             try
             {
@@ -344,6 +474,9 @@ namespace HorseAccounting.Model
                     { "Brand", brand },
                     { "Bloodiness", blodeness },
                     { "Color", color },
+                    { "Breed", breed },
+                    { "TheClass", theClass },
+                    { "ChipNumber", chip },
                     { "Gender", gend },
                     { "BirthDate", Convert.ToDateTime(dateBirth).ToString("yyyy-MM-dd") },
                     { "BirthPlace", placeBirth },
@@ -354,7 +487,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(horseData);
 
-                var response = client.PostAsync("http://1k-horse-base.ru/api/horse.php?horse=change", data).GetAwaiter().GetResult();
+                var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=change", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 

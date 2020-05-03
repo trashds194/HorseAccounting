@@ -4,7 +4,11 @@ using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
 using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -18,13 +22,20 @@ namespace HorseAccounting.ViewModel
         private IPageNavigationService _navigationService = new PageNavigationService();
 
         private Horse _mainHorse;
+        private Horse _selectedHorse;
         private Horse _fatherHorse;
 
         private bool _singleIsChecked;
         private bool _singleIsEnabled;
 
+        private bool _matingIsChecked;
+
         private bool _notCoveredIsChecked;
         private bool _notCoveredIsEnabled;
+
+        private string _chipNumber;
+        private string _chipCountry;
+        private string _fullChip;
 
         private int _foalID;
 
@@ -43,8 +54,21 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                MainHorse = (Horse)_navigationService.Parameter;
-                ComboBoxesUpdate();
+                try
+                {
+                    MainHorse = (Horse)_navigationService.Parameter;
+                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
+                    ComboBoxesUpdate();
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+                MatingIsChecked = false;
+
                 SingleIsChecked = false;
                 SingleIsEnabled = true;
 
@@ -53,26 +77,72 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        public async void OnStallionGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorseList != null)
+                    {
+                        if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                        {
+                            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                            RaisePropertyChanged(() => FatherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
         private async void ComboBoxesUpdate()
         {
             await Task.Run(() =>
             {
-                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                RaisePropertyChanged(() => FatherHorseList);
+                try
+                {
+                    _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                    RaisePropertyChanged(() => FatherHorseList);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
             }).ConfigureAwait(true);
         }
 
         private void AddTribalUse()
         {
-            if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
-                                AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, MainHorse.ID).Result)
+            try
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
-                AddedTribalUse.CleanTribalUseData();
+                if (TribalUse.AddTribalUseAsync(AddedTribalUse.Year, AddedTribalUse.LastDate, AddedTribalUse.MatingType, FatherHorse.FullName, AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass,
+                    AddedTribalUse.FoalDate, AddedTribalUse.FoalGender, AddedTribalUse.FoalColor, AddedTribalUse.FoalNickName, AddedTribalUse.FoalBrand, AddedTribalUse.FoalDestination, FatherHorse.ID, FoalID, SelectedHorse.ID).Result)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили племенную деятельность"));
+                    AddedTribalUse.CleanTribalUseData();
+                }
+                else
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка отправки данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
             }
         }
 
@@ -92,6 +162,20 @@ namespace HorseAccounting.ViewModel
                     _mainHorse = value;
                     RaisePropertyChanged(nameof(MainHorse));
                 }
+            }
+        }
+
+        public Horse SelectedHorse
+        {
+            get
+            {
+                return _selectedHorse;
+            }
+
+            set
+            {
+                _selectedHorse = value;
+                RaisePropertyChanged(nameof(SelectedHorse));
             }
         }
 
@@ -149,6 +233,28 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public bool MatingIsChecked
+        {
+            get
+            {
+                return _matingIsChecked;
+            }
+
+            set
+            {
+                _matingIsChecked = value;
+                RaisePropertyChanged(nameof(MatingIsChecked));
+                if (MatingIsChecked == true)
+                {
+                    AddedTribalUse.MatingType = "ИО";
+                }
+                else
+                {
+                    AddedTribalUse.MatingType = "Живая случка";
+                }
+            }
+        }
+
         public bool NotCoveredIsChecked
         {
             get
@@ -190,6 +296,48 @@ namespace HorseAccounting.ViewModel
             {
                 _notCoveredIsEnabled = value;
                 RaisePropertyChanged(nameof(NotCoveredIsEnabled));
+            }
+        }
+
+        public string ChipNumber
+        {
+            get
+            {
+                return _chipNumber;
+            }
+
+            set
+            {
+                _chipNumber = value;
+                RaisePropertyChanged(nameof(ChipNumber));
+            }
+        }
+
+        public string ChipCountry
+        {
+            get
+            {
+                return _chipCountry;
+            }
+
+            set
+            {
+                _chipCountry = value;
+                RaisePropertyChanged(nameof(ChipCountry));
+            }
+        }
+
+        public string FullChip
+        {
+            get
+            {
+                return _fullChip;
+            }
+
+            set
+            {
+                _fullChip = value;
+                RaisePropertyChanged(nameof(FullChip));
             }
         }
 
@@ -276,29 +424,46 @@ namespace HorseAccounting.ViewModel
                         {
                             AddedTribalUse.FatherFullName = "Не крыта";
                         }
+
+                        if (SelectedHorse == null)
+                        {
+                            SelectedHorse = new Horse();
+                            SelectedHorse.ID = 0;
+                        }
                         if (FatherHorse == null)
                         {
                             FatherHorse = new Horse();
                             FatherHorse.FullName = "Не крыта";
                             FatherHorse.ID = 0;
                         }
+
                         if (AddedTribalUse.FoalNickName == null)
                         {
                             AddedTribalUse.FoalNickName = string.Empty;
                         }
 
-                        if (AddedTribalUse.FoalNickName.Equals("мертворожденный"))
+                        if (!string.IsNullOrEmpty(ChipNumber))
+                        {
+                            FullChip = ChipNumber + " " + ChipCountry;
+                        }
+                        else
+                        {
+                            FullChip = string.Empty;
+                        }
+
+                        if (AddedTribalUse.FoalNickName.Equals("мертворожденный") || AddedTribalUse.FoalNickName.Equals("слаборожденный")
+                        || AddedTribalUse.FoalNickName.Equals("двойня") || AddedTribalUse.FoalNickName.Equals("аборт"))
                         {
                             AddTribalUse();
                         }
-                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalColor, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, MainHorse.ID, FatherHorse.ID).Result)
+                        else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalBrand, AddedTribalUse.FoalColor, FullChip, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, SelectedHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
                             FoalID = Horse.GetLastHorseIDAsync().Result;
 
                             if (AddedTribalUse.FoalDestination != null)
                             {
-                                if(AddedTribalUse.FoalGender == null)
+                                if (AddedTribalUse.FoalGender == null)
                                 {
                                     AddedTribalUse.FoalGender = "Кобыла";
                                 }
@@ -334,6 +499,7 @@ namespace HorseAccounting.ViewModel
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
                                 }
+                                ChipNumber = string.Empty;
                             }
                             else
                             {

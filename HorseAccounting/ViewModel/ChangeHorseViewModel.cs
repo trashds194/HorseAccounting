@@ -3,7 +3,12 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -36,6 +41,10 @@ namespace HorseAccounting.ViewModel
         private string _takenBirthPlace;
         private string _takenOwner;
 
+        private string _chipCountry;
+        private string[] _getChip;
+        private string _fullChip;
+
         private ObservableCollection<Horse> _motherHorseList;
         private ObservableCollection<Horse> _fatherHorseList;
 
@@ -54,14 +63,70 @@ namespace HorseAccounting.ViewModel
             HorseUpdate();
         }
 
+
+        public async void OnMareGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (MotherHorseList != null)
+                    {
+                        if (MotherHorseList.Count != Horse.GetMotherHorseAsync().Result.Count)
+                        {
+                            _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                            RaisePropertyChanged(() => MotherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
+        public async void OnStallionGotFocus()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (FatherHorseList != null)
+                    {
+                        if (FatherHorseList.Count != Horse.GetFatherHorseAsync().Result.Count)
+                        {
+                            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                            RaisePropertyChanged(() => FatherHorseList);
+                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
+                }
+            }).ConfigureAwait(true);
+        }
+
         private void HorseUpdate()
         {
             SelectedHorse = (Horse)_navigationService.Parameter;
 
-            MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
-
-            if (MainHorse != null)
+            try
             {
+                MainHorse = Horse.GetSelectedHorseAsync(SelectedHorse.ID).Result;
+
+                GetChip = MainHorse.ChipNumber.Split(' ');
+                MainHorse.ChipNumber = GetChip[0];
+
                 if (MainHorse.MotherID != 0)
                 {
                     MotherHorse = Horse.GetSelectedHorseAsync(MainHorse.MotherID).Result;
@@ -110,6 +175,18 @@ namespace HorseAccounting.ViewModel
                     MainHorse.Owner = TakenOwner;
                 }
             }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
+            }
+
+            if (MainHorse != null)
+            {
+
+            }
             else
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось загрузить данные лошади! " +
@@ -119,10 +196,20 @@ namespace HorseAccounting.ViewModel
 
         private void ComboBoxesUpdate()
         {
-            _motherHorseList = Horse.GetMotherHorseAsync().Result;
-            _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-            RaisePropertyChanged(() => MotherHorseList);
-            RaisePropertyChanged(() => FatherHorseList);
+            try
+            {
+                _motherHorseList = Horse.GetMotherHorseAsync().Result;
+                _fatherHorseList = Horse.GetFatherHorseAsync().Result;
+                RaisePropertyChanged(() => MotherHorseList);
+                RaisePropertyChanged(() => FatherHorseList);
+            }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
+            }
         }
 
         private void CheckFields()
@@ -244,6 +331,48 @@ namespace HorseAccounting.ViewModel
             {
                 _takenOwner = value;
                 RaisePropertyChanged(nameof(TakenOwner));
+            }
+        }
+
+        public string ChipCountry
+        {
+            get
+            {
+                return _chipCountry;
+            }
+
+            set
+            {
+                _chipCountry = value;
+                RaisePropertyChanged(nameof(ChipCountry));
+            }
+        }
+
+        public string FullChip
+        {
+            get
+            {
+                return _fullChip;
+            }
+
+            set
+            {
+                _fullChip = value;
+                RaisePropertyChanged(nameof(FullChip));
+            }
+        }
+
+        public string[] GetChip
+        {
+            get
+            {
+                return _getChip;
+            }
+
+            set
+            {
+                _getChip = value;
+                RaisePropertyChanged(nameof(GetChip));
             }
         }
 
@@ -486,9 +615,27 @@ namespace HorseAccounting.ViewModel
                     {
                         CheckHorseDataForNull();
 
-                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
+                        if (!string.IsNullOrEmpty(MainHorse.ChipNumber))
+                        {
+                            FullChip = MainHorse.ChipNumber + " " + ChipCountry;
+                        }
+                        else
+                        {
+                            FullChip = string.Empty;
+                        }
+
+                        if (Horse.ChangeHorseAsync(MainHorse.ID, MainHorse.GpkNum, MainHorse.NickName, MainHorse.Brand, MainHorse.Bloodiness, MainHorse.Color, MainHorse.Breed,
+                            MainHorse.TheClass, FullChip, GetGenderResult, MainHorse.BirthDate, StudFarm, Owner, MotherHorse.ID, FatherHorse.ID).Result)
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили запись лошади"));
+                            if (TribalUse.ChangeTribalUseAsync(MainHorse.BirthDate, MainHorse.Gender, MainHorse.Color, MainHorse.NickName, MainHorse.Brand, FatherHorse.ID, MainHorse.ID, MotherHorse.ID).Result)
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно обновили племенную деятельность лошади"));
+                            }
+                            else
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Лошадь с такой кличкой и родителями не участвует в племенной деятельности!"));
+                            }
                             CheckFields();
                         }
                         else

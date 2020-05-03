@@ -7,6 +7,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
@@ -55,23 +58,27 @@ namespace HorseAccounting.ViewModel
 
             await Task.Run(() =>
             {
-                MainHorse = (Horse)_navigationService.Parameter;
-
-                SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
-
-                if (SelectedHorse.Gender.Equals("Кобыла"))
-                {
-                    MaleVis = true;
-                    StallionVis = false;
-                }
-                else
-                {
-                    MaleVis = false;
-                    StallionVis = true;
-                }
-
                 try
                 {
+                    MainHorse = (Horse)_navigationService.Parameter;
+                    if (MainHorse == null)
+                    {
+                        MainHorse = new Horse();
+                        MainHorse.ID = 0;
+                    }
+                    SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
+
+                    if (SelectedHorse.Gender.Equals("Кобыла"))
+                    {
+                        MaleVis = true;
+                        StallionVis = false;
+                    }
+                    else
+                    {
+                        MaleVis = false;
+                        StallionVis = true;
+                    }
+
                     HorseNick = SelectedHorse.FullName;
 
                     if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
@@ -95,7 +102,10 @@ namespace HorseAccounting.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
                 }
             }).ConfigureAwait(true);
         }
@@ -335,7 +345,6 @@ namespace HorseAccounting.ViewModel
                             try
                             {
                                 Word.Application application = new Word.Application();
-                                application.Visible = true;
                                 var path = System.IO.Path.GetFullPath(@"Files\Word\Карточка племенной кобылы.dotx");
 
                                 Word.Document document = application.Documents.Open(path);
@@ -350,6 +359,11 @@ namespace HorseAccounting.ViewModel
                                 application.Quit();
 
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Карточка лошади успешно создана!"));
+
+                                Word.Application word = new Word.Application();
+                                application.Visible = true;
+                                var cardPath = System.IO.Path.GetFullPath(magazinesPath + @SelectedHorse.FullName + @".doc");
+                                Word.Document card = word.Documents.Open(cardPath);
                             }
                             catch (Exception ex)
                             {
