@@ -33,7 +33,7 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
-        private static readonly string link = "loc";
+        private static readonly string link = "ru";
 
         #endregion
 
@@ -173,10 +173,19 @@ namespace HorseAccounting.Model
         public static async Task<bool> AddTribalUseAsync(string year, string lastDate, string matingType, string fatherFullName, string fatherBreed, string fatherClass,
             string foalDate, string foalGender, string foalColor, string foalNickName, string foalBrand, string foalDestination, int fatherID, int foalID, int motherID)
         {
+            if (string.IsNullOrEmpty(lastDate))
+            {
+                lastDate = "00.00.0000";
+            }
+            else
+            {
+                lastDate = Convert.ToDateTime(lastDate).ToString("yyyy-MM-dd");
+            }
+
             var tribalUseData = new Dictionary<string, string>
                 {
                     { "Year", year },
-                    { "LastDate", Convert.ToDateTime(lastDate).ToString("yyyy-MM-dd") },
+                    { "LastDate", lastDate },
                     { "MatingType", matingType },
                     { "FatherFullName", fatherFullName },
                     { "FatherBreed", fatherBreed },

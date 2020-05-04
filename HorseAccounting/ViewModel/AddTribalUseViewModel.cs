@@ -36,6 +36,7 @@ namespace HorseAccounting.ViewModel
         private string _chipNumber;
         private string _chipCountry;
         private string _fullChip;
+        private string _deathDate;
 
         private int _foalID;
 
@@ -122,6 +123,30 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        public void OnSelectionChanged()
+        {
+            if (FatherHorse != null)
+            {
+                if (string.IsNullOrEmpty(FatherHorse.Breed))
+                {
+                    AddedTribalUse.FatherBreed = string.Empty;
+                }
+                else
+                {
+                    AddedTribalUse.FatherBreed = FatherHorse.Breed;
+                }
+
+                if (string.IsNullOrEmpty(FatherHorse.TheClass))
+                {
+                    AddedTribalUse.FatherClass = string.Empty;
+                }
+                else
+                {
+                    AddedTribalUse.FatherClass = FatherHorse.TheClass;
+                }
+            }
+        }
+
         private void AddTribalUse()
         {
             try
@@ -135,6 +160,32 @@ namespace HorseAccounting.ViewModel
                 else
                 {
                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить племенную деятельность"));
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                {
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка отправки данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                }
+            }
+        }
+
+        private void ChangeFather()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(FatherHorse.Breed) || string.IsNullOrEmpty(FatherHorse.TheClass))
+                {
+                    Horse.ChangeHorseClassAsync(AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass, FatherHorse.ID);
+                    Console.WriteLine("msg");
+                    ComboBoxesUpdate();
+                }
+                else if (!FatherHorse.Breed.Equals(AddedTribalUse.FatherBreed) || !FatherHorse.TheClass.Equals(AddedTribalUse.FatherClass))
+                {
+                    Horse.ChangeHorseClassAsync(AddedTribalUse.FatherBreed, AddedTribalUse.FatherClass, FatherHorse.ID);
+                    Console.WriteLine("msg");
+                    ComboBoxesUpdate();
                 }
             }
             catch (Exception ex)
@@ -341,6 +392,20 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public string DeathDate
+        {
+            get
+            {
+                return _deathDate;
+            }
+
+            set
+            {
+                _deathDate = value;
+                RaisePropertyChanged(nameof(DeathDate));
+            }
+        }
+
         public int FoalID
         {
             get
@@ -423,6 +488,7 @@ namespace HorseAccounting.ViewModel
                         if (NotCoveredIsChecked == true)
                         {
                             AddedTribalUse.FatherFullName = "Не крыта";
+                            AddedTribalUse.MatingType = string.Empty;
                         }
 
                         if (SelectedHorse == null)
@@ -454,6 +520,7 @@ namespace HorseAccounting.ViewModel
                         if (AddedTribalUse.FoalNickName.Equals("мертворожденный") || AddedTribalUse.FoalNickName.Equals("слаборожденный")
                         || AddedTribalUse.FoalNickName.Equals("двойня") || AddedTribalUse.FoalNickName.Equals("аборт"))
                         {
+                            ChangeFather();
                             AddTribalUse();
                         }
                         else if (Horse.AddHorseAsync(AddedTribalUse.FoalNickName, AddedTribalUse.FoalBrand, AddedTribalUse.FoalColor, FullChip, AddedTribalUse.FoalGender, AddedTribalUse.FoalDate, SelectedHorse.ID, FatherHorse.ID).Result)
@@ -461,54 +528,98 @@ namespace HorseAccounting.ViewModel
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Жеребенок успешно добавлен"));
                             FoalID = Horse.GetLastHorseIDAsync().Result;
 
-                            if (AddedTribalUse.FoalDestination != null)
+                            if (!string.IsNullOrEmpty(AddedTribalUse.FoalDestination))
                             {
                                 if (AddedTribalUse.FoalGender == null)
                                 {
                                     AddedTribalUse.FoalGender = "Кобыла";
                                 }
-                                if (Progression.AddProgressionAsync(AddedTribalUse.FoalDate, AddedTribalUse.FoalDestination, string.Empty, FoalID).Result)
+                                if (AddedTribalUse.FoalNickName.Equals("пал"))
                                 {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Назначение жеребенка успешно добавлено"));
-                                    if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание")
-                                    || AddedTribalUse.FoalDestination.Equals("прирезан") || AddedTribalUse.FoalDestination.Equals("обмен"))
+                                    if (Progression.AddProgressionAsync(DeathDate, AddedTribalUse.FoalDestination, string.Empty, FoalID).Result)
                                     {
-                                        if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Назначение жеребенка успешно добавлено"));
+                                        if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание")
+                                        || AddedTribalUse.FoalDestination.Equals("прирезан") || AddedTribalUse.FoalDestination.Equals("обмен")
+                                        || AddedTribalUse.FoalDestination.Equals("пал"))
                                         {
-                                            Horse.ChangeHorseStateAsync(FoalID, "Выбыл");
+                                            if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Выбыл");
+                                            }
+                                            else
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Выбыла");
+                                            }
                                         }
                                         else
                                         {
-                                            Horse.ChangeHorseStateAsync(FoalID, "Выбыла");
+                                            if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Действующий");
+                                            }
+                                            else
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Действующая");
+                                            }
                                         }
+                                        ChangeFather();
+                                        AddTribalUse();
                                     }
                                     else
                                     {
-                                        if (AddedTribalUse.FoalGender.Equals("Жеребец"))
-                                        {
-                                            Horse.ChangeHorseStateAsync(FoalID, "Действующий");
-                                        }
-                                        else
-                                        {
-                                            Horse.ChangeHorseStateAsync(FoalID, "Действующая");
-                                        }
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
                                     }
-                                    AddTribalUse();
+                                    ChipNumber = string.Empty;
                                 }
                                 else
                                 {
-                                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
+                                    if (Progression.AddProgressionAsync(AddedTribalUse.FoalDate, AddedTribalUse.FoalDestination, string.Empty, FoalID).Result)
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Назначение жеребенка успешно добавлено"));
+                                        if (AddedTribalUse.FoalDestination.Equals("продажа") || AddedTribalUse.FoalDestination.Equals("списание")
+                                        || AddedTribalUse.FoalDestination.Equals("прирезан") || AddedTribalUse.FoalDestination.Equals("обмен"))
+                                        {
+                                            if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Выбыл");
+                                            }
+                                            else
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Выбыла");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (AddedTribalUse.FoalGender.Equals("Жеребец"))
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Действующий");
+                                            }
+                                            else
+                                            {
+                                                Horse.ChangeHorseStateAsync(FoalID, "Действующая");
+                                            }
+                                        }
+                                        ChangeFather();
+                                        AddTribalUse();
+                                    }
+                                    else
+                                    {
+                                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить назначение жеребенка"));
+                                    }
+                                    ChipNumber = string.Empty;
                                 }
-                                ChipNumber = string.Empty;
                             }
                             else
                             {
+                                ChangeFather();
                                 AddTribalUse();
                             }
                         }
                         else
                         {
                             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Не удалось добавить жеребенка"));
+                            ChangeFather();
                             AddTribalUse();
                         }
                     });

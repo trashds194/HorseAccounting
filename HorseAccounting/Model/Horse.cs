@@ -37,7 +37,7 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
-        private static readonly string link = "loc";
+        private static readonly string link = "ru";
 
         #endregion
 
@@ -500,6 +500,28 @@ namespace HorseAccounting.Model
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage(ex.Message));
                 return false;
             }
+        }
+
+        #endregion
+
+        #region AddTribalUsePage
+
+        public static async Task ChangeHorseClassAsync(string breed, string theClass, int id)
+        {
+            var horseData = new Dictionary<string, string>
+                {
+                    { "Breed", breed },
+                    { "TheClass", theClass },
+                    { "ID", id.ToString() },
+                };
+
+            var data = new FormUrlEncodedContent(horseData);
+
+            var response = client.PostAsync("http://1k-horse-base." + link + "/api/horse.php?horse=change-class", data).GetAwaiter().GetResult();
+
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+
+            Console.WriteLine(responseString);
         }
 
         #endregion

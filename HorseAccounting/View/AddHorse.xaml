@@ -328,6 +328,7 @@
                         <System:String>списание</System:String>
                         <System:String>прирезан</System:String>
                         <System:String>обмен</System:String>
+                        <System:String>пал</System:String>
                         <Separator/>
                         <System:String>маточный состав</System:String>
                         <System:String>жеребец производитель</System:String>
