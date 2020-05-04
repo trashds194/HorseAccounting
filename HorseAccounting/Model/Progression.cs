@@ -23,7 +23,7 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
-        private static readonly string link = "ru";
+        private static readonly string link = "loc";
 
         #endregion
 
