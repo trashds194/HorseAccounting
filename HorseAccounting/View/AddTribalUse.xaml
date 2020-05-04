@@ -120,6 +120,9 @@
                                 <i:EventTrigger EventName="GotFocus">
                                     <ei:CallMethodAction MethodName="OnStallionGotFocus" TargetObject="{Binding}"/>
                                 </i:EventTrigger>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <ei:CallMethodAction MethodName="OnSelectionChanged" TargetObject="{Binding}"/>
+                                </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -180,8 +183,9 @@
                         <Label Content="Масть жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="3" Margin="0,8,0,0" />
                         <Label Content="Номер чипа жеребенка:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Margin="0,8,0,0" />
                         <Label Content="Назначение жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Margin="0,8,0,0" Grid.Column="2" />
+                        <Label Content="Дата смерти жеребенка:&#10;  (если жеребенок пал)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="3" Margin="0,8,0,0" Grid.Column="2" />
 
-                        <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку жеребенка" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}" >
+                        <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку жеребенка" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
@@ -191,6 +195,7 @@
                             <System:String>слаборожденный</System:String>
                             <System:String>двойня</System:String>
                             <System:String>аборт</System:String>
+                            <System:String>пал</System:String>
                         </ComboBox>
                         <TextBox Text="{Binding AddedTribalUse.FoalBrand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите Тавро жеребенка" Margin="16,0" TextWrapping="Wrap" Grid.Column="3" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2" IsEnabled="{Binding SingleIsEnabled}"/>
                         <ComboBox Text="{Binding AddedTribalUse.FoalGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите пол жеребенка" Margin="16,8,16,0"  VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding SingleIsEnabled}">
@@ -236,10 +241,12 @@
                             <System:String>списание</System:String>
                             <System:String>прирезан</System:String>
                             <System:String>обмен</System:String>
+                            <System:String>пал</System:String>
                             <Separator/>
                             <System:String>маточный состав</System:String>
                             <System:String>жеребец производитель</System:String>
                         </ComboBox>
+                        <DatePicker Text="{Binding DeathDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату смерти жеребенка" Margin="16,0" Grid.Column="3" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="3" IsEnabled="{Binding SingleIsEnabled}" Grid.ColumnSpan="2"/>
                     </Grid>
                 </GroupBox>
 

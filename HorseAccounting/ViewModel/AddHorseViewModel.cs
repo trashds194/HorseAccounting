@@ -505,7 +505,8 @@ namespace HorseAccounting.ViewModel
                                     {
                                         Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                         if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание")
-                                        || AddedProgression.Destination.Equals("прирезан") || AddedProgression.Destination.Equals("обмен"))
+                                        || AddedProgression.Destination.Equals("прирезан") || AddedProgression.Destination.Equals("обмен")
+                                        || AddedProgression.Destination.Equals("пал"))
                                         {
                                             if (GetGenderResult.Equals(StallionGender))
                                             {
