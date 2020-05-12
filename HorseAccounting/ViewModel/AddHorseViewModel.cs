@@ -456,6 +456,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _horsesList = new RelayCommand(() =>
                     {
+                        AddedHorse.CleanHorseData();
                         _navigationService.NavigateTo("HorsesList");
                     });
                 }

@@ -24,10 +24,15 @@ namespace HorseAccounting.ViewModel
 
         private ShowHorseViewModel _showHorse;
 
+        private bool _allBtnCheck;
+        private bool _actingBtnCheck;
+        private bool _retiredBtnCheck;
         private bool _stallionBtnCheck;
         private bool _mareBtnCheck;
 
         private string _searchQuery;
+
+        private int _yearQuery;
 
         #endregion
 
@@ -40,22 +45,166 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                SearchQuery = null;
-                StallionBtnCheck = false;
-                MareBtnCheck = false;
                 try
                 {
-                    _horses = Horse.GetHorses().Result;
                     _fatherHorseList = Horse.GetFatherHorseAsync().Result;
-                    RaisePropertyChanged(() => HorsesList);
                     RaisePropertyChanged(() => FatherHorseList);
                 }
                 catch
                 {
                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
                 }
+
+                if (string.IsNullOrEmpty(Properties.Settings.Default.ListState))
+                {
+                    Properties.Settings.Default.ListState = "all";
+                    Properties.Settings.Default.Save();
+                    GetHorses(Properties.Settings.Default.ListState);
+                }
+                else
+                {
+                    switch (Properties.Settings.Default.ListState)
+                    {
+                        case "all":
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                        case "acting":
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                        case "retired":
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                        case "stallion":
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                        case "mare":
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                        default:
+                            GetHorses(Properties.Settings.Default.ListState);
+                            break;
+                    }
+                }
             }).ConfigureAwait(true);
         }
+
+        #region GetMethod
+
+        private void GetHorses(string state)
+        {
+            try
+            {
+                switch (state)
+                {
+                    case "all":
+
+                        AllBtnCheck = true;
+                        SearchQuery = null;
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        _horses = Horse.GetHorses().Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = state;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+
+                    case "acting":
+
+                        ActingBtnCheck = true;
+                        SearchQuery = null;
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        _horses = Horse.GetActingHorses().Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = state;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+
+                    case "retired":
+
+                        RetiredBtnCheck = true;
+                        SearchQuery = null;
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        _horses = Horse.GetRetiredHorses().Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = state;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+
+                    case "stallion":
+
+                        StallionBtnCheck = true;
+                        SearchQuery = null;
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        _horses = Horse.GetFatherHorseAsync().Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = state;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+
+                    case "mare":
+
+                        MareBtnCheck = true;
+                        SearchQuery = null;
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        _horses = Horse.GetMotherHorseAsync().Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = state;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+                    default:
+
+                        FatherHorse = null;
+                        YearQuery = 0;
+
+                        SearchQuery = state;
+
+                        _horses = Horse.SearchHorsesAsync(SearchQuery).Result;
+                        RaisePropertyChanged(() => HorsesList);
+
+                        Properties.Settings.Default.ListState = SearchQuery;
+                        Properties.Settings.Default.Save();
+
+                        Console.WriteLine(Properties.Settings.Default.ListState);
+
+                        break;
+                }
+            }
+            catch
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+            }
+        }
+
+        #endregion
 
         public async void OnSelectionChanged()
         {
@@ -65,13 +214,21 @@ namespace HorseAccounting.ViewModel
                 {
                     if (FatherHorse != null)
                     {
+                        AllBtnCheck = false;
+                        ActingBtnCheck = false;
+                        RetiredBtnCheck = false;
+                        StallionBtnCheck = false;
+                        MareBtnCheck = false;
+
                         _horses = Horse.SearchByFatherHorseAsync(FatherHorse.ID).Result;
                         RaisePropertyChanged(() => HorsesList);
                     }
                     else
                     {
-                        _horses = Horse.GetHorses().Result;
-                        RaisePropertyChanged(() => HorsesList);
+                        Properties.Settings.Default.ListState = "all";
+                        Properties.Settings.Default.Save();
+
+                        GetHorses(Properties.Settings.Default.ListState);
                     }
                 }
                 catch
@@ -85,19 +242,75 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                try
+                if(SearchQuery != null)
                 {
-                    _horses = Horse.SearchHorsesAsync(SearchQuery).Result;
-                    RaisePropertyChanged(() => HorsesList);
+                    try
+                    {
+                        AllBtnCheck = false;
+                        ActingBtnCheck = false;
+                        RetiredBtnCheck = false;
+                        StallionBtnCheck = false;
+                        MareBtnCheck = false;
+
+                        GetHorses(SearchQuery);
+                    }
+                    catch
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    }
                 }
-                catch
+                else
                 {
-                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
-                }
+                    Properties.Settings.Default.ListState = "all";
+                    Properties.Settings.Default.Save();
+
+                    GetHorses(Properties.Settings.Default.ListState);
+                }              
             }).ConfigureAwait(true);
         }
 
         #region Definitions
+
+        public bool AllBtnCheck
+        {
+            get
+            {
+                return _allBtnCheck;
+            }
+            set
+            {
+                _allBtnCheck = value;
+                RaisePropertyChanged(nameof(AllBtnCheck));
+            }
+        }
+
+        public bool ActingBtnCheck
+        {
+            get
+            {
+                return _actingBtnCheck;
+            }
+
+            set
+            {
+                _actingBtnCheck = value;
+                RaisePropertyChanged(nameof(ActingBtnCheck));
+            }
+        }
+
+        public bool RetiredBtnCheck
+        {
+            get
+            {
+                return _retiredBtnCheck;
+            }
+
+            set
+            {
+                _retiredBtnCheck = value;
+                RaisePropertyChanged(nameof(RetiredBtnCheck));
+            }
+        }
 
         public bool StallionBtnCheck
         {
@@ -155,6 +368,23 @@ namespace HorseAccounting.ViewModel
 
                 _searchQuery = value;
                 RaisePropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        public int YearQuery
+        {
+            get
+            {
+                return _yearQuery;
+            }
+
+            set
+            {
+                if(value <= 2150)
+                {
+                    _yearQuery = value;
+                    RaisePropertyChanged(nameof(YearQuery));
+                }
             }
         }
 
@@ -267,14 +497,14 @@ namespace HorseAccounting.ViewModel
             }
         }
 
-        private RelayCommand _showAbout;
+        private RelayCommand _openAbout;
 
-        public RelayCommand ShowAbout
+        public RelayCommand OpenAbout
         {
             get
             {
-                return _showAbout
-                    ?? (_showAbout = new RelayCommand(
+                return _openAbout
+                    ?? (_openAbout = new RelayCommand(
                     () =>
                     {
 
@@ -283,81 +513,36 @@ namespace HorseAccounting.ViewModel
 
             private set
             {
-                _showAbout = value;
+                _openAbout = value;
+            }
+        }
+
+        private RelayCommand _openHelp;
+
+        public RelayCommand OpenHelp
+        {
+            get
+            {
+                return _openHelp
+                    ?? (_openHelp = new RelayCommand(
+                    () =>
+                    {
+                        var proc = new System.Diagnostics.Process();
+                        proc.StartInfo.FileName = System.IO.Path.GetFullPath(@"Files\Help\help.chm"); ;
+                        proc.StartInfo.UseShellExecute = true;
+                        proc.Start();
+                    }));
+            }
+
+            private set
+            {
+                _openHelp = value;
             }
         }
 
         #endregion
 
         #region RadioButtons
-
-        private RelayCommand _showStallionHorses;
-
-        public RelayCommand ShowStallionHorses
-        {
-            get
-            {
-                return _showStallionHorses
-                    ?? (_showStallionHorses = new RelayCommand(
-                    async () =>
-                    {
-                        StallionBtnCheck = true;
-                        await Task.Run(() =>
-                        {
-                            try
-                            {
-                                _horses = Horse.GetFatherHorseAsync().Result;
-                                RaisePropertyChanged(() => HorsesList);
-                            }
-                            catch
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
-                            }
-                        }).ConfigureAwait(true);
-                    }));
-            }
-
-            private set
-            {
-                _showStallionHorses = value;
-            }
-        }
-
-        private RelayCommand _showMareHorses;
-
-        public RelayCommand ShowMareHorses
-        {
-            get
-            {
-                return _showMareHorses
-                    ?? (_showMareHorses = new RelayCommand(
-                    async () =>
-                    {
-                        MareBtnCheck = true;
-                        await Task.Run(() =>
-                        {
-                            try
-                            {
-                                _horses = Horse.GetMotherHorseAsync().Result;
-                                RaisePropertyChanged(() => HorsesList);
-                            }
-                            catch
-                            {
-                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
-                            }
-                        }).ConfigureAwait(true);
-                    }));
-            }
-
-            private set
-            {
-                _showMareHorses = value;
-            }
-        }
-
-        #endregion
-
-        #region WindowCommands
 
         private RelayCommand _showAllHorses;
 
@@ -369,15 +554,11 @@ namespace HorseAccounting.ViewModel
                     ?? (_showAllHorses = new RelayCommand(
                     async () =>
                     {
-                        StallionBtnCheck = false;
-                        MareBtnCheck = false;
                         await Task.Run(() =>
                         {
                             try
                             {
-                                FatherHorse = null;
-                                _horses = Horse.GetHorses().Result;
-                                RaisePropertyChanged(() => HorsesList);
+                                GetHorses("all");
                             }
                             catch
                             {
@@ -407,8 +588,7 @@ namespace HorseAccounting.ViewModel
                         {
                             try
                             {
-                                _horses = Horse.GetActingHorses().Result;
-                                RaisePropertyChanged(() => HorsesList);
+                                GetHorses("acting");
                             }
                             catch
                             {
@@ -438,8 +618,8 @@ namespace HorseAccounting.ViewModel
                         {
                             try
                             {
-                                _horses = Horse.GetRetiredHorses().Result;
-                                RaisePropertyChanged(() => HorsesList);
+
+                                GetHorses("retired");
                             }
                             catch
                             {
@@ -454,6 +634,70 @@ namespace HorseAccounting.ViewModel
                 _showRetiredHorses = value;
             }
         }
+
+        private RelayCommand _showStallionHorses;
+
+        public RelayCommand ShowStallionHorses
+        {
+            get
+            {
+                return _showStallionHorses
+                    ?? (_showStallionHorses = new RelayCommand(
+                    async () =>
+                    {
+                        await Task.Run(() =>
+                        {
+                            try
+                            {
+                                GetHorses("stallion");
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
+                        }).ConfigureAwait(true);
+                    }));
+            }
+
+            private set
+            {
+                _showStallionHorses = value;
+            }
+        }
+
+        private RelayCommand _showMareHorses;
+
+        public RelayCommand ShowMareHorses
+        {
+            get
+            {
+                return _showMareHorses
+                    ?? (_showMareHorses = new RelayCommand(
+                    async () =>
+                    {
+                        await Task.Run(() =>
+                        {
+                            try
+                            {
+                                GetHorses("mare");
+                            }
+                            catch
+                            {
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                            }
+                        }).ConfigureAwait(true);
+                    }));
+            }
+
+            private set
+            {
+                _showMareHorses = value;
+            }
+        }
+
+        #endregion
+
+        #region WindowCommands
 
         private RelayCommand _addHorse;
 

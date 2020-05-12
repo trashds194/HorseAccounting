@@ -23,7 +23,7 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
-        private static readonly string link = "loc";
+        private static readonly string api = Properties.Resources.loc;
 
         #endregion
 
@@ -65,7 +65,7 @@ namespace HorseAccounting.Model
 
         public static async Task<ObservableCollection<Progression>> GetSelectedProgression(int iD)
         {
-            string url = "http://1k-horse-base." + link + "/api/progression.php?progression=" + iD;
+            string url = api + "progression.php?progression=" + iD;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -92,7 +92,7 @@ namespace HorseAccounting.Model
 
                 var data = new FormUrlEncodedContent(progressionData);
 
-                var response = client.PostAsync("http://1k-horse-base." + link + "/api/progression.php?progression=add", data).GetAwaiter().GetResult();
+                var response = client.PostAsync(api + "progression.php?progression=add", data).GetAwaiter().GetResult();
 
                 var responseString = await response.Content.ReadAsStringAsync();
 

@@ -109,7 +109,10 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
@@ -137,6 +140,7 @@
     <Compile Include="Infra\PageNavigationService.cs" />
     <Compile Include="Model\Progression.cs" />
     <Compile Include="Model\TribalUse.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\AddHorseSimpleViewModel.cs" />
     <Compile Include="ViewModel\AddScoringViewModel.cs" />
     <Compile Include="ViewModel\AddTribalUseViewModel.cs" />
@@ -239,8 +243,10 @@
     <Content Include="Files\Excel\Журнал случки.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ClassDiagram.cd" />
     <Content Include="Files\Word\Карточка племенной кобылы.dotx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Help\help.chm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

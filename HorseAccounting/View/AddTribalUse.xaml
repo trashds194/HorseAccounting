@@ -93,7 +93,13 @@
                         <Label Content="Дата последней садки:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0,8,0,0" />
 
                         <TextBox Text="{Binding AddedTribalUse.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите год случки" Grid.Column="1" VerticalAlignment="Center" Margin="16,8,16,0" MaxLength="4" PreviewTextInput="TextBox_PreviewTextInput" />
-                        <DatePicker Text="{Binding AddedTribalUse.LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату последней садки" Margin="16,0,8,4" Grid.Column="3" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" IsEnabled="{Binding NotCoveredIsEnabled}"/>
+                        <DatePicker Text="{Binding AddedTribalUse.LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Выберите дату последней садки" Margin="16,0,8,4" Grid.Column="3" Language="ru" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" IsEnabled="{Binding NotCoveredIsEnabled}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <ei:CallMethodAction MethodName="OnSelectedDateChanged" TargetObject="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
                         <CheckBox IsChecked="{Binding MatingIsChecked}" Content="ИО" Margin="0,8,16,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Grid.Column="4"/>
                     </Grid>
                 </GroupBox>
@@ -185,7 +191,7 @@
                         <Label Content="Назначение жеребенка:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Margin="0,8,0,0" Grid.Column="2" />
                         <Label Content="Дата смерти жеребенка:&#10;  (если жеребенок пал)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="3" Margin="0,8,0,0" Grid.Column="2" />
 
-                        <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку жеребенка" IsEditable="True" IsTextSearchEnabled="True" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}">
+                        <ComboBox Text="{Binding AddedTribalUse.FoalNickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Введите кличку жеребенка" IsEditable="True" IsTextSearchEnabled="False" Grid.Column="1" VerticalAlignment="Center" Margin="16,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" IsEnabled="{Binding SingleIsEnabled}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />

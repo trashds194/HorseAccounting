@@ -61,42 +61,6 @@ namespace HorseAccounting.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на utf8.
-        /// </summary>
-        internal static string DbCharSet {
-            get {
-                return ResourceManager.GetString("DbCharSet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на t60064_db.
-        /// </summary>
-        internal static string DbName {
-            get {
-                return ResourceManager.GetString("DbName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на HR4M%rV~S8.pB$gc.
-        /// </summary>
-        internal static string DbPassword {
-            get {
-                return ResourceManager.GetString("DbPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на t60064_dbuser.
-        /// </summary>
-        internal static string DbUser {
-            get {
-                return ResourceManager.GetString("DbUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap horseArt {
@@ -107,38 +71,20 @@ namespace HorseAccounting.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на t60064.
+        ///   Ищет локализованную строку, похожую на http://1k-horse-base.loc/api/.
         /// </summary>
-        internal static string HostLogin {
+        internal static string loc {
             get {
-                return ResourceManager.GetString("HostLogin", resourceCulture);
+                return ResourceManager.GetString("loc", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на hostru06.fornex.host.
+        ///   Ищет локализованную строку, похожую на http://1k-horse-base.ru/api/.
         /// </summary>
-        internal static string HostName {
+        internal static string ru {
             get {
-                return ResourceManager.GetString("HostName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на HR4M%rV~S8.pB$gc.
-        /// </summary>
-        internal static string HostPassword {
-            get {
-                return ResourceManager.GetString("HostPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на 127.0.0.1.
-        /// </summary>
-        internal static string LocalIP {
-            get {
-                return ResourceManager.GetString("LocalIP", resourceCulture);
+                return ResourceManager.GetString("ru", resourceCulture);
             }
         }
     }

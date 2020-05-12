@@ -68,12 +68,12 @@
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top" Command="{Binding ShowAbout}">
+            <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top" Command="{Binding OpenAbout}">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="About" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Справка" Height="Auto" MinHeight="40" VerticalAlignment="Top">
+            <MenuItem Header="Справка" Height="Auto" MinHeight="40" VerticalAlignment="Top" Command="{Binding OpenHelp}">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="HelpCircle" />
                 </MenuItem.Icon>
@@ -93,9 +93,11 @@
         </Menu>
         <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" Margin="2">
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Весь племсостав" Command="{Binding ShowAllHorses}" />
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Действующие" Command="{Binding ShowActingHorses}" />
-                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Выбывшие" Command="{Binding ShowRetiredHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding AllBtnCheck}" Content="Весь племсостав" Command="{Binding ShowAllHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding ActingBtnCheck}" Content="Действующие" Command="{Binding ShowActingHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding RetiredBtnCheck}" Content="Выбывшие" Command="{Binding ShowRetiredHorses}" />
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding StallionBtnCheck}" Content="Жеребцы" Command="{Binding ShowStallionHorses}"/>
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding MareBtnCheck}" Content="Кобылы" Command="{Binding ShowMareHorses}"/>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="HorseList" Margin="8" ItemsSource="{Binding HorsesList}" SelectedItem="{Binding SelectedHorse}" Grid.RowSpan="4" Grid.Row="2" HorizontalContentAlignment="Stretch">
@@ -193,7 +195,7 @@
             </TextBox>
         </Grid>
 
-        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбрать..." Margin="16,0" Grid.Row="4" VerticalAlignment="Top" Grid.RowSpan="2">
+        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбор по параметру" Margin="29,0,16,0" Grid.Row="4" VerticalAlignment="Top" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -205,13 +207,13 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <RadioButton x:Name="stallionButton" IsChecked="{Binding StallionBtnCheck}" Content="Жеребцы" Grid.Column="0" Margin="0,0,0,8" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowStallionHorses}"/>
-                <RadioButton x:Name="mareButton" IsChecked="{Binding MareBtnCheck}" Content="Кобылы" Grid.Column="1" Margin="0,0,0,8" Grid.Row="0" VerticalAlignment="Top" Command="{Binding ShowMareHorses}"/>
-
-                <Label Content="" Grid.Row="1"/>
-                <Label Content="По жеребцу" Grid.Row="2" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
-                <ComboBox Grid.Row="3" x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="0,2" StaysOpenOnEdit="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="2">
+                <Label Content="По году рождения" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
+                <TextBox Margin="0,2" Text="{Binding YearQuery, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" materialDesign:HintAssist.Hint="Введите год рождения" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
+                <Label Content="" Grid.Row="2"/>
+                <Label Content="По жеребцу" Grid.Row="3" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
+                <ComboBox Grid.Row="4" x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="0,2" StaysOpenOnEdit="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <ei:CallMethodAction MethodName="OnSelectionChanged" TargetObject="{Binding}"/>
@@ -234,7 +236,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button Content="Сбросить" Grid.Column="1" Grid.Row="4" Margin="0,8" Command="{Binding ShowAllHorses}"/>
+                <Button Content="Сбросить" Grid.Column="1" Grid.Row="5" Margin="0,8" Command="{Binding ShowAllHorses}" Height="Auto" Padding="8,4"/>
             </Grid>
         </GroupBox>
     </Grid>

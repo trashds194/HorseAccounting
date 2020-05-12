@@ -48,7 +48,7 @@
 
         <TextBox x:Name="nickNameTextBox" materialDesign:HintAssist.Hint="Введите Кличку в формате 'кличка тавро-год'" Margin="16,0,16,8" TextWrapping="Wrap" Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
         
-        <Grid Grid.Column="1" Margin="0,4" Grid.Row="1">
+        <Grid Grid.Column="1" Margin="0,4,16,4" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

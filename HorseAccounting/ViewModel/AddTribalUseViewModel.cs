@@ -78,6 +78,14 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        public void OnSelectedDateChanged()
+        {
+            if (!string.IsNullOrEmpty(AddedTribalUse.LastDate))
+            {
+                AddedTribalUse.Year = Convert.ToDateTime(AddedTribalUse.LastDate).Year.ToString();
+            }
+        }
+
         public async void OnStallionGotFocus()
         {
             await Task.Run(() =>

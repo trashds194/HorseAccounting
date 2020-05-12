@@ -97,7 +97,26 @@
                         <Label Content="Кровность:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center" Margin="0"/>
                         <Label Content="Масть:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center" Margin="0" Grid.Column="2"/>
 
-                        <TextBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="16,0,16,8" TextWrapping="Wrap" Text="{Binding MainHorse.Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <ComboBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="16,0,16,8" materialDesign:TextFieldAssist.HasClearButton="True" IsEditable="True" Text="{Binding AddedHorse.Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <System:String>1/2</System:String>
+                            <System:String>1/8</System:String>
+                            <System:String>3/4</System:String>
+                            <System:String>5/8</System:String>
+                            <System:String>7/8</System:String>
+                            <System:String>7/16</System:String>
+                            <System:String>9/16</System:String>
+                            <System:String>11/16</System:String>
+                            <System:String>13/16</System:String>
+                            <System:String>15/16</System:String>
+                            <System:String>полукров</System:String>
+                            <System:String>ольден</System:String>
+                            <System:String>хх</System:String>
+                        </ComboBox>
                         <ComboBox x:Name="colorComboBox" Grid.Row="5" Grid.Column="3" Margin="16,0,16,8" materialDesign:HintAssist.Hint="Введите Масть или выберите Масть из списка" IsEditable="True" IsTextSearchEnabled="True" Text="{Binding MainHorse.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
