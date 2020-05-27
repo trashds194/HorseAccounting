@@ -125,6 +125,6 @@
     <value>http://1k-horse-base.loc/api/</value>
   </data>
   <data name="ru" xml:space="preserve">
-    <value>http://1k-horse-base.ru/api/</value>
+    <value>https://1k-horse-base.ru/api/</value>
   </data>
 </root>

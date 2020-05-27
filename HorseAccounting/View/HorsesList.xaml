@@ -68,6 +68,11 @@
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Диаграммы" Height="Auto" MinHeight="40" Command="{Binding ShowDiagrams}" VerticalAlignment="Top">
+                <MenuItem.Icon>
+                    <materialDesign:PackIcon Kind="ChartBar" />
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="О программе" Height="Auto" MinHeight="40" VerticalAlignment="Top" Command="{Binding OpenAbout}">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="About" />
@@ -78,20 +83,15 @@
                     <materialDesign:PackIcon Kind="HelpCircle" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Обратная связь" Height="Auto" MinHeight="40" VerticalAlignment="Top">
-                <MenuItem.Icon>
-                    <materialDesign:PackIcon Kind="MessageTextOutline" />
-                </MenuItem.Icon>
-            </MenuItem>
         </Menu>
-        <Menu Grid.Column="1" HorizontalAlignment="Right" Grid.ColumnSpan="2">
+        <!--<Menu Grid.Column="1" HorizontalAlignment="Right" Grid.ColumnSpan="2">
             <MenuItem Header="Настройки" Height="Auto" MinHeight="40" MinWidth="180" VerticalAlignment="Top">
                 <MenuItem.Icon>
                     <materialDesign:PackIcon Kind="Settings" />
                 </MenuItem.Icon>
             </MenuItem>
-        </Menu>
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="3">
+        </Menu>-->
+        <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3" Mode="PrimaryMid" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" Margin="2">
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding AllBtnCheck}" Content="Весь племсостав" Command="{Binding ShowAllHorses}" />
                 <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="{Binding ActingBtnCheck}" Content="Действующие" Command="{Binding ShowActingHorses}" />
@@ -180,7 +180,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button x:Name="button" Command="{Binding AddHorse}" Style="{StaticResource MaterialDesignRaisedLightButton}" Content="Добавить лошадь"  Grid.Column="1" Margin="16,0" FontSize="15" Grid.Row="1" Height="Auto" MinHeight="34" VerticalAlignment="Center" Grid.ColumnSpan="6"/>
-        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25px" />
                 <ColumnDefinition Width="4*" />
@@ -195,7 +195,7 @@
             </TextBox>
         </Grid>
 
-        <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Выбор по параметру" Margin="29,0,16,0" Grid.Row="4" VerticalAlignment="Top" Grid.RowSpan="2">
+        <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.ColumnSpan="2" Grid.Column="1" Header="Выбор по параметру" Margin="29,0,16,0" Grid.Row="4" VerticalAlignment="Top" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -205,15 +205,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Content="По году рождения" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
-                <TextBox Margin="0,2" Text="{Binding YearQuery, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" materialDesign:HintAssist.Hint="Введите год рождения" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
-                <Label Content="" Grid.Row="2"/>
-                <Label Content="По жеребцу" Grid.Row="3" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
-                <ComboBox Grid.Row="4" x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="0,2" StaysOpenOnEdit="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="2">
+                <Label Content="По жеребцу" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Padding="0,4,4,4"/>
+                <ComboBox Grid.Row="1" x:Name="fatherComboBox" materialDesign:HintAssist.Hint="Выберите жеребца" TextSearch.TextPath="FullName" IsEditable="True" IsTextSearchEnabled="True" SelectedItem="{Binding FatherHorse}" ItemsSource="{Binding FatherHorseList}" Margin="0,2" StaysOpenOnEdit="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <ei:CallMethodAction MethodName="OnSelectionChanged" TargetObject="{Binding}"/>
@@ -236,7 +230,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button Content="Сбросить" Grid.Column="1" Grid.Row="5" Margin="0,8" Command="{Binding ShowAllHorses}" Height="Auto" Padding="8,4"/>
+                <Button Content="Сбросить" Grid.Column="1" Grid.Row="2" Margin="0,8" Command="{Binding ShowAllHorses}" Height="Auto" Padding="8,4"/>
             </Grid>
         </GroupBox>
     </Grid>

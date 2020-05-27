@@ -11,11 +11,5 @@ namespace HorseAccounting.View
         {
             InitializeComponent();
         }
-
-        private void SimpleAddBtn_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            AddHorseSimple addHorseSimple = new AddHorseSimple();
-            addHorseSimple.Show();
-        }
     }
 }

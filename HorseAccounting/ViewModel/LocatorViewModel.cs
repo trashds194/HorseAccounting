@@ -22,6 +22,7 @@ namespace HorseAccounting.ViewModel
             SimpleIoc.Default.Register<TaleMagazineViewModel>();
             SimpleIoc.Default.Register<AddTribalUseViewModel>();
             SimpleIoc.Default.Register<AddHorseSimpleViewModel>();
+            SimpleIoc.Default.Register<ShowDiagramsViewModel>();
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
 
             SetupNavigation();
@@ -38,6 +39,7 @@ namespace HorseAccounting.ViewModel
             navigationService.Configure("TaleMagazinePage", new Uri("../View/TaleMagazine.xaml", UriKind.Relative));
             navigationService.Configure("AddTribalUsePage", new Uri("../View/AddTribalUse.xaml", UriKind.Relative));
             navigationService.Configure("AddHorseSimpleWindow", new Uri("../View/AddHorseSimple.xaml", UriKind.Relative));
+            navigationService.Configure("ShowDiagramsPage", new Uri("../View/ShowDiagrams.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IPageNavigationService>(() => navigationService);
         }
@@ -114,9 +116,17 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        public ShowDiagramsViewModel ShowDiagramsViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ShowDiagramsViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            // TODO Clear the ViewModels.
         }
 
         private void NotifyUserMethod(NotificationMessage message)

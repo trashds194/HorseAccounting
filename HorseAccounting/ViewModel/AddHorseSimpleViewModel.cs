@@ -197,6 +197,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _addHorse = new RelayCommand(() =>
                     {
+                        FullName = string.Empty;
                         NamePart = FullName.Split(delimiterChars);
 
                         try

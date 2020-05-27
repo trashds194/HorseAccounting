@@ -176,7 +176,7 @@ namespace HorseAccounting.Model
 
             sWatch.Stop();
 
-            Console.WriteLine("сек" + sWatch.ElapsedMilliseconds.ToString());
+            Console.WriteLine("milliseconds " + sWatch.ElapsedMilliseconds.ToString());
             return horses;
         }
 
@@ -205,6 +205,17 @@ namespace HorseAccounting.Model
         public static async Task<ObservableCollection<Horse>> SearchHorsesAsync(string searchQuery)
         {
             string url = api + "horse.php?search=" + searchQuery;
+
+            string response = client.GetStringAsync(url).GetAwaiter().GetResult();
+
+            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+
+            return searchedHorses;
+        }
+
+        public static async Task<ObservableCollection<Horse>> SearchHorsesByYearAsync(string searchYearQuery)
+        {
+            string url = api + "horse.php?year=" + searchYearQuery;
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
@@ -452,7 +463,21 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
+        public static async Task DeleteHorseAsync(int id)
+        {
+            var horseData = new Dictionary<string, string>
+                {
+                    { "ID", id.ToString() },
+                };
 
+            var data = new FormUrlEncodedContent(horseData);
+
+            var response = client.PostAsync(api + "horse.php?horse=del", data).GetAwaiter().GetResult();
+
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+
+            Console.WriteLine(responseString);
+        }
 
         #endregion
 

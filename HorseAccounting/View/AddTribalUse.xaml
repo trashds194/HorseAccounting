@@ -54,7 +54,9 @@
 
             <Button x:Name="BackBtn" Command="{Binding Back}" Content="Назад" Margin="20,10" FontSize="18"/>
             <Button x:Name="AddBtn" Command="{Binding AddTribalUseToList}" Content="Добавить" Grid.Column="1" Margin="128,8,16,8" Grid.Row="12" FontSize="18" Grid.RowSpan="2" Height="Auto" VerticalAlignment="Center"/>
-            <Button x:Name="SimpleAddBtn" Content="Упрощенное добавление отца" Margin="16,8,0,8" Grid.Row="12" FontSize="18" Click="SimpleAddBtn_Click"/>
+            <Button x:Name="SimpleAddBtn" Margin="16,8,0,8" Grid.Row="12" FontSize="18" Command="{Binding AddHorseSimple}" Height="Auto" VerticalAlignment="Center">
+                <TextBlock Text="Упрощенное добавление отца" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
 
             <Label Grid.Row="0" Grid.Column="1" Content="Добавление племенной деятельности кобылы" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
 
@@ -79,7 +81,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="Информация о случке" Grid.ColumnSpan="4" Margin="0,8">
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Header="Информация о случке" Grid.ColumnSpan="4" Margin="0,8">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -104,7 +106,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Grid.Row="1" Grid.ColumnSpan="4" Header="Информация об отце жеребенка" Margin="0,8" Grid.RowSpan="3">
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="1" Grid.ColumnSpan="4" Header="Информация об отце жеребенка" Margin="0,8" Grid.RowSpan="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -166,7 +168,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Grid.RowSpan="5" Margin="0,8" Header="Информация о жеребенке">
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="4" Grid.ColumnSpan="4" Grid.RowSpan="5" Margin="0,8" Header="Информация о жеребенке">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -256,7 +258,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Дополнительно (Если лошадь не была крыта или стала холоста, то выберите значения ниже)" Grid.Row="9" Margin="0,8" Grid.ColumnSpan="4" Grid.RowSpan="2">
+                <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Header="Дополнительно (Если лошадь не была крыта или стала холоста, то выберите значения ниже)" Grid.Row="9" Margin="0,8" Grid.ColumnSpan="4" Grid.RowSpan="2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

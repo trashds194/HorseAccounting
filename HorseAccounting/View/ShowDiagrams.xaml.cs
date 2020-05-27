@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HorseAccounting.View
 {
     /// <summary>
-    /// Логика взаимодействия для ChangeHorse.xaml
+    /// Логика взаимодействия для AddDiagrams.xaml
     /// </summary>
-    public partial class ChangeHorse : Page
+    public partial class ShowDiagrams : Page
     {
-        public ChangeHorse()
+        public ShowDiagrams()
         {
             InitializeComponent();
         }

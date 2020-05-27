@@ -54,20 +54,20 @@
                             <MenuItem.Icon>
                                 <materialDesign:PackIcon Kind="FileDocument" />
                             </MenuItem.Icon>
-                            <MenuItem Header="Создать файл" MinHeight="40" Height="Auto" VerticalAlignment="Top">
-                                <!--Command="{Binding CreateHorseCard}"-->
+                            <MenuItem Header="Создать карточку" MinHeight="40" Height="Auto" VerticalAlignment="Top" Command="{Binding CreateHorseCard}">
+                                
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Add" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Открыть файл" MinHeight="40" Height="Auto" VerticalAlignment="Top">
-                                <!-- Command="{Binding OpenHorseCard}"-->
+                            <MenuItem Header="Открыть карточку" MinHeight="40" Height="Auto" VerticalAlignment="Top" Command="{Binding OpenHorseCard}">
+                                 
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="DriveDocument" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Открыть папку" MinHeight="40" Height="Auto" VerticalAlignment="Top">
-                                <!--Command="{Binding OpenCardsFolder}"-->
+                            <MenuItem Header="Открыть папку" MinHeight="40" Height="Auto" VerticalAlignment="Top" Command="{Binding OpenCardsFolder}">
+                                
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="FolderOpenOutline" />
                                 </MenuItem.Icon>
@@ -282,55 +282,8 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <!--<Label VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
-                                <Label.Content>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Source="Состояние:" />
-                                                <Binding Path="State" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Label.Content>
-                            </Label>
-                            <Label Grid.Column="1" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
-                                <Label.Content>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Source="Номер чипа:" />
-                                                <Binding Path="ChipNumber" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Label.Content>
-                            </Label>
-                            <Label Grid.Column="2" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
-                                <Label.Content>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Source="Порода:" />
-                                                <Binding Path="Breed" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Label.Content>
-                            </Label>
-                            <Label Grid.Column="3" VerticalAlignment="Center" DataContext="{Binding SelectedHorse}">
-                                <Label.Content>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Source="Класс:" />
-                                                <Binding Path="TheClass" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Label.Content>
-                            </Label>-->
-                            <Button Grid.Column="4" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35"/>
+                            <Button Height="Auto" MinHeight="35" Margin="0,16,24,8" Command="{Binding DeleteHorse}" HorizontalAlignment="Left" MinWidth="150" VerticalAlignment="Center" Content="Удалить" />
+                            <Button Grid.Column="4" Height="Auto" Margin="24,16,0,8" Content="Изменить" Command="{Binding ChangeHorse}" HorizontalAlignment="Right" MinWidth="150" MinHeight="35" VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
                 </Expander>

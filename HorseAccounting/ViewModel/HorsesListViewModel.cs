@@ -3,10 +3,13 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using HorseAccounting.View;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HorseAccounting.ViewModel
 {
@@ -32,7 +35,8 @@ namespace HorseAccounting.ViewModel
 
         private string _searchQuery;
 
-        private int _yearQuery;
+        About about;
+        bool isAboutOpen;
 
         #endregion
 
@@ -45,6 +49,7 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
+                Console.WriteLine(Properties.Settings.Default.ListState);
                 try
                 {
                     _fatherHorseList = Horse.GetFatherHorseAsync().Result;
@@ -85,6 +90,9 @@ namespace HorseAccounting.ViewModel
                             break;
                     }
                 }
+
+                isAboutOpen = true;
+
             }).ConfigureAwait(true);
         }
 
@@ -101,7 +109,6 @@ namespace HorseAccounting.ViewModel
                         AllBtnCheck = true;
                         SearchQuery = null;
                         FatherHorse = null;
-                        YearQuery = 0;
 
                         _horses = Horse.GetHorses().Result;
                         RaisePropertyChanged(() => HorsesList);
@@ -118,7 +125,6 @@ namespace HorseAccounting.ViewModel
                         ActingBtnCheck = true;
                         SearchQuery = null;
                         FatherHorse = null;
-                        YearQuery = 0;
 
                         _horses = Horse.GetActingHorses().Result;
                         RaisePropertyChanged(() => HorsesList);
@@ -135,7 +141,6 @@ namespace HorseAccounting.ViewModel
                         RetiredBtnCheck = true;
                         SearchQuery = null;
                         FatherHorse = null;
-                        YearQuery = 0;
 
                         _horses = Horse.GetRetiredHorses().Result;
                         RaisePropertyChanged(() => HorsesList);
@@ -152,7 +157,6 @@ namespace HorseAccounting.ViewModel
                         StallionBtnCheck = true;
                         SearchQuery = null;
                         FatherHorse = null;
-                        YearQuery = 0;
 
                         _horses = Horse.GetFatherHorseAsync().Result;
                         RaisePropertyChanged(() => HorsesList);
@@ -169,7 +173,6 @@ namespace HorseAccounting.ViewModel
                         MareBtnCheck = true;
                         SearchQuery = null;
                         FatherHorse = null;
-                        YearQuery = 0;
 
                         _horses = Horse.GetMotherHorseAsync().Result;
                         RaisePropertyChanged(() => HorsesList);
@@ -181,21 +184,39 @@ namespace HorseAccounting.ViewModel
 
                         break;
                     default:
+                        if (DateTime.TryParseExact(state, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
+                        {
+                            FatherHorse = null;
 
-                        FatherHorse = null;
-                        YearQuery = 0;
+                            SearchQuery = state;
 
-                        SearchQuery = state;
+                            _horses = Horse.SearchHorsesByYearAsync(SearchQuery).Result;
+                            RaisePropertyChanged(() => HorsesList);
 
-                        _horses = Horse.SearchHorsesAsync(SearchQuery).Result;
-                        RaisePropertyChanged(() => HorsesList);
+                            Properties.Settings.Default.ListState = SearchQuery;
+                            Properties.Settings.Default.Save();
 
-                        Properties.Settings.Default.ListState = SearchQuery;
-                        Properties.Settings.Default.Save();
+                            Console.WriteLine(Properties.Settings.Default.ListState);
 
-                        Console.WriteLine(Properties.Settings.Default.ListState);
+                            break;
 
-                        break;
+                        }
+                        else
+                        {
+                            FatherHorse = null;
+
+                            SearchQuery = state;
+
+                            _horses = Horse.SearchHorsesAsync(SearchQuery).Result;
+                            RaisePropertyChanged(() => HorsesList);
+
+                            Properties.Settings.Default.ListState = SearchQuery;
+                            Properties.Settings.Default.Save();
+
+                            Console.WriteLine(Properties.Settings.Default.ListState);
+
+                            break;
+                        }
                 }
             }
             catch
@@ -242,7 +263,7 @@ namespace HorseAccounting.ViewModel
         {
             await Task.Run(() =>
             {
-                if(SearchQuery != null)
+                if (!string.IsNullOrEmpty(SearchQuery))
                 {
                     try
                     {
@@ -265,7 +286,7 @@ namespace HorseAccounting.ViewModel
                     Properties.Settings.Default.Save();
 
                     GetHorses(Properties.Settings.Default.ListState);
-                }              
+                }
             }).ConfigureAwait(true);
         }
 
@@ -368,23 +389,6 @@ namespace HorseAccounting.ViewModel
 
                 _searchQuery = value;
                 RaisePropertyChanged(nameof(SearchQuery));
-            }
-        }
-
-        public int YearQuery
-        {
-            get
-            {
-                return _yearQuery;
-            }
-
-            set
-            {
-                if(value <= 2150)
-                {
-                    _yearQuery = value;
-                    RaisePropertyChanged(nameof(YearQuery));
-                }
             }
         }
 
@@ -507,7 +511,21 @@ namespace HorseAccounting.ViewModel
                     ?? (_openAbout = new RelayCommand(
                     () =>
                     {
+                        FormCollection fc = Application.OpenForms;
+                        for(int i = 0; i < fc.Count; i++)
+                        {
+                            if(fc[i].Name == "About")
+                            {
+                                fc[i].Close();
+                                isAboutOpen = true;
+                            }
+                        }
 
+                        if (isAboutOpen)
+                        {
+                            about = new About();
+                            about.Show();
+                        }
                     }));
             }
 
@@ -537,6 +555,26 @@ namespace HorseAccounting.ViewModel
             private set
             {
                 _openHelp = value;
+            }
+        }
+
+        private RelayCommand _showDiagrams;
+
+        public RelayCommand ShowDiagrams
+        {
+            get
+            {
+                return _showDiagrams
+                    ?? (_showDiagrams = new RelayCommand(
+                    () =>
+                    {
+                        _navigationService.NavigateTo("ShowDiagramsPage");
+                    }));
+            }
+
+            private set
+            {
+                _showDiagrams = value;
             }
         }
 
@@ -721,19 +759,19 @@ namespace HorseAccounting.ViewModel
 
         //private RelayCommand _searchHorse;
 
-        //public RelayCommand SearchHorse
-        //{
-        //    get
-        //    {
-        //        return _searchHorse
-        //            ?? (_searchHorse = new RelayCommand(
-        //            () =>
-        //            {
-        //                _horses = Horse.SearchHorses(SearchQuery);
-        //                RaisePropertyChanged(() => HorsesList);
-        //            }));
-        //    }
-        //}
+        // public RelayCommand SearchHorse
+        // {
+        //     get
+        //     {
+        //         return _searchHorse
+        //             ?? (_searchHorse = new RelayCommand(
+        //             () =>
+        //             {
+        //                 _horses = Horse.SearchHorses(SearchQuery);
+        //                 RaisePropertyChanged(() => HorsesList);
+        //             }));
+        //     }
+        // }
 
         #endregion
 

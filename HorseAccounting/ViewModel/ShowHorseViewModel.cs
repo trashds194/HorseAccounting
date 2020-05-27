@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿#define TRACE_ON
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
@@ -11,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -49,6 +51,8 @@ namespace HorseAccounting.ViewModel
             _navigationService = navigationService;
         }
 
+        [Conditional("TRACE_ON")]
+        [Conditional("DEBUG")]
         public async void OnPageLoad()
         {
             ParentsVis = false;
@@ -65,8 +69,10 @@ namespace HorseAccounting.ViewModel
                     {
                         MainHorse = new Horse();
                         MainHorse.ID = 0;
+                        Console.WriteLine("Ошибка при загрузке данных лошади");
                     }
                     SelectedHorse = Horse.GetSelectedHorseAsync(MainHorse.ID).Result;
+                    Console.WriteLine("Данные лошади загружены");
 
                     if (SelectedHorse.Gender.Equals("Кобыла"))
                     {
@@ -499,6 +505,46 @@ namespace HorseAccounting.ViewModel
             }
         }
 
+        private ICommand _deleteHorse;
+
+        public ICommand DeleteHorse
+        {
+            get
+            {
+                if (_deleteHorse == null)
+                {
+                    _deleteHorse = new RelayCommand(() =>
+                    {
+                        MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить данные лошади?\n(Это действие нельзя отменить)", "Удалить лошадь?", MessageBoxButton.YesNo);
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                Horse.DeleteHorseAsync(SelectedHorse.ID);
+
+                                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно удалили данные лошади"));
+
+                                MainHorse = null;
+                                SelectedHorse = null;
+                                MotherHorse = null;
+                                FatherHorse = null;
+                                MainHorseScoring = null;
+                                MainHorseProgression = null;
+                                MainHorseTribalUses = null;
+                                _navigationService.NavigateTo("HorsesList");
+                                break;
+                        }
+                    });
+                }
+
+                return _deleteHorse;
+            }
+
+            set
+            {
+                _deleteHorse = value;
+            }
+        }
+
         private ICommand _changeHorse;
 
         public ICommand ChangeHorse
@@ -509,7 +555,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _changeHorse = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("ChangeHorsePage", MainHorse);
+                        _navigationService.NavigateTo("ChangeHorsePage", SelectedHorse);
                     });
                 }
 
@@ -542,7 +588,7 @@ namespace HorseAccounting.ViewModel
                         {
                             if (!string.IsNullOrEmpty(AddedProgression.Date))
                             {
-                                if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, MainHorse.ID).Result)
+                                if (Progression.AddProgressionAsync(AddedProgression.Date, AddedProgression.Destination, AddedProgression.Comment, SelectedHorse.ID).Result)
                                 {
                                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Вы успешно добавили движение лошади"));
                                     if (AddedProgression.Destination.Equals("продажа") || AddedProgression.Destination.Equals("списание")
@@ -600,7 +646,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _addScoring = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("AddScoringPage", MainHorse);
+                        _navigationService.NavigateTo("AddScoringPage", SelectedHorse);
                     });
                 }
 
@@ -623,7 +669,7 @@ namespace HorseAccounting.ViewModel
                 {
                     _addTribalUse = new RelayCommand(() =>
                     {
-                        _navigationService.NavigateTo("AddTribalUsePage", MainHorse);
+                        _navigationService.NavigateTo("AddTribalUsePage", SelectedHorse);
                     });
                 }
 

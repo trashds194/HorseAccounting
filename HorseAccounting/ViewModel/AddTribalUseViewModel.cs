@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using HorseAccounting.Infra;
 using HorseAccounting.Model;
+using HorseAccounting.View;
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.ObjectModel;
@@ -43,6 +44,8 @@ namespace HorseAccounting.ViewModel
         private TribalUse _addedTribalUse;
 
         private ObservableCollection<Horse> _fatherHorseList;
+
+        AddHorseSimple addHorseSimple;
 
         #endregion
 
@@ -98,7 +101,7 @@ namespace HorseAccounting.ViewModel
                         {
                             _fatherHorseList = Horse.GetFatherHorseAsync().Result;
                             RaisePropertyChanged(() => FatherHorseList);
-                            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
+                            // Messenger.Default.Send<NotificationMessage>(new NotificationMessage("В фокусе"));
                         }
                     }
                 }
@@ -474,6 +477,34 @@ namespace HorseAccounting.ViewModel
             set
             {
                 _backToHorse = value;
+            }
+        }
+
+        private ICommand _addHorseSimple;
+
+        public ICommand AddHorseSimple
+        {
+            get
+            {
+                if (_addHorseSimple == null)
+                {
+                    _addHorseSimple = new RelayCommand(() =>
+                    {
+                        if (this.addHorseSimple == null)
+                        {
+                            this.addHorseSimple = new AddHorseSimple();
+                            this.addHorseSimple.Closed += (sender, args) => this.addHorseSimple = null;
+                            this.addHorseSimple.Show();
+                        }
+                    });
+                }
+
+                return _addHorseSimple;
+            }
+
+            set
+            {
+                _addHorseSimple = value;
             }
         }
 

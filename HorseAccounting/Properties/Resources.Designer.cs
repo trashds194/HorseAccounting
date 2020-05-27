@@ -80,7 +80,7 @@ namespace HorseAccounting.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на http://1k-horse-base.ru/api/.
+        ///   Ищет локализованную строку, похожую на https://1k-horse-base.ru/api/.
         /// </summary>
         internal static string ru {
             get {

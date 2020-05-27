@@ -1649,7 +1649,7 @@ namespace HorseAccounting.ViewModel
                             else
                             {
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Файл уже создан. Выполняется открытие файла"));
-                                //System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + StallionHorse.NickName + @"\" + StallionHorse.NickName + ".xlsx");
+                                // System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.BaseDirectory + StallionHorse.NickName + @"\" + StallionHorse.NickName + ".xlsx");
                                 Excel.Application excel = new Excel.Application();
                                 excel.Visible = true;
                                 Excel.Workbook workbook = excel.Workbooks.Open(magazinesPath + Year + @"\" + StallionHorse.FullName + ".xlsx", 0, false);

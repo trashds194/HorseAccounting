@@ -6,12 +6,12 @@ using System.Windows;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("HorseAccounting")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Помощник коневода")]
+[assembly: AssemblyDescription("Программа Помощник коневода разработана на базе колледжа РКРИПТ для внедрения на ОАО Конный завод им. Первой Конной Армиии.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HorseAccounting")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("ОАО Конный завод им. Первой Конной Армии")]
+[assembly: AssemblyProduct("Помощник коневода")]
+[assembly: AssemblyCopyright("Разработчик: Тращенко Дмитрий Сергеевич\nстудент группы ПО-41\nCopyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -44,5 +44,5 @@ using System.Windows;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.4")]
+[assembly: AssemblyFileVersion("1.0.0.4")]

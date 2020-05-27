@@ -50,11 +50,13 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="BackBtn" Command="{Binding Back}" Content="Назад" Margin="16,8" FontSize="18"/>
-            <Button x:Name="AddBtn" Command="{Binding ChangeHorse}" Content="Сохранить" Grid.Column="1" Margin="128,8,0,8" Grid.Row="9" FontSize="18"/>
-            <Button x:Name="SimpleAddBtn" Content="Упрощенное добавление" Margin="16,8,0,8" Grid.Row="9" FontSize="18" Click="SimpleAddBtn_Click"/>
+            <Button x:Name="AddBtn" Command="{Binding ChangeHorse}" Content="Сохранить" Grid.Column="1" Margin="128,8,0,8" Grid.Row="9" FontSize="18" VerticalAlignment="Center" Height="Auto"/>
+            <Button x:Name="SimpleAddBtn" Margin="16,8,0,8" Grid.Row="9" FontSize="18" Command="{Binding AddHorseSimple}" Height="Auto" VerticalAlignment="Center">
+                <TextBlock Text="Упрощенное добавление" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
 
             <Label Grid.Row="0" Grid.Column="1" Content="Изменение данных лошади" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
-            <GroupBox Grid.Row="1" Header="Полная кличка лошади" Grid.ColumnSpan="2" Margin="16,8,0,8">
+            <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="1" Header="Полная кличка лошади" Grid.ColumnSpan="2" Margin="16,8,0,8">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -76,7 +78,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Margin="16,8,0,8" Grid.RowSpan="5" Header="Основная информация о лошади">
+            <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="2" Grid.ColumnSpan="2" Margin="16,8,0,8" Grid.RowSpan="5" Header="Основная информация о лошади">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -264,7 +266,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="7" Grid.ColumnSpan="2" Margin="16,8,0,8" Header="Родители лошади">
+            <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="7" Grid.ColumnSpan="2" Margin="16,8,0,8" Header="Родители лошади">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
