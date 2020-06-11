@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace HorseAccounting.Model
 {
+    // Сущность "Лошадь"
     public class Horse : ObservableObject
     {
         #region Vars
@@ -40,7 +41,7 @@ namespace HorseAccounting.Model
 
         public static readonly Stopwatch sWatch = new Stopwatch();
 
-        private static readonly string api = Properties.Resources.loc;
+        private static readonly string api = Properties.Resources.ru;
 
         #endregion
 
@@ -164,6 +165,7 @@ namespace HorseAccounting.Model
 
         #region HorsesListPage
 
+        // Метод получения всех записей из БД
         public static async Task<ObservableCollection<Horse>> GetHorses()
         {
             sWatch.Start();
@@ -261,7 +263,9 @@ namespace HorseAccounting.Model
             return fatherHorses;
         }
 
-        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
+        // Метод добавления записи в БД
+        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, 
+            string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
             {
@@ -285,9 +289,7 @@ namespace HorseAccounting.Model
                 };
 
                 var data = new FormUrlEncodedContent(horseData);
-
                 var response = client.PostAsync(api + "horse.php?horse=add", data).GetAwaiter().GetResult();
-
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 Console.WriteLine(responseString);
@@ -463,6 +465,7 @@ namespace HorseAccounting.Model
 
         #region ShowHorsePage
 
+        // Метод удаления данных из БД
         public static async Task DeleteHorseAsync(int id)
         {
             var horseData = new Dictionary<string, string>

@@ -8,7 +8,6 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HorseAccounting.ViewModel
@@ -51,107 +50,93 @@ namespace HorseAccounting.ViewModel
             };
         }
 
-        public void OnPageLoad()
+        public void OnSelectionChanged()
         {
             try
             {
+                if (SelectedMenuItem != null)
+                {
+                    switch (SelectedMenuItem.ID)
+                    {
+                        case 0:
+                            PieVis = true;
+                            CartesianVis = false;
+
+                            PieChartSeriesCollection.Clear();
+                            _diagrams = Diagram.GetGenderDiagram().Result;
+                            RaisePropertyChanged(() => Diagrams);
+
+                            foreach (Diagram item in _diagrams)
+                            {
+                                PieChartSeriesCollection.Add(new PieSeries { Title = item.Title, Values = new ChartValues<int> { item.Value }, DataLabels = true, LabelPoint = labelPoint });
+                            }
+                            break;
+                        case 1:
+                            PieVis = true;
+                            CartesianVis = false;
+
+                            PieChartSeriesCollection.Clear();
+                            _diagrams = Diagram.GetBirthPlaceDiagram().Result;
+                            RaisePropertyChanged(() => Diagrams);
+
+                            foreach (Diagram item in _diagrams)
+                            {
+                                PieChartSeriesCollection.Add(new PieSeries { Title = item.Title, Values = new ChartValues<int> { item.Value }, DataLabels = true, LabelPoint = labelPoint });
+                            }
+                            break;
+                        case 2:
+                            PieVis = false;
+                            CartesianVis = true;
+
+                            CartesianChartSeriesCollection.Clear();
+                            _diagrams = Diagram.GetStallionYearDiagram().Result;
+                            RaisePropertyChanged(() => Diagrams);
+
+                            Diagram stallionCartes = new Diagram();
+                            ChartValues<int> stallionValues = new ChartValues<int>();
+                            Labels = new List<string>();
+
+
+                            foreach (Diagram item in _diagrams)
+                            {
+                                stallionCartes.Title = item.Title;
+                                stallionValues.Add(item.Value);
+                                Labels.Add(item.Year);
+                            }
+
+                            CartesianChartSeriesCollection.Add(new ColumnSeries
+                            {
+                                Title = stallionCartes.Title,
+                                Values = stallionValues
+                            });
+
+                            _diagrams = Diagram.GetMareYearDiagram().Result;
+                            RaisePropertyChanged(() => Diagrams);
+
+                            Diagram mareCartes = new Diagram();
+                            ChartValues<int> mareValues = new ChartValues<int>();
+
+                            foreach (Diagram item in _diagrams)
+                            {
+                                mareCartes.Title = item.Title;
+                                mareValues.Add(item.Value);
+                            }
+
+                            CartesianChartSeriesCollection.Add(new ColumnSeries
+                            {
+                                Title = mareCartes.Title,
+                                Values = mareValues
+                            });
+                            break;
+                    }
+                }
 
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
             }
-        }
-
-        public async void OnSelectionChanged()
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    if (SelectedMenuItem != null)
-                    {
-                        switch (SelectedMenuItem.ID)
-                        {
-                            case 0:
-                                PieVis = true;
-                                CartesianVis = false;
-
-                                PieChartSeriesCollection.Clear();
-                                _diagrams = Diagram.GetGenderDiagram().Result;
-                                RaisePropertyChanged(() => Diagrams);
-
-                                foreach (Diagram item in _diagrams)
-                                {
-                                    PieChartSeriesCollection.Add(new PieSeries { Title = item.Title, Values = new ChartValues<int> { item.Value }, DataLabels = true, LabelPoint = labelPoint });
-                                }
-                                break;
-                            case 1:
-                                PieVis = true;
-                                CartesianVis = false;
-
-                                PieChartSeriesCollection.Clear();
-                                _diagrams = Diagram.GetBirthPlaceDiagram().Result;
-                                RaisePropertyChanged(() => Diagrams);
-
-                                foreach (Diagram item in _diagrams)
-                                {
-                                    PieChartSeriesCollection.Add(new PieSeries { Title = item.Title, Values = new ChartValues<int> { item.Value }, DataLabels = true, LabelPoint = labelPoint });
-                                }
-                                break;
-                            case 2:
-                                PieVis = false;
-                                CartesianVis = true;
-
-                                CartesianChartSeriesCollection.Clear();
-                                _diagrams = Diagram.GetStallionYearDiagram().Result;
-                                RaisePropertyChanged(() => Diagrams);
-
-                                Diagram stallionCartes = new Diagram();
-                                ChartValues<int> stallionValues = new ChartValues<int>();
-                                Labels = new List<string>();
-
-
-                                foreach (Diagram item in _diagrams)
-                                {
-                                    stallionCartes.Title = item.Title;
-                                    stallionValues.Add(item.Value);
-                                    Labels.Add(item.Year);
-                                }
-
-                                CartesianChartSeriesCollection.Add(new ColumnSeries
-                                {
-                                    Title = stallionCartes.Title,
-                                    Values = stallionValues
-                                });
-
-                                _diagrams = Diagram.GetMareYearDiagram().Result;
-                                RaisePropertyChanged(() => Diagrams);
-
-                                Diagram mareCartes = new Diagram();
-                                ChartValues<int> mareValues = new ChartValues<int>();
-
-                                foreach (Diagram item in _diagrams)
-                                {
-                                    mareCartes.Title = item.Title;
-                                    mareValues.Add(item.Value);
-                                }
-
-                                CartesianChartSeriesCollection.Add(new ColumnSeries
-                                {
-                                    Title = mareCartes.Title,
-                                    Values = mareValues
-                                });
-                                break;
-                        }
-                    }
-
-                }
-                catch
-                {
-                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
-                }
-            }).ConfigureAwait(true);
         }
 
         #region Definitions

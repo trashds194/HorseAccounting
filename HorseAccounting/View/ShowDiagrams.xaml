@@ -28,11 +28,6 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
     </Page.Resources>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction MethodName="OnPageLoad" TargetObject="{Binding}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -46,7 +41,7 @@
         <Button x:Name="BackBtn" Command="{Binding BackToList}" Content="Назад" Margin="16,8" FontSize="18" Height="Auto" VerticalAlignment="Center"/>
         <Label Grid.Row="0" Grid.Column="1" Content="Диаграммы" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" FontFamily="Roboto" FontWeight="Bold"/>
 
-        <GroupBox Grid.Row="1" Margin="16,0" Header="Выбор диаграммы">
+        <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="1" Margin="16,0" Header="Выбор диаграммы">
             <ListBox FontSize="16" ItemsSource="{Binding MenuList}" SelectedItem="{Binding SelectedMenuItem}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -66,9 +61,9 @@
             </ListBox>
         </GroupBox>
 
-        <GroupBox Grid.Row="1" Grid.Column="1" Margin="16,0" Header="Диаграмма">
+        <GroupBox Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Grid.Row="1" Grid.Column="1" Margin="16,0" Header="Диаграмма">
             <Grid>
-                <lvc:PieChart Visibility="{Binding PieVis, Converter={StaticResource BoolToVisConverter}}" Hoverable="True" DataTooltip="{x:Null}" InnerRadius="150" Series="{Binding PieChartSeriesCollection}" LegendLocation="Right">
+                <lvc:PieChart Visibility="{Binding PieVis, Converter={StaticResource BoolToVisConverter}}" Hoverable="True" DataTooltip="{x:Null}" InnerRadius="80" Series="{Binding PieChartSeriesCollection}" LegendLocation="Right">
                     <lvc:PieChart.ChartLegend>
                         <c:CustomLvChartLegend Orientation="Vertical"/>
                     </lvc:PieChart.ChartLegend>

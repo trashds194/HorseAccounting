@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="HorseAccounting.App" Collapsed="true">
+    <Position X="4" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.Infra.ChartCommand&lt;T&gt;" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAACAAQAEEAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Infra\ChartCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.Infra.CustomLvChartLegend" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAIAQAAAAAAIAEAAAAAgEAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Infra\CustomLvChartLegend.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.Infra.CustomSeriesViewModel" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEEAAIAAAAAAAgAABCAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Infra\CustomLvChartLegend.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.Infra.PageNavigationService" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAEAAIATAAAAAgAAQCAFAAAAAAAAAAAA=</HashCode>
+      <FileName>Infra\PageNavigationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.Model.Diagram">
+    <Position X="5.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAEBIAIAEAAAAAAAAIAAAAAAAAAACggBAQAAAA=</HashCode>
+      <FileName>Model\Diagram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Model.Horse">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCAYkSGIEAgYgcGBABJADAYgkABIAAEokCCEhgNDAAA=</HashCode>
+      <FileName>Model\Horse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Model.Progression">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQAEEAAAgCIABABAAAAAAAAAAAAFKCAABAAAAAA=</HashCode>
+      <FileName>Model\Progression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Model.Scoring">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAgVEUggBgAAABEBACAAAAAABAAghKCgRBAgAAgA=</HashCode>
+      <FileName>Model\Scoring.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Model.TribalUse">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAMEJJAAwggAABDABEIgokBAAAJIgiAgDAAAAKQ=</HashCode>
+      <FileName>Model\TribalUse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Properties.Resources">
+    <Position X="9.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAAAAAAAAAAAAABGAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.Properties.Settings">
+    <Position X="11" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAIAAAAAABIAAAAAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.View.About">
+    <Position X="18" Y="9.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>kIACAAgAACAgCAUAAACAAAADAAAAEIAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\About.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.View.AddHorse" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddHorse.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.AddHorseSimple" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddHorseSimple.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.AddScoring" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddScoring.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.AddTribalUse" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddTribalUse.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.ChangeHorse" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\ChangeHorse.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.HorsesList" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\HorsesList.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.ShowDiagrams" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\ShowDiagrams.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.ShowHorse" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\ShowHorse.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.View.TaleMagazine" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\TaleMagazine.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.AddHorseSimpleViewModel">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gwAAEAAABAQIAIiBABAQgAIAAQAAAAFAAAAAAgQBABA=</HashCode>
+      <FileName>ViewModel\AddHorseSimpleViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.AddHorseViewModel">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hxKhkAiEAgQIAAiAYRAEAAQABRBAOCBAFIALgh4QhIA=</HashCode>
+      <FileName>ViewModel\AddHorseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.AddScoringViewModel">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCACAAAAAEAQAAAIIAACIAAAAgAAAAABIAAjAgAhAA=</HashCode>
+      <FileName>ViewModel\AddScoringViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.AddTribalUseViewModel">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARG4CAAEABAAEEFAJAAAABQABFRAKAAABYAASlhDhoA=</HashCode>
+      <FileName>ViewModel\AddTribalUseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.ChangeHorseViewModel">
+    <Position X="11" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BxC7mSmMAgYIAAiAJRAkAAQABQBAOCAABMABChgQhIA=</HashCode>
+      <FileName>ViewModel\ChangeHorseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.HorsesListViewModel">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gGAASOAIEMEwAACAIYCBAhQEAJBAIkoAgIBBAgSCBmA=</HashCode>
+      <FileName>ViewModel\HorsesListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.LocatorViewModel">
+    <Position X="21.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAkAAAAIAAAAAAQAAAAQAEAEAAAAACAEAgAIA=</HashCode>
+      <FileName>ViewModel\LocatorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.MainWindowViewModel">
+    <Position X="19.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.ShowDiagramsViewModel">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAKACAEAFBAAAU4AAAAAAAAAJQABAAAEACABATBAA=</HashCode>
+      <FileName>ViewModel\ShowDiagramsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.MenuItem">
+    <Position X="14.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ShowDiagramsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.ShowHorseViewModel">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MBIIGIIIiAQhUiIAIBAAASQgABBAICAJEIADmikAJIA=</HashCode>
+      <FileName>ViewModel\ShowHorseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HorseAccounting.ViewModel.TaleMagazineViewModel">
+    <Position X="14.5" Y="9.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>FWSDF0xgBIlA1lqAoIBiWCNNFQGEoNZYAAc1kAkjDzI=</HashCode>
+      <FileName>ViewModel\TaleMagazineViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="HorseAccounting.Infra.IPageNavigationService">
+    <Position X="12.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infra\IPageNavigationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="HorseAccounting.ViewModel.Gender">
+    <Position X="21.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>ViewModel\AddHorseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

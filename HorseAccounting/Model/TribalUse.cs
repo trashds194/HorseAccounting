@@ -33,7 +33,7 @@ namespace HorseAccounting.Model
 
         private static readonly HttpClient client = new HttpClient();
 
-        private static readonly string api = Properties.Resources.loc;
+        private static readonly string api = Properties.Resources.ru;
 
         #endregion
 

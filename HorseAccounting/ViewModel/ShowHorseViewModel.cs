@@ -359,6 +359,25 @@ namespace HorseAccounting.ViewModel
                                 document.Bookmarks["GpkNum"].Range.Text = SelectedHorse.GpkNum;
                                 document.Bookmarks["NickName"].Range.Text = SelectedHorse.NickName;
                                 document.Bookmarks["Brand"].Range.Text = SelectedHorse.Brand;
+                                document.Bookmarks["Bloodiness"].Range.Text = SelectedHorse.Bloodiness;
+                                document.Bookmarks["FullName"].Range.Text = SelectedHorse.FullName;
+                                document.Bookmarks["BirthDate"].Range.Text = SelectedHorse.BirthDate;
+                                document.Bookmarks["Color"].Range.Text = SelectedHorse.Color;
+                                document.Bookmarks["BirthPlace"].Range.Text = SelectedHorse.BirthPlace;
+                                document.Bookmarks["Owner"].Range.Text = SelectedHorse.Owner;
+                                document.Bookmarks["Breed"].Range.Text = SelectedHorse.Breed;
+
+                                document.Bookmarks["MotherGpkNum"].Range.Text = MotherHorse.GpkNum;
+                                document.Bookmarks["MotherNickName"].Range.Text = MotherHorse.NickName;
+                                document.Bookmarks["MotherBrand"].Range.Text = MotherHorse.Brand;
+                                document.Bookmarks["MotherColor"].Range.Text = MotherHorse.Color;
+                                document.Bookmarks["MotherBirthDate"].Range.Text = MotherHorse.BirthDate;
+
+                                document.Bookmarks["FatherGpkNum"].Range.Text = FatherHorse.GpkNum;
+                                document.Bookmarks["FatherNickName"].Range.Text = FatherHorse.NickName;
+                                document.Bookmarks["FatherBrand"].Range.Text = FatherHorse.Brand;
+                                document.Bookmarks["FatherColor"].Range.Text = FatherHorse.Color;
+                                document.Bookmarks["FatherBirthDate"].Range.Text = FatherHorse.BirthDate;
 
                                 document.SaveAs2(FileName: magazinesPath + SelectedHorse.FullName, format);
                                 document.Close();
@@ -367,7 +386,7 @@ namespace HorseAccounting.ViewModel
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Карточка лошади успешно создана!"));
 
                                 Word.Application word = new Word.Application();
-                                application.Visible = true;
+                                word.Visible = true;
                                 var cardPath = System.IO.Path.GetFullPath(magazinesPath + @SelectedHorse.FullName + @".doc");
                                 Word.Document card = word.Documents.Open(cardPath);
                             }

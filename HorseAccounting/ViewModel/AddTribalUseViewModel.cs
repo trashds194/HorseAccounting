@@ -115,6 +115,7 @@ namespace HorseAccounting.ViewModel
             }).ConfigureAwait(true);
         }
 
+        // Асинхронный метод обновления данных выпадающего списка
         private async void ComboBoxesUpdate()
         {
             await Task.Run(() =>
@@ -128,7 +129,7 @@ namespace HorseAccounting.ViewModel
                 {
                     if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
                     {
-                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение."));
                     }
                 }
             }).ConfigureAwait(true);
