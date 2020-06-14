@@ -99,7 +99,7 @@
                         <Label Content="Кровность:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center" Margin="0"/>
                         <Label Content="Масть:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center" Margin="0" Grid.Column="2"/>
 
-                        <ComboBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="16,0,16,8" materialDesign:TextFieldAssist.HasClearButton="True" IsEditable="True" Text="{Binding AddedHorse.Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox x:Name="blodinessTextBox" materialDesign:HintAssist.Hint="Введите Кровность" Margin="16,0,16,8" materialDesign:TextFieldAssist.HasClearButton="True" IsEditable="True" Text="{Binding MainHorse.Bloodiness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />

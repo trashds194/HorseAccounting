@@ -44,6 +44,9 @@ namespace HorseAccounting.ViewModel
 
         private Progression _addedProgression;
 
+        Word.Application application;
+        Word.Document document;
+
         #endregion
 
         public ShowHorseViewModel(IPageNavigationService navigationService)
@@ -350,34 +353,99 @@ namespace HorseAccounting.ViewModel
                         {
                             try
                             {
-                                Word.Application application = new Word.Application();
-                                var path = System.IO.Path.GetFullPath(@"Files\Word\Карточка племенной кобылы.dotx");
+                                var path = "";
 
-                                Word.Document document = application.Documents.Open(path);
+                                if (SelectedHorse.Gender.Equals("Кобыла"))
+                                {
+                                    path = System.IO.Path.GetFullPath(@"Files\Word\Карточка племенной кобылы.dotx");
+                                }
+                                else
+                                {
+                                    path = System.IO.Path.GetFullPath(@"Files\Word\Карточка жеребца.dotx");
+                                }
+                                application = new Word.Application();
+
+                                document = application.Documents.Open(path);
                                 Word.WdSaveFormat format = Word.WdSaveFormat.wdFormatDocument;
 
                                 document.Bookmarks["GpkNum"].Range.Text = SelectedHorse.GpkNum;
                                 document.Bookmarks["NickName"].Range.Text = SelectedHorse.NickName;
                                 document.Bookmarks["Brand"].Range.Text = SelectedHorse.Brand;
-                                document.Bookmarks["Bloodiness"].Range.Text = SelectedHorse.Bloodiness;
-                                document.Bookmarks["FullName"].Range.Text = SelectedHorse.FullName;
+                                document.Bookmarks["Bloodiness"].Range.Text = SelectedHorse.Bloodiness;                               
                                 document.Bookmarks["BirthDate"].Range.Text = SelectedHorse.BirthDate;
                                 document.Bookmarks["Color"].Range.Text = SelectedHorse.Color;
                                 document.Bookmarks["BirthPlace"].Range.Text = SelectedHorse.BirthPlace;
                                 document.Bookmarks["Owner"].Range.Text = SelectedHorse.Owner;
                                 document.Bookmarks["Breed"].Range.Text = SelectedHorse.Breed;
 
-                                document.Bookmarks["MotherGpkNum"].Range.Text = MotherHorse.GpkNum;
-                                document.Bookmarks["MotherNickName"].Range.Text = MotherHorse.NickName;
-                                document.Bookmarks["MotherBrand"].Range.Text = MotherHorse.Brand;
-                                document.Bookmarks["MotherColor"].Range.Text = MotherHorse.Color;
-                                document.Bookmarks["MotherBirthDate"].Range.Text = MotherHorse.BirthDate;
+                                if (SelectedHorse.MotherID != 0 || SelectedHorse.FatherID != 0)
+                                {
+                                    if (MotherHorse != null)
+                                    {
+                                        document.Bookmarks["MotherGpkNum"].Range.Text = MotherHorse.GpkNum;
+                                        document.Bookmarks["MotherNickName"].Range.Text = MotherHorse.NickName;
+                                        document.Bookmarks["MotherBrand"].Range.Text = MotherHorse.Brand;
+                                        document.Bookmarks["MotherColor"].Range.Text = MotherHorse.Color;
+                                        document.Bookmarks["MotherBirthDate"].Range.Text = MotherHorse.BirthDate;
+                                    }
 
-                                document.Bookmarks["FatherGpkNum"].Range.Text = FatherHorse.GpkNum;
-                                document.Bookmarks["FatherNickName"].Range.Text = FatherHorse.NickName;
-                                document.Bookmarks["FatherBrand"].Range.Text = FatherHorse.Brand;
-                                document.Bookmarks["FatherColor"].Range.Text = FatherHorse.Color;
-                                document.Bookmarks["FatherBirthDate"].Range.Text = FatherHorse.BirthDate;
+                                    if (FatherHorse != null)
+                                    {
+                                        document.Bookmarks["FatherGpkNum"].Range.Text = FatherHorse.GpkNum;
+                                        document.Bookmarks["FatherNickName"].Range.Text = FatherHorse.NickName;
+                                        document.Bookmarks["FatherBrand"].Range.Text = FatherHorse.Brand;
+                                        document.Bookmarks["FatherColor"].Range.Text = FatherHorse.Color;
+                                        document.Bookmarks["FatherBirthDate"].Range.Text = FatherHorse.BirthDate;
+                                    }
+                                }
+
+                                if (MainHorseScoring != null)
+                                {
+                                    int i = 3;
+                                    Word.Table scoringTable = document.Tables[2];
+                                    foreach (Scoring s in MainHorseScoring)
+                                    {
+                                        scoringTable.Cell(i, 1).Range.Text = s.Date;
+                                        scoringTable.Cell(i, 2).Range.Text = s.Age;
+                                        scoringTable.Cell(i, 3).Range.Text = s.Boniter;
+                                        scoringTable.Cell(i, 4).Range.Text = s.Origin.ToString();
+                                        scoringTable.Cell(i, 5).Range.Text = s.Typicality.ToString();
+                                        scoringTable.Cell(i, 6).Range.Text = s.Measurements.ToString();
+                                        scoringTable.Cell(i, 7).Range.Text = s.Exterior.ToString();
+                                        scoringTable.Cell(i, 8).Range.Text = s.WorkingCapacity.ToString();
+                                        scoringTable.Cell(i, 9).Range.Text = s.OffspringQuality.ToString();
+                                        scoringTable.Cell(i, 10).Range.Text = s.TheClass.ToString();
+                                        scoringTable.Cell(i, 11).Range.Text = s.Comment;
+                                        i++;
+                                    }
+                                }
+
+                                if (SelectedHorse.Gender.Equals("Кобыла"))
+                                {
+                                    document.Bookmarks["FullName"].Range.Text = SelectedHorse.FullName;
+
+                                    if (MainHorseTribalUses != null)
+                                    {
+                                        int i = 2;
+                                        Word.Table tribalUseTable = document.Tables[3];
+                                        foreach (TribalUse t in MainHorseTribalUses)
+                                        {
+                                            tribalUseTable.Cell(i, 1).Range.Text = t.Year.ToString();
+                                            tribalUseTable.Cell(i, 2).Range.Text = t.LastDate;
+                                            tribalUseTable.Cell(i, 3).Range.Text = t.MatingType;
+                                            tribalUseTable.Cell(i, 4).Range.Text = t.FatherFullName;
+                                            tribalUseTable.Cell(i, 5).Range.Text = t.FatherBreed;
+                                            tribalUseTable.Cell(i, 6).Range.Text = t.FatherClass;
+                                            tribalUseTable.Cell(i, 7).Range.Text = t.FoalDate;
+                                            tribalUseTable.Cell(i, 8).Range.Text = t.FoalGender;
+                                            tribalUseTable.Cell(i, 9).Range.Text = t.FoalColor;
+                                            tribalUseTable.Cell(i, 10).Range.Text = t.FoalNickName;
+                                            tribalUseTable.Cell(i, 11).Range.Text = t.FoalBrand;
+                                            tribalUseTable.Cell(i, 12).Range.Text = t.FoalDestination;
+                                            i++;
+                                        }
+                                    }
+                                }
 
                                 document.SaveAs2(FileName: magazinesPath + SelectedHorse.FullName, format);
                                 document.Close();
@@ -394,6 +462,8 @@ namespace HorseAccounting.ViewModel
                             {
                                 Console.WriteLine(ex.Message);
                                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка при создании карточки лошади!"));
+                                document.Close();
+                                application.Quit();
                             }
                         }
                         else
