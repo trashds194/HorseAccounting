@@ -3,9 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HorseAccounting.Model
@@ -161,9 +159,17 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<TribalUse> selectedTribalUse = JsonConvert.DeserializeObject<ObservableCollection<TribalUse>>(response);
+            try
+            {
+                ObservableCollection<TribalUse> selectedTribalUse = JsonConvert.DeserializeObject<ObservableCollection<TribalUse>>(response);
+                return selectedTribalUse;
 
-            return selectedTribalUse;
+            } catch (Exception ex)
+            {
+                //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные племенного использования отсутствуют!"));
+                return null;
+            }
+
         }
 
         #endregion

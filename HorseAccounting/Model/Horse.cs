@@ -173,24 +173,32 @@ namespace HorseAccounting.Model
             string url = api + "horse.php?horse=all";
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
-
-            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            sWatch.Stop();
-
-            Console.WriteLine("milliseconds " + sWatch.ElapsedMilliseconds.ToString());
-            return horses;
+            try
+            {
+                ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                sWatch.Stop();
+                Console.WriteLine("milliseconds " + sWatch.ElapsedMilliseconds.ToString());
+                return horses;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> GetActingHorses()
         {
             string url = api + "horse.php?horse=acting";
-
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
-
-            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return horses;
+            try
+            {
+                ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return horses;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> GetRetiredHorses()
@@ -199,9 +207,15 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return horses;
+            try
+            {
+                ObservableCollection<Horse> horses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return horses;
+            } 
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> SearchHorsesAsync(string searchQuery)
@@ -210,9 +224,15 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return searchedHorses;
+            try
+            {
+                ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return searchedHorses;
+            } 
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> SearchHorsesByYearAsync(string searchYearQuery)
@@ -221,9 +241,15 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return searchedHorses;
+            try
+            {
+                ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return searchedHorses;
+            } 
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> SearchByFatherHorseAsync(int fatherID)
@@ -232,9 +258,15 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return searchedHorses;
+            try
+            {
+                ObservableCollection<Horse> searchedHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return searchedHorses;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         #endregion
@@ -247,9 +279,16 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> motherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return motherHorses;
+            try
+            {
+                ObservableCollection<Horse> motherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return motherHorses;
+            }
+            catch (Exception ex)
+            {
+                //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные кобыл отсутствуют!"));
+                return null;
+            }
         }
 
         public static async Task<ObservableCollection<Horse>> GetFatherHorseAsync()
@@ -258,13 +297,20 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Horse> fatherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
-
-            return fatherHorses;
+            try
+            {
+                ObservableCollection<Horse> fatherHorses = JsonConvert.DeserializeObject<ObservableCollection<Horse>>(response);
+                return fatherHorses;
+            }
+            catch (Exception ex)
+            {
+                //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные жеребцов отсутствуют!"));
+                return null;
+            }
         }
 
         // Метод добавления записи в БД
-        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed, 
+        public static async Task<bool> AddHorseAsync(string gpk, string nick, string brand, string blodeness, string color, string breed,
             string theClass, string chip, string gend, string dateBirth, string placeBirth, string owner, int motherID, int fatherID, string state)
         {
             try
