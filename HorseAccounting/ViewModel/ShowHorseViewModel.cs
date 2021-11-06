@@ -102,18 +102,27 @@ namespace HorseAccounting.ViewModel
                     }
 
                     _mainHorseProgression = Progression.GetSelectedProgression(SelectedHorse.ID).Result;
-                    _mainHorseTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
-                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
-
                     RaisePropertyChanged(() => MainHorseProgression);
+
+                    _mainHorseScoring = Scoring.GetSelectedScoring(SelectedHorse.ID).Result;
                     RaisePropertyChanged(() => MainHorseScoring);
+
+                    _mainHorseTribalUses = TribalUse.GetSelectedTribalUse(SelectedHorse.ID).Result;
                     RaisePropertyChanged(() => MainHorseTribalUses);
+
                 }
                 catch (Exception ex)
                 {
-                    if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
+                    if (ex is Newtonsoft.Json.JsonReaderException)
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные отсутствуют!"));
+                    }
+                    else if (ex is HttpRequestException || ex is SocketException || ex is WebException || ex is AggregateException)
                     {
                         Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Ошибка получения данных! Проверьте ваше интернет соединение или обратитесь к разработчику."));
+                    } else 
+                    {
+                        Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные отсутствуют!"));
                     }
                 }
             }).ConfigureAwait(true);

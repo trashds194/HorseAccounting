@@ -69,9 +69,18 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Progression> selectedProgression = JsonConvert.DeserializeObject<ObservableCollection<Progression>>(response);
+            Console.WriteLine(response);
 
-            return selectedProgression;
+            try
+            {
+                ObservableCollection<Progression> selectedProgression = JsonConvert.DeserializeObject<ObservableCollection<Progression>>(response);
+                return selectedProgression;
+            } 
+            catch (Exception ex)
+            {
+                //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные движения отсутствуют!"));
+                return null;
+            }
         }
 
         #endregion

@@ -146,9 +146,16 @@ namespace HorseAccounting.Model
 
             string response = client.GetStringAsync(url).GetAwaiter().GetResult();
 
-            ObservableCollection<Scoring> selectedScoring = JsonConvert.DeserializeObject<ObservableCollection<Scoring>>(response);
-
-            return selectedScoring;
+            try
+            {
+                ObservableCollection<Scoring> selectedScoring = JsonConvert.DeserializeObject<ObservableCollection<Scoring>>(response);
+                return selectedScoring;
+            } 
+            catch (Exception ex)
+            {
+                //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Данные промеров отсутствуют!"));
+                return null;
+            }
         }
 
         #endregion
