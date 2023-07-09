@@ -22,5 +22,3 @@
 * MaterialDesignThemes и MaterialDesignThemes - библиотеки, реализующие MaterialDesign интерфейс;
 * LiveCharts - библиотека, реализующая построение графических диаграмм;
 * Newtonsoft.Json – библиотека, позволяющая реализовать считывания ответов от севера в формате JSON.
-
-Ознакомиться с проектом можно по ссылке: https://horses-recording.000webhostapp.com/app/publish.htm
